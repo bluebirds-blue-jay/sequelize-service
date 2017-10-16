@@ -6,6 +6,7 @@ import { TFindByPrimaryKeyOptions } from '../types/find-by-primary-key-options';
 import { TUpdateOptions } from '../types/update-options';
 import { TValues } from '../types/values';
 import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
+import { TDeleteOptions } from '../types/delete-options';
 
 export interface ISequelizeService<A> {
   getPrimaryKeyField(): keyof A;
@@ -18,4 +19,5 @@ export interface ISequelizeService<A> {
   findByPrimaryKeys(pks: string[] | number[], options?: TFindByPrimaryKeyOptions<A>): Promise<Collection<A>>;
   update(filters: TFilters<A>, values: TValues<A>, options?: TUpdateOptions<A>): Promise<number>;
   updateByPrimaryKey(pk: string | number, values: TValues<A>, options?: TUpdateByPrimaryKeyOptions<A>): Promise<number>;
+  delete(filters: TFilters<A>, options?: TDeleteOptions<A>): Promise<number>;
 }

@@ -439,6 +439,47 @@ describe('SequelizeService', function () {
     });
   });
 
+  describe('#delete()', function () {
+    it('should delete object', async () => {
+      const users = await userService.createMany([
+        { email: 'foo1', password: 'bar1', age: 15 },
+        { email: 'foo2', password: 'bar2', age: 15 }
+      ]);
+      const count = await userService.delete({ id: { in: users.mapByProperty('id') } });
+      expect(count).to.equal(2);
+      const retrieved = await userService.find({});
+      expect(retrieved.size()).to.equal(0);
+    });
+    it('should limit deleted objects', async () => {
+      const users = await userService.createMany([
+        { email: 'foo1', password: 'bar1', age: 15 },
+        { email: 'foo2', password: 'bar2', age: 15 }
+      ]);
+      const count = await userService.delete({ id: { in: users.mapByProperty('id') } }, { limit: 1 });
+      expect(count).to.equal(1);
+      const retrieved = await userService.find({});
+      expect(retrieved.size()).to.equal(1);
+    });
+    it('should call hooks', async () => {
+      let calledBefore = false;
+      let calledAfter = false;
+      const beforeDeleteStub = Sinon.stub(userService, 'beforeDelete' as any);
+      const afterDeleteStub = Sinon.stub(userService, 'afterDelete' as any);
+      userService.subscribe(Hook.WILL_DELETE, () => calledBefore = true);
+      userService.subscribe(Hook.DID_DELETE, () => calledAfter = true);
+
+      await userService.delete({});
+
+      expect(beforeDeleteStub.calledOnce).to.equal(true);
+      expect(afterDeleteStub.calledOnce).to.equal(true);
+      expect(calledBefore).to.equal(true);
+      expect(calledAfter).to.equal(true);
+
+      beforeDeleteStub.restore();
+      afterDeleteStub.restore();
+    });
+  });
+
   after(async () => {
     await database.close();
   });

@@ -27,6 +27,9 @@ import { TValues } from '../types/values';
 import { TUpdateOptions } from '../types/update-options';
 import { UpdateSession } from './sessions/update-session';
 import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
+import { TDeleteOptions } from '../types/delete-options';
+import { TSequelizeDestroyOptions } from '../types/sequelize-destroy-options';
+import { DeleteSession } from './sessions/delete-session';
 
 @injectable()
 export class SequelizeService<A> extends Service implements ISequelizeService<A> {
@@ -122,6 +125,21 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
     return await this.update({ [this.getPrimaryKeyField()]: pk } as any, values, options);
   }
 
+  public async delete(filters: TFilters<A>, options: TDeleteOptions<A> = {}): Promise<number> {
+    return await this.transaction(options, async () => {
+      const session = new DeleteSession(filters, options, this);
+      await this.executeHook(Hook.WILL_DELETE, session, this._beforeDelete.bind(this));
+      const formattedFilters = this.toSequelizeWhere(filters);
+      const sequelizeOptions = this.toSequelizeOptions<TSequelizeDestroyOptions<A>>(options, { where: formattedFilters });
+      const count = await this.model.destroy(sequelizeOptions);
+      await this.executeHook(Hook.DID_DELETE, session, this._afterDelete.bind(this));
+      return count;
+    });
+  }
+
+
+  protected async beforeDelete(session: DeleteSession<A>) {}
+  protected async afterDelete(session: DeleteSession<A>) {}
   protected async beforeUpdate(session: UpdateSession<A>) {}
   protected async afterUpdate(session: UpdateSession<A>) {}
   protected async beforeCreate(session: CreateSession<A>) {}
@@ -214,6 +232,15 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
   private async _afterUpdate(session: UpdateSession<A>) {
     await this.afterUpdate(session);
     await this.publish(Hook.DID_UPDATE, session);
+  }
+
+  private async _beforeDelete(session: DeleteSession<A>) {
+    await this.beforeDelete(session);
+    await this.publish(Hook.WILL_DELETE, session);
+  }
+  private async _afterDelete(session: DeleteSession<A>) {
+    await this.afterDelete(session);
+    await this.publish(Hook.DID_DELETE, session);
   }
 
   public warn(condition: boolean, message: string, data?: object) {
