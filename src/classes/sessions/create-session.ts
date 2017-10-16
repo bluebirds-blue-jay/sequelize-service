@@ -3,7 +3,7 @@ import { TCreateOptions } from '../../types/create-options';
 import { ISequelizeService } from '../../interfaces/sequelize-service';
 
 export class CreateSession<A> extends Session<A, TCreateOptions<A>> {
-  public constructor(objects: A[], options: TCreateOptions<A>, service: ISequelizeService<A, any>) {
+  public constructor(objects: A[], options: TCreateOptions<A>, service: ISequelizeService<A>) {
     super(objects, options, service);
   }
 }

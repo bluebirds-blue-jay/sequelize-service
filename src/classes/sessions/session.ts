@@ -13,14 +13,14 @@ import { TOptionsMap } from '../../types/options-map';
 export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collection<A> {
   private context: TContext;
   private options: TOptionsMap<O>;
-  private service: ISequelizeService<A, any>;
+  private service: ISequelizeService<A>;
   private filters: TFiltersMap<A>;
   private decorations: Set<keyof A>;
 
   public constructor(
     objects: A[],
     options: O,
-    service: ISequelizeService<A, any>,
+    service: ISequelizeService<A>,
     filters?: TFilters<A>
   ) {
     super(objects);

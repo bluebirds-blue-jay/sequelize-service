@@ -10,10 +10,6 @@ import * as Sequelize from 'sequelize';
 import { Session } from '../../src/classes/sessions/session';
 import { SortOrder } from '../../src/constants/sort-order';
 
-function testFindMethod<A>(fetch: () => Promise<A[]>, ) {
-
-}
-
 describe('SequelizeService', function () {
   beforeEach(async () => {
     await database.reset();
@@ -370,6 +366,20 @@ describe('SequelizeService', function () {
       expect(retrieved.size()).to.equal(2);
       retrieved.forEach(object => expect(object.age).to.equal(12));
     });
+    it('should limit updated objects', async () => {
+      const users = await userService.createMany([
+        { email: 'foo1', password: 'bar1', age: 15 },
+        { email: 'foo2', password: 'bar2', age: 15 }
+      ]);
+      const count = await userService.update({ id: { in: users.mapByProperty('id') } }, { age: 12 }, {
+        limit: 1
+      });
+      expect(count).to.equal(1);
+      const retrieved = await userService.find({});
+      expect(retrieved.size()).to.equal(2);
+      expect(retrieved.getAt(0).age).to.equal(12);
+      expect(retrieved.getAt(1).age).to.equal(15);
+    });
     it('should call hooks', async () => {
       let calledBefore = false;
       let calledAfter = false;
@@ -380,6 +390,42 @@ describe('SequelizeService', function () {
       userService.subscribe(Hook.DID_UPDATE, () => calledAfter = true);
 
       await userService.update({}, { email: 'foo', password: 'bar' });
+
+      expect(beforeUpdateStub.calledOnce).to.equal(true);
+      expect(afterUpdateStub.calledOnce).to.equal(true);
+      expect(transformStub.calledOnce).to.equal(true);
+      expect(calledBefore).to.equal(true);
+      expect(calledAfter).to.equal(true);
+
+      beforeUpdateStub.restore();
+      afterUpdateStub.restore();
+      transformStub.restore();
+    });
+  });
+
+  describe('#updateByPrimaryKey()', function () {
+    it('should update object', async () => {
+      const [ user1, user2 ] = await userService.createMany([
+        { email: 'foo1', password: 'bar1', age: 15 },
+        { email: 'foo2', password: 'bar2', age: 15 }
+      ]);
+      const count = await userService.updateByPrimaryKey(user1.id, { age: 12 });
+      const retrieved = await userService.findByPrimaryKeys([user1.id, user2.id]);
+      expect(count).to.equal(1);
+      expect(retrieved.size()).to.equal(2);
+      expect(retrieved.getAt(0).age).to.equal(12);
+      expect(retrieved.getAt(1).age).to.equal(15);
+    });
+    it('should call hooks', async () => {
+      let calledBefore = false;
+      let calledAfter = false;
+      const beforeUpdateStub = Sinon.stub(userService, 'beforeUpdate' as any);
+      const afterUpdateStub = Sinon.stub(userService, 'afterUpdate' as any);
+      const transformStub = Sinon.stub(userService, 'transform' as any);
+      userService.subscribe(Hook.WILL_UPDATE, () => calledBefore = true);
+      userService.subscribe(Hook.DID_UPDATE, () => calledAfter = true);
+
+      await userService.updateByPrimaryKey(1, { email: 'foo', password: 'bar' });
 
       expect(beforeUpdateStub.calledOnce).to.equal(true);
       expect(afterUpdateStub.calledOnce).to.equal(true);

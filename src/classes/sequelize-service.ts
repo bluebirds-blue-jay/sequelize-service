@@ -26,11 +26,10 @@ import { SortOrder } from '../constants/sort-order';
 import { TValues } from '../types/values';
 import { TUpdateOptions } from '../types/update-options';
 import { UpdateSession } from './sessions/update-session';
-import { TSequelizeUpdateOptions } from '../types/sequelize-update-options';
-import { AnyWhereOptions } from 'sequelize';
+import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
 
 @injectable()
-export class SequelizeService<A, PK extends A[keyof A]> extends Service implements ISequelizeService<A, PK> {
+export class SequelizeService<A> extends Service implements ISequelizeService<A> {
   private primaryKeyField: keyof A = 'id' as keyof A;
 
   public constructor(protected model: Sequelize.Model<A, A>) {
@@ -99,11 +98,11 @@ export class SequelizeService<A, PK extends A[keyof A]> extends Service implemen
     return object || null;
   }
 
-  public async findByPrimaryKey(pk: PK, options: TFindByPrimaryKeyOptions<A> = {}): Promise<A> {
+  public async findByPrimaryKey(pk: string | number, options: TFindByPrimaryKeyOptions<A> = {}): Promise<A> {
     return await this.findOne({ [this.getPrimaryKeyField()]: pk } as any, options);
   }
 
-  public async findByPrimaryKeys(pks: PK[], options: TFindByPrimaryKeyOptions<A> = {}): Promise<Collection<A>> {
+  public async findByPrimaryKeys(pks: string[] | number[], options: TFindByPrimaryKeyOptions<A> = {}): Promise<Collection<A>> {
     return await this.find({ [this.getPrimaryKeyField()]: { in: pks } } as any, options);
   }
 
@@ -117,6 +116,10 @@ export class SequelizeService<A, PK extends A[keyof A]> extends Service implemen
       await this._afterUpdate(session);
       return count;
     });
+  }
+
+  public async updateByPrimaryKey(pk: string | number, values: TValues<A>, options: TUpdateByPrimaryKeyOptions<A> = {}): Promise<number> {
+    return await this.update({ [this.getPrimaryKeyField()]: pk } as any, values, options);
   }
 
   protected async beforeUpdate(session: UpdateSession<A>) {}

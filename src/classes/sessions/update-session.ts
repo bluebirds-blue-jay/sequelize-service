@@ -9,7 +9,7 @@ import { TValuesMap } from '../../types/values-map';
 export class UpdateSession<A> extends Session<A, TUpdateOptions<A>> {
   private values: TValuesMap<A>;
 
-  public constructor(filters: TFilters<A>, values: TValues<A>, options: TUpdateOptions<A>, service: ISequelizeService<A, any>) {
+  public constructor(filters: TFilters<A>, values: TValues<A>, options: TUpdateOptions<A>, service: ISequelizeService<A>) {
     super([], options, service, filters);
     this.values = <TValuesMap<A>>new Map(Lodash.toPairs(values));
   }
