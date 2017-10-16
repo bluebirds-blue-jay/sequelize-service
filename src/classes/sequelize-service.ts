@@ -30,6 +30,8 @@ import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-optio
 import { TDeleteOptions } from '../types/delete-options';
 import { TSequelizeDestroyOptions } from '../types/sequelize-destroy-options';
 import { DeleteSession } from './sessions/delete-session';
+import { TCountOptions } from '../types/count-options';
+import { TSequelizeCountOptions } from '../types/sequelize-count-options';
 
 @injectable()
 export class SequelizeService<A> extends Service implements ISequelizeService<A> {
@@ -136,6 +138,13 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
       return count;
     });
   }
+
+  public async count(filters: TFilters<A>, options: TCountOptions<A> = {}): Promise<number> {
+    const formattedFilters = this.toSequelizeWhere(filters);
+    const sequelizeOptions = this.toSequelizeOptions<TSequelizeCountOptions<A>>(options, { where: formattedFilters });
+    return await this.model.count(sequelizeOptions);
+  }
+
 
 
   protected async beforeDelete(session: DeleteSession<A>) {}

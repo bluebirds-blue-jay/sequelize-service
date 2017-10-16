@@ -480,6 +480,25 @@ describe('SequelizeService', function () {
     });
   });
 
+  describe('#count()', function () {
+    it('should count objects', async () => {
+      await userService.createMany([
+        { email: 'foo1', password: 'bar1', age: 15 },
+        { email: 'foo2', password: 'bar2', age: 15 }
+      ]);
+      const count = await userService.count({});
+      expect(count).to.equal(2);
+    });
+    it('should count filtered objects', async () => {
+      await userService.createMany([
+        { email: 'foo1', password: 'bar1', age: 15 },
+        { email: 'foo2', password: 'bar2', age: 15 }
+      ]);
+      const count = await userService.count({ email: 'foo1' });
+      expect(count).to.equal(1);
+    });
+  });
+
   after(async () => {
     await database.close();
   });
