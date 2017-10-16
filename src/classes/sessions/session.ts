@@ -47,8 +47,23 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     return this.getDecorations().has(decoration);
   }
 
+  public getOption<T extends O[keyof O]>(key: keyof O): T {
+    return this.options.get(key);
+  }
+
+  public setOption(key: keyof O, value: O[keyof O]): this {
+    this.options.set(key, value);
+    return this;
+  }
+
   public getSafeOptions<T = A>(overrides: Partial<TAllOptions<T>> = {}): TSafeOptions {
-    return Object.assign(Lodash.pick(this.options, ['transaction', 'context', 'skipHooks']), overrides);
+    const options: TSafeOptions = {};
+
+    for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks']) {
+      options[key as keyof TSafeOptions] = this.options.get(key);
+    }
+
+    return Object.assign(options, overrides)
   }
 
   public async ensureIdentified(options: TFindOptions<A>) {

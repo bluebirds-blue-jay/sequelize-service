@@ -8,6 +8,7 @@ import { TValues } from '../types/values';
 import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
 import { TDeleteOptions } from '../types/delete-options';
 import { TCountOptions } from '../types/count-options';
+import { TReplaceOneOptions } from '../types/replace-one-options';
 
 export interface ISequelizeService<A> {
   getPrimaryKeyField(): keyof A;
@@ -22,4 +23,5 @@ export interface ISequelizeService<A> {
   updateByPrimaryKey(pk: string | number, values: TValues<A>, options?: TUpdateByPrimaryKeyOptions<A>): Promise<number>;
   delete(filters: TFilters<A>, options?: TDeleteOptions<A>): Promise<number>;
   count(filters: TFilters<A>, options?: TCountOptions<A>): Promise<number>;
+  replaceOne(filters: TFilters<A>, values: A, options?: TReplaceOneOptions<A>): Promise<A>;
 }

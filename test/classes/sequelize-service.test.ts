@@ -499,6 +499,68 @@ describe('SequelizeService', function () {
     });
   });
 
+  describe('#replaceOne()', function () {
+    it('should create object', async () => {
+      expect(await userService.count({})).to.equal(0);
+      await userService.replaceOne({ email: 'foo' }, { email: 'foo', password: 'bar' });
+      expect(await userService.count({})).to.equal(1);
+    });
+    it('should update object', async () => {
+      await userService.create({ email: 'foo', password: 'bar' });
+      expect(await userService.count({})).to.equal(1);
+      await userService.replaceOne({ email: 'foo' }, { email: 'foo', password: 'baz' });
+      expect(await userService.count({})).to.equal(1);
+      expect((await userService.findOne({})).password).to.equal('baz');
+    });
+    it('should call create hooks', async () => {
+      let calledBefore = false;
+      let calledAfter = false;
+      const beforeCreateStub = Sinon.stub(userService, 'beforeCreate' as any);
+      const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any);
+      const transformStub = Sinon.stub(userService, 'transform' as any);
+      const decorateStub = Sinon.stub(userService, 'decorate' as any);
+      userService.subscribe(Hook.DID_CREATE, () => calledBefore = true);
+      userService.subscribe(Hook.WILL_CREATE, () => calledAfter = true);
+
+      await userService.replaceOne({ email: 'foo' }, { email: 'foo', password: 'bar' });
+
+      expect(beforeCreateStub.calledOnce).to.equal(true);
+      expect(afterCreateStub.calledOnce).to.equal(true);
+      expect(transformStub.calledOnce).to.equal(true);
+      expect(decorateStub.calledOnce).to.equal(true);
+      expect(calledBefore).to.equal(true);
+      expect(calledAfter).to.equal(true);
+
+      beforeCreateStub.restore();
+      afterCreateStub.restore();
+      transformStub.restore();
+      decorateStub.restore();
+    });
+    it('should call update hooks', async () => {
+      await userService.create({ email: 'foo', password: 'bar' });
+
+      let calledBefore = false;
+      let calledAfter = false;
+      const beforeUpdateStub = Sinon.stub(userService, 'beforeUpdate' as any);
+      const afterUpdateStub = Sinon.stub(userService, 'afterUpdate' as any);
+      const transformStub = Sinon.stub(userService, 'transform' as any);
+      userService.subscribe(Hook.WILL_UPDATE, () => calledBefore = true);
+      userService.subscribe(Hook.DID_UPDATE, () => calledAfter = true);
+
+      await userService.replaceOne({ email: 'foo' }, { email: 'foo', password: 'baz' });
+
+      expect(beforeUpdateStub.calledOnce).to.equal(true);
+      expect(afterUpdateStub.calledOnce).to.equal(true);
+      expect(transformStub.calledOnce).to.equal(true);
+      expect(calledBefore).to.equal(true);
+      expect(calledAfter).to.equal(true);
+
+      beforeUpdateStub.restore();
+      afterUpdateStub.restore();
+      transformStub.restore();
+    });
+  });
+
   after(async () => {
     await database.close();
   });

@@ -32,6 +32,7 @@ import { TSequelizeDestroyOptions } from '../types/sequelize-destroy-options';
 import { DeleteSession } from './sessions/delete-session';
 import { TCountOptions } from '../types/count-options';
 import { TSequelizeCountOptions } from '../types/sequelize-count-options';
+import { TReplaceOneOptions } from '../types/replace-one-options';
 
 @injectable()
 export class SequelizeService<A> extends Service implements ISequelizeService<A> {
@@ -145,7 +146,23 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
     return await this.model.count(sequelizeOptions);
   }
 
+  public async replaceOne(filters: TFilters<A>, values: A, options: TReplaceOneOptions<A> = {}): Promise<A> {
+    return await this.transaction(options, async () => {
+      const candidate = await this.findOne(filters, {
+        transaction: options.transaction,
+        lock: Sequelize.Transaction.LOCK.UPDATE
+      });
 
+      if (candidate) {
+        const primaryKeyFilter = <any>candidate[this.getPrimaryKeyField()];
+        await this.updateByPrimaryKey(primaryKeyFilter, values, options);
+        // Return the updated object for consistency
+        return await this.findByPrimaryKey(primaryKeyFilter, options);
+      } else {
+        return await this.create(values, options);
+      }
+    });
+  }
 
   protected async beforeDelete(session: DeleteSession<A>) {}
   protected async afterDelete(session: DeleteSession<A>) {}
@@ -157,7 +174,7 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
   protected async decorate(session: Session<A>) {}
 
   protected async executeHook(hook: Hook, session: Session<A>, handler: (session: Session<A>) => Promise<any>) {
-    if (session.getOptions().get('skipHooks')) {
+    if (session.getOption('skipHooks')) {
       return;
     }
 
