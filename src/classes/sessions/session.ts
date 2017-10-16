@@ -9,8 +9,9 @@ import { TFilters } from '../../types/filters';
 import { ISequelizeService } from '../../interfaces/sequelize-service';
 import { TFiltersMap } from '../../types/filters-map';
 import { TOptionsMap } from '../../types/options-map';
+import { ISession } from '../../interfaces/sessions/session';
 
-export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collection<A> {
+export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collection<A> implements ISession<A, O> {
   private context: TContext;
   private options: TOptionsMap<O>;
   private service: ISequelizeService<A>;
@@ -56,6 +57,15 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     return this;
   }
 
+  public hasOption(key: keyof O): boolean {
+    return this.options.has(key);
+  }
+
+  public unsetOption(key: keyof O): this {
+    this.options.delete(key);
+    return this;
+  }
+
   public getSafeOptions<T = A>(overrides: Partial<TAllOptions<T>> = {}): TSafeOptions {
     const options: TSafeOptions = {};
 
@@ -66,29 +76,20 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     return Object.assign(options, overrides)
   }
 
-  public async ensureIdentified(options: TFindOptions<A>) {
-    return await this.ensureProperties(Object.assign(options, { select: [this.service.getPrimaryKeyField()] }));
+  public getFilters(): TFiltersMap<A> {
+    return this.filters;
   }
 
-  public async ensureProperties(options: TFindOptions<A>) {
-    const select = options.select || [];
-    const decorations = options.decorate || [];
-    const allProps = select.concat(decorations);
+  public getRawFilters(): TFilters<A> {
+    return <any>Lodash.fromPairs(Array.from(this.getFilters()));
+  }
 
-    let allSet = true;
+  public hasFilters(): boolean {
+    return Object.keys(this.getRawFilters()).length > 0;
+  }
 
-    for (const object of this) {
-      for (const prop of allProps) {
-        if (!(prop in object)) {
-          allSet = false;
-          break;
-        }
-      }
-    }
-
-    if (!this.size() || !allSet) {
-      await this.fetch(options);
-    }
+  public hasFilter(key: keyof A): boolean {
+    return this.filters.has(key);
   }
 
   public isIdentified(): boolean {
@@ -100,7 +101,7 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     let oneIdentified = false;
     let allIdentified = true;
 
-    for (const object of this) {
+    for (const object of this.getObjects()) {
       if (primaryKeyField in object) {
         oneIdentified = true;
       } else if (oneIdentified) {
@@ -114,7 +115,7 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     return allIdentified;
   }
 
-  public async fetch(options: TFindOptions<A>): Promise<this> {
+  public async fetch(options: TFindOptions<A>): Promise<void> {
     this.service.warn(!this.hasFilters() && !('limit' in options), `Fetching entire table.`);
 
     const primaryKeyField = this.service.getPrimaryKeyField();
@@ -123,9 +124,7 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
 
     if (this.isIdentified()) {
       for (const object of this) {
-        const newObject = newObjects.find(newObject => {
-          return newObject[primaryKeyField] === object[primaryKeyField];
-        });
+        const newObject = newObjects.findByProperties(<any>{ [primaryKeyField]: object[primaryKeyField] });
         if (!newObject) {
           throw new Error(`Unable to find matching object with primary key ${object[primaryKeyField]}.`);
         }
@@ -134,23 +133,34 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     } else {
       this.setObjects(newObjects.toArray());
     }
+  }
 
-    return this;
+  public async ensureProperties(options: TFindOptions<A>): Promise<void> {
+    const select = options.select || [];
+    const decorations = options.decorate || [];
+    const allProps = select.concat(decorations);
+
+    let allSet = true;
+
+    for (const object of this.getObjects()) {
+      for (const prop of allProps) {
+        if (!(prop in object)) {
+          allSet = false;
+          break;
+        }
+      }
+    }
+
+    if (!this.size() || !allSet) {
+      await this.fetch(options);
+    }
+  }
+
+  public async ensureIdentified(options: TSafeOptions = {}): Promise<void> {
+    return await this.ensureProperties(Object.assign(options, { select: [this.service.getPrimaryKeyField()] }));
   }
 
   protected getService() {
     return this.service;
-  }
-
-  public getFilters(): TFiltersMap<A> {
-    return this.filters;
-  }
-
-  public getRawFilters(): TFilters<A> {
-    return <any>Lodash.fromPairs(Array.from(this.getFilters()));
-  }
-
-  public hasFilters(): boolean {
-    return Object.keys(this.getRawFilters()).length > 0;
   }
 }

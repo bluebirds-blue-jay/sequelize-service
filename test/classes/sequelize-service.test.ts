@@ -560,8 +560,4 @@ describe('SequelizeService', function () {
       transformStub.restore();
     });
   });
-
-  after(async () => {
-    await database.close();
-  });
 });
