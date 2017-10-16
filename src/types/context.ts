@@ -1,0 +1,1 @@
+export type TContext = Map<symbol, any>;

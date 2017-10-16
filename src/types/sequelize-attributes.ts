@@ -1,0 +1,1 @@
+export type TSequelizeAttributes<A> = (keyof A)[];

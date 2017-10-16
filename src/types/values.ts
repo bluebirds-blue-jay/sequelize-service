@@ -1,0 +1,1 @@
+export type TValues<A> = { [key in keyof Partial<A>]: A[key] };

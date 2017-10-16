@@ -1,0 +1,1 @@
+export type TSelect<T> = (keyof T)[];
