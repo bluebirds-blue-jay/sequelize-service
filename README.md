@@ -64,6 +64,19 @@ class UserService extends SequelizeService<TUser> {
     await session.ensureIdentified(); // Make sure all objects corresponding to the filters have their primary key set
     
     await session.ensureProperties({ select: ['email', 'age'] }); // Only performs a SELECT if not all objects have their age and email set
+    
+    // Run a callback for each user, in parallel
+    await session.forEachParallel(async user => {
+      
+    });
+    
+    // Run a callback for each user, in series
+    await session.forEachSeries(async user => {
+      
+    });
+    
+    // Get all the users IDs
+    const ids = session.mapByProperty('id');
   }
 }
 ```
