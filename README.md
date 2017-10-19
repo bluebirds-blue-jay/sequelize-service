@@ -25,7 +25,7 @@ The only required dependency is a Sequelize model.
 #### Manually
 
 ```typescript
-const userService = new SequelizeService<TUser>(UserModel);
+const userService = new SequelizeService<TUser, TUserComputedProperties>(UserModel);
 ```
 
 #### Using inversify
@@ -209,6 +209,8 @@ class UserService extends SequelizeService<TUser> {
 
 
 ### Working with events
+
+### Computed properties
 
 ## Documentation
 

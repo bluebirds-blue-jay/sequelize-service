@@ -6,10 +6,10 @@ import { ISequelizeService } from '../../interfaces/sequelize-service';
 import * as Lodash from 'lodash';
 import { TValuesMap } from '../../types/values-map';
 
-export class UpdateSession<A> extends Session<A, TUpdateOptions<A>> {
+export class UpdateSession<A, CP> extends Session<A, CP, TUpdateOptions<A>> {
   private values: TValuesMap<A>;
 
-  public constructor(filters: TFilters<A>, values: TValues<A>, options: TUpdateOptions<A>, service: ISequelizeService<A>) {
+  public constructor(filters: TFilters<A>, values: TValues<A>, options: TUpdateOptions<A>, service: ISequelizeService<A, CP>) {
     super([], options, service, filters);
     this.values = <TValuesMap<A>>new Map(Lodash.toPairs(values));
   }

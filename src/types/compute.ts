@@ -1,0 +1,1 @@
+export type TCompute<T> = (keyof T)[];

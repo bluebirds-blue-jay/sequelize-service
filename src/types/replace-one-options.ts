@@ -1,4 +1,4 @@
 import { TSafeOptions } from './safe-options';
-import { TDecorateOption } from './decorate-option';
+import { TComputeOption } from './compute-option';
 
-export type TReplaceOneOptions<A> = TSafeOptions & Partial<TDecorateOption<A>>;
+export type TReplaceOneOptions<A, CP> = TSafeOptions & Partial<TComputeOption<CP>>;

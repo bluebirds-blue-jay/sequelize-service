@@ -75,6 +75,7 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/computedproperty.html" class="tsd-kind-icon">Computed<wbr>Property</a></li>
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/createsession.html" class="tsd-kind-icon">Create<wbr>Session</a></li>
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/deletesession.html" class="tsd-kind-icon">Delete<wbr>Session</a></li>
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/sequelizeservice.html" class="tsd-kind-icon">Sequelize<wbr>Service</a></li>
@@ -85,6 +86,7 @@
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/icomputedproperty.html" class="tsd-kind-icon">IComputed<wbr>Property</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/isequelizeservice.html" class="tsd-kind-icon">ISequelize<wbr>Service</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/isession.html" class="tsd-kind-icon">ISession</a></li>
 							</ul>
@@ -96,12 +98,13 @@
 								<li class="tsd-kind-type-alias"><a href="globals.html#tallsequelizeoptions" class="tsd-kind-icon">TAll<wbr>Sequelize<wbr>Options</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tarrayoperator" class="tsd-kind-icon">TArray<wbr>Operator</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tarrayoperatorfilter" class="tsd-kind-icon">TArray<wbr>Operator<wbr>Filter</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#tcompute" class="tsd-kind-icon">TCompute</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#tcomputeoption" class="tsd-kind-icon">TCompute<wbr>Option</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#tcomputedproperties" class="tsd-kind-icon">TComputed<wbr>Properties</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tcontext" class="tsd-kind-icon">TContext</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tcontextoption" class="tsd-kind-icon">TContext<wbr>Option</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tcountoptions" class="tsd-kind-icon">TCount<wbr>Options</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tcreateoptions" class="tsd-kind-icon">TCreate<wbr>Options</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#tdecorate" class="tsd-kind-icon">TDecorate</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#tdecorateoption" class="tsd-kind-icon">TDecorate<wbr>Option</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tdeleteoptions" class="tsd-kind-icon">TDelete<wbr>Options</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tfilter" class="tsd-kind-icon">TFilter</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#tfilters" class="tsd-kind-icon">TFilters</a></li>
@@ -164,10 +167,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="talloptions" class="tsd-anchor"></a>
 					<h3>TAll<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">TAll<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tcontextoption" class="tsd-signature-type">TContextOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tdecorateoption" class="tsd-signature-type">TDecorateOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tskiphooksoption" class="tsd-signature-type">TSkipHooksOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsortoption" class="tsd-signature-type">TSortOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#toffsetoption" class="tsd-signature-type">TOffsetOption</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">TAll<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tcontextoption" class="tsd-signature-type">TContextOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tcomputeoption" class="tsd-signature-type">TComputeOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tskiphooksoption" class="tsd-signature-type">TSkipHooksOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsortoption" class="tsd-signature-type">TSortOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#toffsetoption" class="tsd-signature-type">TOffsetOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/all-options.ts#L10">types/all-options.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/all-options.ts#L10">types/all-options.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -177,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">TAll<wbr>Sequelize<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsequelizeorderoption" class="tsd-signature-type">TSequelizeOrderOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsequelizewhereoption" class="tsd-signature-type">TSequelizeWhereOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#toffsetoption" class="tsd-signature-type">TOffsetOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsequelizeorderoption" class="tsd-signature-type">TSequelizeOrderOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/all-sequelize-options.ts#L7">types/all-sequelize-options.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/all-sequelize-options.ts#L7">types/all-sequelize-options.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,7 +190,7 @@
 					<div class="tsd-signature tsd-kind-icon">TArray<wbr>Operator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"in"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"nin"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/array-operator.ts#L1">types/array-operator.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/array-operator.ts#L1">types/array-operator.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -197,7 +200,50 @@
 					<div class="tsd-signature tsd-kind-icon">TArray<wbr>Operator<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/array-operator-filter.ts#L3">types/array-operator-filter.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/array-operator-filter.ts#L3">types/array-operator-filter.ts:3</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="tcompute" class="tsd-anchor"></a>
+					<h3>TCompute</h3>
+					<div class="tsd-signature tsd-kind-icon">TCompute<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof T</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/compute.ts#L1">types/compute.ts:1</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="tcomputeoption" class="tsd-anchor"></a>
+					<h3>TCompute<wbr>Option</h3>
+					<div class="tsd-signature tsd-kind-icon">TCompute<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/compute-option.ts#L3">types/compute-option.ts:3</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>compute<span class="tsd-signature-symbol">: </span><a href="globals.html#tcompute" class="tsd-signature-type">TCompute</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="tcomputedproperties" class="tsd-anchor"></a>
+					<h3>TComputed<wbr>Properties</h3>
+					<div class="tsd-signature tsd-kind-icon">TComputed<wbr>Properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in types/computed-properties.ts:3</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -212,7 +258,7 @@
 					<div class="tsd-signature tsd-kind-icon">TContext<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/context.ts#L1">types/context.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/context.ts#L1">types/context.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -222,7 +268,7 @@
 					<div class="tsd-signature tsd-kind-icon">TContext<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/context-option.ts#L3">types/context-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/context-option.ts#L3">types/context-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -240,7 +286,7 @@
 					<div class="tsd-signature tsd-kind-icon">TCount<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/count-options.ts#L3">types/count-options.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/count-options.ts#L3">types/count-options.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -250,37 +296,9 @@
 					<div class="tsd-signature tsd-kind-icon">TCreate<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/create-options.ts#L3">types/create-options.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/create-options.ts#L3">types/create-options.ts:3</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="tdecorate" class="tsd-anchor"></a>
-					<h3>TDecorate</h3>
-					<div class="tsd-signature tsd-kind-icon">TDecorate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof T</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/decorate.ts#L1">types/decorate.ts:1</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="tdecorateoption" class="tsd-anchor"></a>
-					<h3>TDecorate<wbr>Option</h3>
-					<div class="tsd-signature tsd-kind-icon">TDecorate<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/decorate-option.ts#L3">types/decorate-option.ts:3</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>decorate<span class="tsd-signature-symbol">: </span><a href="globals.html#tdecorate" class="tsd-signature-type">TDecorate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="tdeleteoptions" class="tsd-anchor"></a>
@@ -288,7 +306,7 @@
 					<div class="tsd-signature tsd-kind-icon">TDelete<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/delete-options.ts#L4">types/delete-options.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/delete-options.ts#L4">types/delete-options.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -298,7 +316,7 @@
 					<div class="tsd-signature tsd-kind-icon">TFilter<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsimplefilter" class="tsd-signature-type">TSimpleFilter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#toperatorfilter" class="tsd-signature-type">TOperatorFilter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/filter.ts#L4">types/filter.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/filter.ts#L4">types/filter.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -308,7 +326,7 @@
 					<div class="tsd-signature tsd-kind-icon">TFilters<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/filters.ts#L3">types/filters.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/filters.ts#L3">types/filters.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -323,37 +341,37 @@
 					<div class="tsd-signature tsd-kind-icon">TFilters<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><a href="globals.html#tfilter" class="tsd-signature-type">TFilter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/filters-map.ts#L3">types/filters-map.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/filters-map.ts#L3">types/filters-map.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="tfindbyprimarykeyoptions" class="tsd-anchor"></a>
 					<h3>TFind<wbr>ByPrimary<wbr>Key<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">TFind<wbr>ByPrimary<wbr>Key<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tdecorateoption" class="tsd-signature-type">TDecorateOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionisolationleveloption" class="tsd-signature-type">TTransactionIsolationLevelOption</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">TFind<wbr>ByPrimary<wbr>Key<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tcomputeoption" class="tsd-signature-type">TComputeOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionisolationleveloption" class="tsd-signature-type">TTransactionIsolationLevelOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/find-by-primary-key-options.ts#L6">types/find-by-primary-key-options.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/find-by-primary-key-options.ts#L6">types/find-by-primary-key-options.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="tfindoneoptions" class="tsd-anchor"></a>
 					<h3>TFind<wbr>One<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">TFind<wbr>One<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tdecorateoption" class="tsd-signature-type">TDecorateOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsortoption" class="tsd-signature-type">TSortOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">TFind<wbr>One<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tcomputeoption" class="tsd-signature-type">TComputeOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsortoption" class="tsd-signature-type">TSortOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tcomputeoption" class="tsd-signature-type">TComputeOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/find-one-options.ts#L7">types/find-one-options.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/find-one-options.ts#L7">types/find-one-options.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="tfindoptions" class="tsd-anchor"></a>
 					<h3>TFind<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">TFind<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tdecorateoption" class="tsd-signature-type">TDecorateOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsortoption" class="tsd-signature-type">TSortOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#toffsetoption" class="tsd-signature-type">TOffsetOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">TFind<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tcomputeoption" class="tsd-signature-type">TComputeOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tselectoption" class="tsd-signature-type">TSelectOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsortoption" class="tsd-signature-type">TSortOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#toffsetoption" class="tsd-signature-type">TOffsetOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/find-options.ts#L9">types/find-options.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/find-options.ts#L9">types/find-options.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -363,7 +381,7 @@
 					<div class="tsd-signature tsd-kind-icon">TLimit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/limit.ts#L1">types/limit.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/limit.ts#L1">types/limit.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -373,7 +391,7 @@
 					<div class="tsd-signature tsd-kind-icon">TLimit<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/limit-option.ts#L3">types/limit-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/limit-option.ts#L3">types/limit-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -391,7 +409,7 @@
 					<div class="tsd-signature tsd-kind-icon">TOffset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/offset.ts#L1">types/offset.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/offset.ts#L1">types/offset.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -401,7 +419,7 @@
 					<div class="tsd-signature tsd-kind-icon">TOffset<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/offset-option.ts#L3">types/offset-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/offset-option.ts#L3">types/offset-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -419,7 +437,7 @@
 					<div class="tsd-signature tsd-kind-icon">TOperator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"in"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"nin"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ne"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"gt"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"gte"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"lt"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"lte"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/operator.ts#L1">types/operator.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/operator.ts#L1">types/operator.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -429,7 +447,7 @@
 					<div class="tsd-signature tsd-kind-icon">TOperator<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tsimpleoperatorfilter" class="tsd-signature-type">TSimpleOperatorFilter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tarrayoperatorfilter" class="tsd-signature-type">TArrayOperatorFilter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/operator-filter.ts#L4">types/operator-filter.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/operator-filter.ts#L4">types/operator-filter.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -439,7 +457,7 @@
 					<div class="tsd-signature tsd-kind-icon">TOptions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/options.ts#L1">types/options.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/options.ts#L1">types/options.ts:1</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -454,17 +472,17 @@
 					<div class="tsd-signature tsd-kind-icon">TOptions<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T[K]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/options-map.ts#L1">types/options-map.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/options-map.ts#L1">types/options-map.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="treplaceoneoptions" class="tsd-anchor"></a>
 					<h3>TReplace<wbr>One<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">TReplace<wbr>One<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tdecorateoption" class="tsd-signature-type">TDecorateOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">TReplace<wbr>One<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tcomputeoption" class="tsd-signature-type">TComputeOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/replace-one-options.ts#L4">types/replace-one-options.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/replace-one-options.ts#L4">types/replace-one-options.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -474,7 +492,7 @@
 					<div class="tsd-signature tsd-kind-icon">TReturning<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/returning.ts#L1">types/returning.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/returning.ts#L1">types/returning.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -484,7 +502,7 @@
 					<div class="tsd-signature tsd-kind-icon">TReturning<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/returning-option.ts#L3">types/returning-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/returning-option.ts#L3">types/returning-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -502,7 +520,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSafe<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tcontextoption" class="tsd-signature-type">TContextOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionoption" class="tsd-signature-type">TTransactionOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tskiphooksoption" class="tsd-signature-type">TSkipHooksOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/safe-options.ts#L5">types/safe-options.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/safe-options.ts#L5">types/safe-options.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -512,7 +530,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSelect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof T</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/select.ts#L1">types/select.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/select.ts#L1">types/select.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -522,7 +540,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSelect<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/select-option.ts#L3">types/select-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/select-option.ts#L3">types/select-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -540,7 +558,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Array<wbr>Operator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"in"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"notIn"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-array-operator.ts#L1">types/sequelize-array-operator.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-array-operator.ts#L1">types/sequelize-array-operator.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -550,7 +568,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Array<wbr>Operator<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-array-operator-filter.ts#L3">types/sequelize-array-operator-filter.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-array-operator-filter.ts#L3">types/sequelize-array-operator-filter.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -565,7 +583,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof A</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-attributes.ts#L1">types/sequelize-attributes.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-attributes.ts#L1">types/sequelize-attributes.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -575,7 +593,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Attributes<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-attributes-option.ts#L3">types/sequelize-attributes-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-attributes-option.ts#L3">types/sequelize-attributes-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -593,7 +611,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Count<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsequelizewhereoption" class="tsd-signature-type">TSequelizeWhereOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#ttransactionoption" class="tsd-signature-type">TTransactionOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-count-options.ts#L4">types/sequelize-count-options.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-count-options.ts#L4">types/sequelize-count-options.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -603,7 +621,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Destroy<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsequelizewhereoption" class="tsd-signature-type">TSequelizeWhereOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#ttransactionoption" class="tsd-signature-type">TTransactionOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-destroy-options.ts#L5">types/sequelize-destroy-options.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-destroy-options.ts#L5">types/sequelize-destroy-options.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -613,7 +631,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Find<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsequelizewhereoption" class="tsd-signature-type">TSequelizeWhereOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#ttransactionoption" class="tsd-signature-type">TTransactionOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsequelizeorderoption" class="tsd-signature-type">TSequelizeOrderOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-find-options.ts#L5">types/sequelize-find-options.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-find-options.ts#L5">types/sequelize-find-options.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -623,7 +641,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Operator<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tsequelizesimpleoperatorfilter" class="tsd-signature-type">TSequelizeSimpleOperatorFilter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsequelizearrayoperatorfilter" class="tsd-signature-type">TSequelizeArrayOperatorFilter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-operator-filter.ts#L4">types/sequelize-operator-filter.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-operator-filter.ts#L4">types/sequelize-operator-filter.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -633,7 +651,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Order<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">keyof A</span><span class="tsd-signature-symbol">, </span><a href="enums/sortorder.html" class="tsd-signature-type">SortOrder</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-order.ts#L3">types/sequelize-order.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-order.ts#L3">types/sequelize-order.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -643,7 +661,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Order<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-order-option.ts#L3">types/sequelize-order-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-order-option.ts#L3">types/sequelize-order-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -661,7 +679,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Simple<wbr>Operator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"eq"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ne"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"gt"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"gte"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"lt"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"lte"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-simple-operator.ts#L1">types/sequelize-simple-operator.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-simple-operator.ts#L1">types/sequelize-simple-operator.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -671,7 +689,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Simple<wbr>Operator<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-simple-operator-filter.ts#L3">types/sequelize-simple-operator-filter.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-simple-operator-filter.ts#L3">types/sequelize-simple-operator-filter.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -686,7 +704,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Update<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#ttransactionoptions" class="tsd-signature-type">TTransactionOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#tsequelizewhereoption" class="tsd-signature-type">TSequelizeWhereOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-update-options.ts#L5">types/sequelize-update-options.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-update-options.ts#L5">types/sequelize-update-options.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -696,7 +714,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Where<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-where.ts#L3">types/sequelize-where.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-where.ts#L3">types/sequelize-where.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -711,7 +729,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSequelize<wbr>Where<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sequelize-where-option.ts#L3">types/sequelize-where-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sequelize-where-option.ts#L3">types/sequelize-where-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -729,7 +747,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSimple<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/simple-filter.ts#L1">types/simple-filter.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/simple-filter.ts#L1">types/simple-filter.ts:1</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -744,7 +762,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSimple<wbr>Operator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"ne"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"gte"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"gt"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"lte"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"lt"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/simple-operator.ts#L1">types/simple-operator.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/simple-operator.ts#L1">types/simple-operator.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -754,7 +772,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSimple<wbr>Operator<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/simple-operator-filter.ts#L3">types/simple-operator-filter.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/simple-operator-filter.ts#L3">types/simple-operator-filter.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -769,7 +787,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSkip<wbr>Hooks<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/skip-hooks.ts#L1">types/skip-hooks.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/skip-hooks.ts#L1">types/skip-hooks.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -779,7 +797,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSkip<wbr>Hooks<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/skip-hooks-option.ts#L3">types/skip-hooks-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/skip-hooks-option.ts#L3">types/skip-hooks-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -797,7 +815,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSort<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">keyof A</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sort.ts#L3">types/sort.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sort.ts#L3">types/sort.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -807,7 +825,7 @@
 					<div class="tsd-signature tsd-kind-icon">TSort<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/sort-option.ts#L3">types/sort-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/sort-option.ts#L3">types/sort-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -825,7 +843,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction<wbr>Isolation<wbr>Level<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/transaction-isolation-level-option.ts#L1">types/transaction-isolation-level-option.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/transaction-isolation-level-option.ts#L1">types/transaction-isolation-level-option.ts:1</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -843,7 +861,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction<wbr>Lock<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransactionLockLevel</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/transaction-lock.ts#L3">types/transaction-lock.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/transaction-lock.ts#L3">types/transaction-lock.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -853,7 +871,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction<wbr>Lock<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/transaction-lock-option.ts#L3">types/transaction-lock-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/transaction-lock-option.ts#L3">types/transaction-lock-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -871,7 +889,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction<wbr>Option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/transaction-option.ts#L3">types/transaction-option.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/transaction-option.ts#L3">types/transaction-option.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -889,7 +907,7 @@
 					<div class="tsd-signature tsd-kind-icon">TTransaction<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#ttransactionoption" class="tsd-signature-type">TTransactionOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionisolationleveloption" class="tsd-signature-type">TTransactionIsolationLevelOption</a><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#ttransactionlockoption" class="tsd-signature-type">TTransactionLockOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/transaction-options.ts#L5">types/transaction-options.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/transaction-options.ts#L5">types/transaction-options.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -899,7 +917,7 @@
 					<div class="tsd-signature tsd-kind-icon">TUpdate<wbr>ByPrimary<wbr>Key<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/update-by-primary-key-options.ts#L3">types/update-by-primary-key-options.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/update-by-primary-key-options.ts#L3">types/update-by-primary-key-options.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -909,7 +927,7 @@
 					<div class="tsd-signature tsd-kind-icon">TUpdate<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#tlimitoption" class="tsd-signature-type">TLimitOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/update-options.ts#L4">types/update-options.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/update-options.ts#L4">types/update-options.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -919,7 +937,7 @@
 					<div class="tsd-signature tsd-kind-icon">TValues<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/values.ts#L1">types/values.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/values.ts#L1">types/values.ts:1</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -934,7 +952,7 @@
 					<div class="tsd-signature tsd-kind-icon">TValues<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">keyof T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T[keyof T]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6178681/src/types/values-map.ts#L1">types/values-map.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/types/values-map.ts#L1">types/values-map.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -957,6 +975,9 @@
 						<a href="enums/sortorder.html" class="tsd-kind-icon">Sort<wbr>Order</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/computedproperty.html" class="tsd-kind-icon">Computed<wbr>Property</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/createsession.html" class="tsd-kind-icon">Create<wbr>Session</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
@@ -970,6 +991,9 @@
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/updatesession.html" class="tsd-kind-icon">Update<wbr>Session</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icomputedproperty.html" class="tsd-kind-icon">IComputed<wbr>Property</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/isequelizeservice.html" class="tsd-kind-icon">ISequelize<wbr>Service</a>
@@ -990,6 +1014,15 @@
 						<a href="globals.html#tarrayoperatorfilter" class="tsd-kind-icon">TArray<wbr>Operator<wbr>Filter</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tcompute" class="tsd-kind-icon">TCompute</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tcomputeoption" class="tsd-kind-icon">TCompute<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tcomputedproperties" class="tsd-kind-icon">TComputed<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tcontext" class="tsd-kind-icon">TContext</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
@@ -1000,12 +1033,6 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tcreateoptions" class="tsd-kind-icon">TCreate<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tdecorate" class="tsd-kind-icon">TDecorate</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tdecorateoption" class="tsd-kind-icon">TDecorate<wbr>Option</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tdeleteoptions" class="tsd-kind-icon">TDelete<wbr>Options</a>

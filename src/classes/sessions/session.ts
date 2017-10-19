@@ -11,17 +11,16 @@ import { TFiltersMap } from '../../types/filters-map';
 import { TOptionsMap } from '../../types/options-map';
 import { ISession } from '../../interfaces/sessions/session';
 
-export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collection<A> implements ISession<A, O> {
+export class Session<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> extends Collection<A & Partial<CP>> implements ISession<A, CP, O> {
   private context: TContext;
   private options: TOptionsMap<O>;
-  private service: ISequelizeService<A>;
+  private service: ISequelizeService<A, CP>;
   private filters: TFiltersMap<A>;
-  private decorations: Set<keyof A>;
 
   public constructor(
-    objects: A[],
+    objects: (A & Partial<CP>)[],
     options: O,
-    service: ISequelizeService<A>,
+    service: ISequelizeService<A, CP>,
     filters?: TFilters<A>
   ) {
     super(objects);
@@ -29,7 +28,6 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     this.options = <TOptionsMap<O>>new Map(Lodash.toPairs(options));
     this.service = service;
     this.filters = <TFiltersMap<A>>new Map(Lodash.toPairs(filters || { [this.service.getPrimaryKeyField()]: null }));
-    this.decorations = new Set((<TAllOptions<A>>options).decorate || []);
   }
 
   public getOptions() {
@@ -38,14 +36,6 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
 
   public getContext() {
     return this.context;
-  }
-
-  public getDecorations() {
-    return this.decorations;
-  }
-
-  public hasDecoration(decoration: keyof A): boolean {
-    return this.getDecorations().has(decoration);
   }
 
   public getOption<T extends O[keyof O]>(key: keyof O): T {
@@ -66,7 +56,7 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     return this;
   }
 
-  public getSafeOptions<T = A>(overrides: Partial<TAllOptions<T>> = {}): TSafeOptions {
+  public getSafeOptions<TA = A, TCP = CP>(overrides: Partial<TAllOptions<TA, TCP>> = {}): TSafeOptions {
     const options: TSafeOptions = {};
 
     for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks']) {
@@ -115,7 +105,7 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     return allIdentified;
   }
 
-  public async fetch(options: TFindOptions<A>): Promise<void> {
+  public async fetch(options: TFindOptions<A, CP>): Promise<void> {
     this.service.warn(!this.hasFilters() && !('limit' in options), `Fetching entire table.`);
 
     const primaryKeyField = this.service.getPrimaryKeyField();
@@ -135,15 +125,21 @@ export class Session<A, O extends TSafeOptions = TAllOptions<A>> extends Collect
     }
   }
 
-  public async ensureProperties(options: TFindOptions<A>): Promise<void> {
+  public async ensureProperties(options: TFindOptions<A, CP>): Promise<void> {
     const select = options.select || [];
-    const decorations = options.decorate || [];
-    const allProps = select.concat(decorations);
+    const computedProperties = options.compute || [];
 
     let allSet = true;
 
     for (const object of this.getObjects()) {
-      for (const prop of allProps) {
+      for (const prop of select) {
+        if (!(prop in object)) {
+          allSet = false;
+          break;
+        }
+      }
+
+      for (const prop of computedProperties) {
         if (!(prop in object)) {
           allSet = false;
           break;

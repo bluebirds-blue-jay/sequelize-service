@@ -1,5 +1,5 @@
 import { Session } from '../../../';
-import { TUser } from '../../resources/types/user';
+import { TUser, TUserComputedProperties } from '../../resources/types/user';
 import { userService, database } from '../../resources/index';
 import { TAllOptions } from '../../../src/types/all-options';
 import { TSafeOptions } from '../../../src/types/safe-options';
@@ -7,10 +7,10 @@ import { TFilters } from '../../../src/types/filters';
 import * as Sinon from 'sinon';
 import { Collection } from '@bluejay/collection';
 
-function createSession<O extends TSafeOptions = TAllOptions<TUser>>(
-  params: { options?: TAllOptions<TUser>, objects?: TUser[], filters?: TFilters<TUser> } = {}
-): Session<TUser, O> {
-  return new Session<TUser, O>(params.objects || [], (params.options || {}) as O, userService, params.filters || {});
+function createSession<O extends TSafeOptions = TAllOptions<TUser, TUserComputedProperties>>(
+  params: { options?: TAllOptions<TUser, TUserComputedProperties>, objects?: TUser[], filters?: TFilters<TUser> } = {}
+): Session<TUser, TUserComputedProperties, O> {
+  return new Session<TUser, TUserComputedProperties, O>(params.objects || [], (params.options || {}) as O, userService, params.filters || {});
 }
 
 describe('Session', function () {
@@ -31,27 +31,6 @@ describe('Session', function () {
     });
     it('should have create a context', () => {
       expect(createSession().getContext()).to.be.instanceOf(Map);
-    });
-  });
-
-  describe('#getDecorations()', function () {
-    it('should return a set based on options', () => {
-      const decorate: (keyof TUser)[] = ['date_of_birth'];
-      const session = createSession({ options: { decorate } });
-      expect(session.getDecorations()).to.be.instanceOf(Set);
-      expect(Array.from(session.getDecorations())).to.deep.equal(decorate);
-    });
-    it('should return an empty set', () => {
-      expect(Array.from(createSession().getDecorations())).to.deep.equal([]);
-    });
-  });
-
-  describe('#hasDecoration()', function () {
-    it('should return true', () => {
-      expect(createSession({ options: { decorate: ['date_of_birth'] } }).hasDecoration('date_of_birth')).to.equal(true);
-    });
-    it('should return false', () => {
-      expect(createSession().hasDecoration('date_of_birth')).to.equal(false);
     });
   });
 

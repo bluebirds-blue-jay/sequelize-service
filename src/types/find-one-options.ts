@@ -1,7 +1,7 @@
 import { TSafeOptions } from './safe-options';
 import { TSelectOption } from './select-option';
-import { TDecorateOption } from './decorate-option';
+import { TComputeOption } from './compute-option';
 import { TSortOption } from './sort-option';
 import { TTransactionOptions } from './transaction-options';
 
-export type TFindOneOptions<A> = TSafeOptions & Partial<TSelectOption<A> & TDecorateOption<A> & TSortOption<A> & TTransactionOptions>;
+export type TFindOneOptions<A, CP> = TSafeOptions & Partial<TSelectOption<A> & TComputeOption<CP> & TSortOption<A> & TTransactionOptions & TComputeOption<CP>>;

@@ -33,23 +33,27 @@ import { DeleteSession } from './sessions/delete-session';
 import { TCountOptions } from '../types/count-options';
 import { TSequelizeCountOptions } from '../types/sequelize-count-options';
 import { TReplaceOneOptions } from '../types/replace-one-options';
+import { TCompute } from '../index';
+import { TComputedProperties } from '../types/computed-properties';
 
 @injectable()
-export class SequelizeService<A> extends Service implements ISequelizeService<A> {
+export class SequelizeService<A, CP extends {} = {}> extends Service implements ISequelizeService<A, CP> {
   private primaryKeyField: keyof A = 'id' as keyof A;
+  protected computedProperties: TComputedProperties<A, CP>;
 
   public constructor(protected model: Sequelize.Model<A, A>) {
     super();
+    this.computedProperties = this.computedProperties || <TComputedProperties<A, CP>>{};
   }
 
   public getPrimaryKeyField() {
     return this.primaryKeyField;
   }
 
-  public async create(object: A, options: TCreateOptions<A> = {}): Promise<A> {
+  public async create(object: A, options: TCreateOptions<A> = {}): Promise<A & CP> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = new CreateSession<A>([object], options, this);
+        const session = new CreateSession<A, CP>([object], options, this);
 
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
@@ -57,17 +61,19 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
 
         session.setObjects([created]);
 
+        await this.computeProperties(session);
+
         await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this));
 
-        return created;
+        return session.getAt(0) as A & CP;
       });
     });
   }
 
-  public async createMany(objects: A[], options: TCreateOptions<A> = {}): Promise<Collection<A>> {
+  public async createMany(objects: A[], options: TCreateOptions<A> = {}): Promise<Collection<A & CP>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = new CreateSession<A>(objects, options, this);
+        const session = new CreateSession<A, CP>(objects, options, this);
 
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
@@ -79,6 +85,8 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
 
         session.setObjects(created);
 
+        await this.computeProperties(session);
+
         await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this));
 
         return new Collection(created);
@@ -86,35 +94,35 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
     });
   }
 
-  public async find(filters: TFilters<A>, options: TFindOptions<A> = {}): Promise<Collection<A>> {
+  public async find(filters: TFilters<A>, options: TFindOptions<A, CP> = {}): Promise<Collection<A & CP>> {
     const formattedFilters = this.toSequelizeWhere(filters);
     const sequelizeOptions = this.toSequelizeOptions<TSequelizeFindOptions<A>>(options, { where: formattedFilters });
 
     const objects = (await this.model.findAll(sequelizeOptions)).map(object => (<any>object).toJSON());
 
     if (objects.length) {
-      await this.decorate(new Session<A, TFindOptions<A>>(objects, options, this, filters));
+      await this.computeProperties(new Session<A, CP, TFindOptions<A, CP>>(objects, options, this, filters));
     }
 
     return new Collection(objects);
   }
 
-  public async findOne(filters: TFilters<A>, options: TFindOneOptions<A> = {}): Promise<A> {
+  public async findOne(filters: TFilters<A>, options: TFindOneOptions<A, CP> = {}): Promise<A & CP> {
     const [ object ] = await this.find(filters, Object.assign(options, { limit: 1 }));
     return object || null;
   }
 
-  public async findByPrimaryKey(pk: string | number, options: TFindByPrimaryKeyOptions<A> = {}): Promise<A> {
+  public async findByPrimaryKey(pk: string | number, options: TFindByPrimaryKeyOptions<A, CP> = {}): Promise<A & CP> {
     return await this.findOne({ [this.getPrimaryKeyField()]: pk } as any, options);
   }
 
-  public async findByPrimaryKeys(pks: string[] | number[], options: TFindByPrimaryKeyOptions<A> = {}): Promise<Collection<A>> {
+  public async findByPrimaryKeys(pks: string[] | number[], options: TFindByPrimaryKeyOptions<A, CP> = {}): Promise<Collection<A & CP>> {
     return await this.find({ [this.getPrimaryKeyField()]: { in: pks } } as any, options);
   }
 
   public async update(filters: TFilters<A>, values: TValues<A>, options: TUpdateOptions<A> = {}): Promise<number> {
     return await this.transaction(options, async () => {
-      const session = new UpdateSession<A>(filters, values, options, this);
+      const session = new UpdateSession<A, CP>(filters, values, options, this);
       await this._beforeUpdate(session);
       const formattedFilters = this.toSequelizeWhere(filters);
       const sequelizeOptions = this.toSequelizeOptions<any>(options, { where: formattedFilters });
@@ -146,7 +154,7 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
     return await this.model.count(sequelizeOptions);
   }
 
-  public async replaceOne(filters: TFilters<A>, values: A, options: TReplaceOneOptions<A> = {}): Promise<A> {
+  public async replaceOne(filters: TFilters<A>, values: A, options: TReplaceOneOptions<A, CP> = {}): Promise<A & CP> {
     return await this.transaction(options, async () => {
       const candidate = await this.findOne(filters, {
         transaction: options.transaction,
@@ -164,16 +172,20 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
     });
   }
 
-  protected async beforeDelete(session: DeleteSession<A>) {}
-  protected async afterDelete(session: DeleteSession<A>) {}
-  protected async beforeUpdate(session: UpdateSession<A>) {}
-  protected async afterUpdate(session: UpdateSession<A>) {}
-  protected async beforeCreate(session: CreateSession<A>) {}
-  protected async afterCreate(session: CreateSession<A>) {}
-  protected async transform(session: Session<A>) {}
-  protected async decorate(session: Session<A>) {}
+  protected async beforeDelete(session: DeleteSession<A, CP>) {}
+  protected async afterDelete(session: DeleteSession<A, CP>) {}
+  protected async beforeUpdate(session: UpdateSession<A, CP>) {}
+  protected async afterUpdate(session: UpdateSession<A, CP>) {}
+  protected async beforeCreate(session: CreateSession<A, CP>) {}
+  protected async afterCreate(session: CreateSession<A, CP>) {}
 
-  protected async executeHook(hook: Hook, session: Session<A>, handler: (session: Session<A>) => Promise<any>) {
+  protected async computeProperties(session: Session<A, CP>) {
+    await Promise.all((session.getOption<TCompute<CP>>('compute') || []).map(async computedProperty => {
+      await this.computedProperties[computedProperty].transform(session);
+    }));
+  }
+
+  protected async executeHook(hook: Hook, session: Session<A, CP>, handler: (session: Session<A, CP>) => Promise<any>) {
     if (session.getOption('skipHooks')) {
       return;
     }
@@ -213,7 +225,7 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
     return filters;
   }
 
-  protected toSequelizeOptions<T extends TAllSequelizeOptions<A>>(options: Partial<TAllOptions<A>> = {}, overrides: TAllSequelizeOptions<A> = {}): T {
+  protected toSequelizeOptions<T extends TAllSequelizeOptions<A>>(options: Partial<TAllOptions<A, CP>> = {}, overrides: TAllSequelizeOptions<A> = {}): T {
     options = Object.assign({}, options);
 
     if (options.select) {
@@ -231,40 +243,37 @@ export class SequelizeService<A> extends Service implements ISequelizeService<A>
       delete options.sort;
     }
 
-    delete options.decorate;
+    delete options.compute;
     delete options.context;
 
     return <T>Object.assign(options, overrides);
   }
 
-  private async _beforeCreate(session: CreateSession<A>) {
-    await this.transform(session);
+  private async _beforeCreate(session: CreateSession<A, CP>) {
     await this.beforeCreate(session);
     await this.publish(Hook.WILL_CREATE, session);
   }
 
-  private async _afterCreate(session: CreateSession<A>) {
+  private async _afterCreate(session: CreateSession<A, CP>) {
     await this.afterCreate(session);
-    await this.decorate(session);
     await this.publish(Hook.DID_CREATE, session);
   }
 
-  private async _beforeUpdate(session: UpdateSession<A>) {
-    await this.transform(session);
+  private async _beforeUpdate(session: UpdateSession<A, CP>) {
     await this.beforeUpdate(session);
     await this.publish(Hook.WILL_UPDATE, session);
   }
 
-  private async _afterUpdate(session: UpdateSession<A>) {
+  private async _afterUpdate(session: UpdateSession<A, CP>) {
     await this.afterUpdate(session);
     await this.publish(Hook.DID_UPDATE, session);
   }
 
-  private async _beforeDelete(session: DeleteSession<A>) {
+  private async _beforeDelete(session: DeleteSession<A, CP>) {
     await this.beforeDelete(session);
     await this.publish(Hook.WILL_DELETE, session);
   }
-  private async _afterDelete(session: DeleteSession<A>) {
+  private async _afterDelete(session: DeleteSession<A, CP>) {
     await this.afterDelete(session);
     await this.publish(Hook.DID_DELETE, session);
   }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SortOrder | @bluejay/sequelize-service</title>
+	<title>IComputedProperty | @bluejay/sequelize-service</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,51 +54,81 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="sortorder.html">SortOrder</a>
+					<a href="icomputedproperty.html">IComputedProperty</a>
 				</li>
 			</ul>
-			<h1>Enumeration SortOrder</h1>
+			<h1>Interface IComputedProperty&lt;A, CP, T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>A</h4>
+					</li>
+					<li>
+						<h4>CP</h4>
+					</li>
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">IComputedProperty</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/computedproperty.html" class="tsd-signature-type">ComputedProperty</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="sortorder.html#asc" class="tsd-kind-icon">ASC</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="sortorder.html#desc" class="tsd-kind-icon">DESC</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="icomputedproperty.html#transform" class="tsd-kind-icon">transform</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="asc" class="tsd-anchor"></a>
-					<h3>ASC</h3>
-					<div class="tsd-signature tsd-kind-icon">ASC<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;ASC&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/constants/sort-order.ts#L2">constants/sort-order.ts:2</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="desc" class="tsd-anchor"></a>
-					<h3>DESC</h3>
-					<div class="tsd-signature tsd-kind-icon">DESC<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;DESC&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/6e53282/src/constants/sort-order.ts#L3">constants/sort-order.ts:3</a></li>
-						</ul>
-					</aside>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="transform" class="tsd-anchor"></a>
+					<h3>transform</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">transform<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="isession.html" class="tsd-signature-type">ISession</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in interfaces/computed-property.ts:4</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>session: <a href="isession.html" class="tsd-signature-type">ISession</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -114,14 +144,11 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-enum">
-						<a href="sortorder.html" class="tsd-kind-icon">Sort<wbr>Order</a>
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="icomputedproperty.html" class="tsd-kind-icon">IComputed<wbr>Property</a>
 						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="sortorder.html#asc" class="tsd-kind-icon">ASC</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="sortorder.html#desc" class="tsd-kind-icon">DESC</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="icomputedproperty.html#transform" class="tsd-kind-icon">transform</a>
 							</li>
 						</ul>
 					</li>

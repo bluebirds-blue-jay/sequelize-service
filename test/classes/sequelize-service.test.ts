@@ -64,8 +64,7 @@ describe('SequelizeService', function () {
       let calledAfter = false;
       const beforeCreateStub = Sinon.stub(userService, 'beforeCreate' as any);
       const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
-      const decorateStub = Sinon.stub(userService, 'decorate' as any);
+      const computePropertiesStub = Sinon.stub(userService, 'computeProperties' as any);
       userService.subscribe(Hook.DID_CREATE, () => calledBefore = true);
       userService.subscribe(Hook.WILL_CREATE, () => calledAfter = true);
 
@@ -73,23 +72,20 @@ describe('SequelizeService', function () {
 
       expect(beforeCreateStub.calledOnce).to.equal(true);
       expect(afterCreateStub.calledOnce).to.equal(true);
-      expect(transformStub.calledOnce).to.equal(true);
-      expect(decorateStub.calledOnce).to.equal(true);
+      expect(computePropertiesStub.calledOnce).to.equal(true);
       expect(calledBefore).to.equal(true);
       expect(calledAfter).to.equal(true);
 
       beforeCreateStub.restore();
       afterCreateStub.restore();
-      transformStub.restore();
-      decorateStub.restore();
+      computePropertiesStub.restore();
     });
     it('should skip hooks', async () => {
       let calledBefore = false;
       let calledAfter = false;
       const beforeCreateStub = Sinon.stub(userService, 'beforeCreate' as any);
       const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
-      const decorateStub = Sinon.stub(userService, 'decorate' as any);
+      const computePropertiesStub = Sinon.stub(userService, 'computeProperties' as any);
       userService.subscribe(Hook.DID_CREATE, () => calledBefore = true);
       userService.subscribe(Hook.WILL_CREATE, () => calledAfter = true);
 
@@ -97,15 +93,13 @@ describe('SequelizeService', function () {
 
       expect(beforeCreateStub.callCount).to.equal(0);
       expect(afterCreateStub.callCount).to.equal(0);
-      expect(transformStub.callCount).to.equal(0);
-      expect(decorateStub.callCount).to.equal(0);
+      expect(computePropertiesStub.callCount).to.equal(1);
       expect(calledBefore).to.equal(false);
       expect(calledAfter).to.equal(false);
 
       beforeCreateStub.restore();
       afterCreateStub.restore();
-      transformStub.restore();
-      decorateStub.restore();
+      computePropertiesStub.restore();
     });
   });
 
@@ -122,8 +116,7 @@ describe('SequelizeService', function () {
       let calledAfter = false;
       const beforeCreateStub = Sinon.stub(userService, 'beforeCreate' as any);
       const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
-      const decorateStub = Sinon.stub(userService, 'decorate' as any);
+      const computePropertiesStub = Sinon.stub(userService, 'computeProperties' as any);
       userService.subscribe(Hook.DID_CREATE, () => calledBefore = true);
       userService.subscribe(Hook.WILL_CREATE, () => calledAfter = true);
 
@@ -131,23 +124,20 @@ describe('SequelizeService', function () {
 
       expect(beforeCreateStub.calledOnce).to.equal(true);
       expect(afterCreateStub.calledOnce).to.equal(true);
-      expect(transformStub.calledOnce).to.equal(true);
-      expect(decorateStub.calledOnce).to.equal(true);
+      expect(computePropertiesStub.calledOnce).to.equal(true);
       expect(calledBefore).to.equal(true);
       expect(calledAfter).to.equal(true);
 
       beforeCreateStub.restore();
       afterCreateStub.restore();
-      transformStub.restore();
-      decorateStub.restore();
+      computePropertiesStub.restore();
     });
     it('should skip hooks', async () => {
       let calledBefore = false;
       let calledAfter = false;
       const beforeCreateStub = Sinon.stub(userService, 'beforeCreate' as any);
       const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
-      const decorateStub = Sinon.stub(userService, 'decorate' as any);
+      const computePropertiesStub = Sinon.stub(userService, 'computeProperties' as any);
       userService.subscribe(Hook.DID_CREATE, () => calledBefore = true);
       userService.subscribe(Hook.WILL_CREATE, () => calledAfter = true);
 
@@ -155,15 +145,13 @@ describe('SequelizeService', function () {
 
       expect(beforeCreateStub.callCount).to.equal(0);
       expect(afterCreateStub.callCount).to.equal(0);
-      expect(transformStub.callCount).to.equal(0);
-      expect(decorateStub.callCount).to.equal(0);
+      expect(computePropertiesStub.callCount).to.equal(1);
       expect(calledBefore).to.equal(false);
       expect(calledAfter).to.equal(false);
 
       beforeCreateStub.restore();
       afterCreateStub.restore();
-      transformStub.restore();
-      decorateStub.restore();
+      computePropertiesStub.restore();
     });
   });
 
@@ -236,7 +224,7 @@ describe('SequelizeService', function () {
 
     it('should reuse transaction', async () => {
       let tx: Sequelize.Transaction = null;
-      const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any).callsFake((session: Session<any>) => {
+      const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any).callsFake((session: Session<any, any>) => {
         tx = <Sequelize.Transaction>session.getOptions().get('transaction')
       });
       await database.transaction(async transaction => {
@@ -246,13 +234,13 @@ describe('SequelizeService', function () {
       afterCreateStub.restore();
     });
 
-    it('should decorate objects', async () => {
+    it('should computeProperties objects', async () => {
       await userService.createMany([
         { email: 'foo1', password: 'bar1', age: 12 },
         { email: 'foo2', password: 'bar2', age: 14 }
       ]);
 
-      const [ user1, user2 ] = await userService.find({}, { decorate: ['date_of_birth'] });
+      const [ user1, user2 ] = await userService.find({}, { compute: ['date_of_birth'] });
 
       expect(user1.date_of_birth).to.be.a('date');
       expect(user2.date_of_birth).to.be.a('date');
@@ -299,9 +287,9 @@ describe('SequelizeService', function () {
       const found = await userService.findOne({}, { select: ['email'] });
       expect(found).to.contain.keys(['id', 'email']);
     });
-    it('should decorate object', async () => {
+    it('should computeProperties object', async () => {
       await userService.create({ email: 'foo', password: 'bar', age: 12 });
-      const found = await userService.findOne({}, { decorate: ['date_of_birth'] });
+      const found = await userService.findOne({}, { compute: ['date_of_birth'] });
       expect(found.date_of_birth).to.be.a('date');
     });
   });
@@ -317,9 +305,9 @@ describe('SequelizeService', function () {
       const found = await userService.findByPrimaryKey(user.id, { select: ['email'] });
       expect(found).to.have.keys(['id', 'email']);
     });
-    it('should decorate object', async () => {
+    it('should computeProperties object', async () => {
       const user = await userService.create({ email: 'foo', password: 'bar', age: 12 });
-      const found = await userService.findByPrimaryKey(user.id, { decorate: ['date_of_birth'] });
+      const found = await userService.findByPrimaryKey(user.id, { compute: ['date_of_birth'] });
       expect(found.date_of_birth).to.be.a('date');
     });
   });
@@ -343,13 +331,13 @@ describe('SequelizeService', function () {
       const found = await userService.findByPrimaryKeys(users.mapByProperty('id'), { select: ['email'] });
       found.forEach(object => expect(object).to.have.keys(['id', 'email']));
     });
-    it('should decorate objects', async () => {
+    it('should computeProperties objects', async () => {
       const users = await userService.createMany([
         { email: 'foo1', password: 'bar1', age: 12 },
         { email: 'foo2', password: 'bar2', age: 12 }
       ]);
 
-      const found = await userService.findByPrimaryKeys(users.mapByProperty('id'), { decorate: ['date_of_birth'] });
+      const found = await userService.findByPrimaryKeys(users.mapByProperty('id'), { compute: ['date_of_birth'] });
       found.forEach(object => expect(object.date_of_birth).to.be.a('date'));
     });
   });
@@ -385,7 +373,6 @@ describe('SequelizeService', function () {
       let calledAfter = false;
       const beforeUpdateStub = Sinon.stub(userService, 'beforeUpdate' as any);
       const afterUpdateStub = Sinon.stub(userService, 'afterUpdate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
       userService.subscribe(Hook.WILL_UPDATE, () => calledBefore = true);
       userService.subscribe(Hook.DID_UPDATE, () => calledAfter = true);
 
@@ -393,13 +380,11 @@ describe('SequelizeService', function () {
 
       expect(beforeUpdateStub.calledOnce).to.equal(true);
       expect(afterUpdateStub.calledOnce).to.equal(true);
-      expect(transformStub.calledOnce).to.equal(true);
       expect(calledBefore).to.equal(true);
       expect(calledAfter).to.equal(true);
 
       beforeUpdateStub.restore();
       afterUpdateStub.restore();
-      transformStub.restore();
     });
   });
 
@@ -421,7 +406,6 @@ describe('SequelizeService', function () {
       let calledAfter = false;
       const beforeUpdateStub = Sinon.stub(userService, 'beforeUpdate' as any);
       const afterUpdateStub = Sinon.stub(userService, 'afterUpdate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
       userService.subscribe(Hook.WILL_UPDATE, () => calledBefore = true);
       userService.subscribe(Hook.DID_UPDATE, () => calledAfter = true);
 
@@ -429,13 +413,11 @@ describe('SequelizeService', function () {
 
       expect(beforeUpdateStub.calledOnce).to.equal(true);
       expect(afterUpdateStub.calledOnce).to.equal(true);
-      expect(transformStub.calledOnce).to.equal(true);
       expect(calledBefore).to.equal(true);
       expect(calledAfter).to.equal(true);
 
       beforeUpdateStub.restore();
       afterUpdateStub.restore();
-      transformStub.restore();
     });
   });
 
@@ -517,8 +499,7 @@ describe('SequelizeService', function () {
       let calledAfter = false;
       const beforeCreateStub = Sinon.stub(userService, 'beforeCreate' as any);
       const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
-      const decorateStub = Sinon.stub(userService, 'decorate' as any);
+      const computePropertiesStub = Sinon.stub(userService, 'computeProperties' as any);
       userService.subscribe(Hook.DID_CREATE, () => calledBefore = true);
       userService.subscribe(Hook.WILL_CREATE, () => calledAfter = true);
 
@@ -526,15 +507,13 @@ describe('SequelizeService', function () {
 
       expect(beforeCreateStub.calledOnce).to.equal(true);
       expect(afterCreateStub.calledOnce).to.equal(true);
-      expect(transformStub.calledOnce).to.equal(true);
-      expect(decorateStub.calledOnce).to.equal(true);
+      expect(computePropertiesStub.calledOnce).to.equal(true);
       expect(calledBefore).to.equal(true);
       expect(calledAfter).to.equal(true);
 
       beforeCreateStub.restore();
       afterCreateStub.restore();
-      transformStub.restore();
-      decorateStub.restore();
+      computePropertiesStub.restore();
     });
     it('should call update hooks', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
@@ -543,7 +522,6 @@ describe('SequelizeService', function () {
       let calledAfter = false;
       const beforeUpdateStub = Sinon.stub(userService, 'beforeUpdate' as any);
       const afterUpdateStub = Sinon.stub(userService, 'afterUpdate' as any);
-      const transformStub = Sinon.stub(userService, 'transform' as any);
       userService.subscribe(Hook.WILL_UPDATE, () => calledBefore = true);
       userService.subscribe(Hook.DID_UPDATE, () => calledAfter = true);
 
@@ -551,13 +529,11 @@ describe('SequelizeService', function () {
 
       expect(beforeUpdateStub.calledOnce).to.equal(true);
       expect(afterUpdateStub.calledOnce).to.equal(true);
-      expect(transformStub.calledOnce).to.equal(true);
       expect(calledBefore).to.equal(true);
       expect(calledAfter).to.equal(true);
 
       beforeUpdateStub.restore();
       afterUpdateStub.restore();
-      transformStub.restore();
     });
   });
 });

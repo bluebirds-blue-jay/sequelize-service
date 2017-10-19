@@ -77,7 +77,7 @@
 				<p>The only required dependency is a Sequelize model.</p>
 				<p><code>TUser</code> below is an interface describing a user&#39;s properties. It is suggested to describe this interface as the &quot;creating&quot; interface, meaning to require properties that are required to create the object and leaving the others either optional or readonly.<br><code>UserModel</code> is the User Sequelize model.</p>
 				<h4 id="manually">Manually</h4>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> userService = <span class="hljs-keyword">new</span> SequelizeService&lt;TUser&gt;(UserModel);
+				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> userService = <span class="hljs-keyword">new</span> SequelizeService&lt;TUser, TUserComputedProperties&gt;(UserModel);
 </code></pre>
 				<h4 id="using-inversify">Using inversify</h4>
 				<pre><code class="lang-typescript"><span class="hljs-comment">// TUser describes all the fields from the User schema</span>
@@ -107,6 +107,19 @@ container.bind&lt;ISequelizeService&lt;TUser&gt;&gt;(ID.UserService).to(UserServ
     <span class="hljs-keyword">await</span> session.ensureIdentified(); <span class="hljs-comment">// Make sure all objects corresponding to the filters have their primary key set</span>
 
     <span class="hljs-keyword">await</span> session.ensureProperties({ select: [<span class="hljs-string">'email'</span>, <span class="hljs-string">'age'</span>] }); <span class="hljs-comment">// Only performs a SELECT if not all objects have their age and email set</span>
+
+    <span class="hljs-comment">// Run a callback for each user, in parallel</span>
+    <span class="hljs-keyword">await</span> session.forEachParallel(<span class="hljs-keyword">async</span> user =&gt; {
+
+    });
+
+    <span class="hljs-comment">// Run a callback for each user, in series</span>
+    <span class="hljs-keyword">await</span> session.forEachSeries(<span class="hljs-keyword">async</span> user =&gt; {
+
+    });
+
+    <span class="hljs-comment">// Get all the users IDs</span>
+    <span class="hljs-keyword">const</span> ids = session.mapByProperty(<span class="hljs-string">'id'</span>);
   }
 }
 </code></pre>
@@ -189,6 +202,7 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 }
 </code></pre>
 				<h3 id="working-with-events">Working with events</h3>
+				<h3 id="computed-properties">Computed properties</h3>
 				<h2 id="documentation">Documentation</h2>
 				<p>See <a href="https://bluebirds-blue-jay.github.io/sequelize-service/">Github Pages</a>.</p>
 			</div>
@@ -210,6 +224,9 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 						<a href="enums/sortorder.html" class="tsd-kind-icon">Sort<wbr>Order</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/computedproperty.html" class="tsd-kind-icon">Computed<wbr>Property</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/createsession.html" class="tsd-kind-icon">Create<wbr>Session</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
@@ -223,6 +240,9 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/updatesession.html" class="tsd-kind-icon">Update<wbr>Session</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icomputedproperty.html" class="tsd-kind-icon">IComputed<wbr>Property</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/isequelizeservice.html" class="tsd-kind-icon">ISequelize<wbr>Service</a>
@@ -243,6 +263,15 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 						<a href="globals.html#tarrayoperatorfilter" class="tsd-kind-icon">TArray<wbr>Operator<wbr>Filter</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tcompute" class="tsd-kind-icon">TCompute</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tcomputeoption" class="tsd-kind-icon">TCompute<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tcomputedproperties" class="tsd-kind-icon">TComputed<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tcontext" class="tsd-kind-icon">TContext</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
@@ -253,12 +282,6 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tcreateoptions" class="tsd-kind-icon">TCreate<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tdecorate" class="tsd-kind-icon">TDecorate</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tdecorateoption" class="tsd-kind-icon">TDecorate<wbr>Option</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tdeleteoptions" class="tsd-kind-icon">TDelete<wbr>Options</a>

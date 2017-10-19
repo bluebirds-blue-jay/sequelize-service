@@ -1,1 +1,0 @@
-export type TDecorate<T> = (keyof T)[];

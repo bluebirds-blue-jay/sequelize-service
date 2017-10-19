@@ -1,9 +1,9 @@
 import { UpdateSession } from '../../../';
-import { TUser } from '../../resources/types/user';
+import { TUser, TUserComputedProperties } from '../../resources/types/user';
 import { userService } from '../../resources/index';
 import { TValues } from '../../../src/types/values';
 
-function createSession(params: { values?: TValues<TUser> } = {}): UpdateSession<TUser> {
+function createSession(params: { values?: TValues<TUser> } = {}): UpdateSession<TUser, TUserComputedProperties> {
   return new UpdateSession({}, params.values || {}, {}, userService);
 }
 

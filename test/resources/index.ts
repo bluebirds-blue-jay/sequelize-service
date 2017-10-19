@@ -1,4 +1,4 @@
-import { UserService } from './services/user';
+import { UserService } from './services/user/user';
 import { Models } from './models/index';
 
 export { database } from './database';
