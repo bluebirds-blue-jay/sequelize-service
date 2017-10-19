@@ -219,7 +219,14 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
   <span class="hljs-keyword">protected</span> computedProperties = {
     age: <span class="hljs-keyword">new</span> UserAge()
   }
+
+  <span class="hljs-comment">// ...</span>
 }
+</code></pre>
+				<p>You can now request <code>age</code> to be computed using the <code>compute</code> option:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> myUser = <span class="hljs-keyword">await</span> userService.findById(<span class="hljs-number">1</span>, { compute: [<span class="hljs-string">'age'</span>] });
+
+<span class="hljs-built_in">console</span>.log()
 </code></pre>
 				<h2 id="documentation">Documentation</h2>
 				<p>See <a href="https://bluebirds-blue-jay.github.io/sequelize-service/">Github Pages</a>.</p>
