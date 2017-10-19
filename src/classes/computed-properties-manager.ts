@@ -11,8 +11,8 @@ export abstract class ComputedPropertiesManager<A, CP> implements IComputedPrope
   public constructor() {
     const defined = this.map();
 
-    this.computedProperties = Object.keys(defined).reduce((acc, key) => {
-      if ('property' in defined[key]) {
+    this.computedProperties = Object.keys(defined).reduce((acc, key: keyof CP) => {
+      if ('property' as keyof CP in defined[key]) {
         acc[key] = <{ property: ComputedProperty<A, CP, CP[keyof CP]>, dependencies: (keyof CP)[] }>defined[key];
       } else {
         acc[key] = { property: <ComputedProperty<A, CP, CP[keyof CP]>>defined[key], dependencies: [] };

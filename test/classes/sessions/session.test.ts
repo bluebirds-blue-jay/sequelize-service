@@ -97,7 +97,7 @@ describe('Session', function () {
       expect(createSession({ filters: { id: 1 } }).hasFilter('id')).to.equal(true);
     });
     it('should return false', () => {
-      expect(createSession({ filters: { id: 1 } }).hasFilter('age')).to.equal(false);
+      expect(createSession({ filters: { id: 1 } }).hasFilter('date_of_birth')).to.equal(false);
     });
   });
 
