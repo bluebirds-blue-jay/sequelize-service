@@ -242,9 +242,7 @@ class UserService extends SequelizeService<TUser, TUserComputedProperties> {
 You can now request `age` to be computed using the `compute` option:
 
 ```typescript
-const myUser = await userService.findById(1, { compute: ['age'] });
-
-console.log()
+const myUser = await userService.findByPrimaryKey(1, { compute: ['age'] });
 ```
 
 
