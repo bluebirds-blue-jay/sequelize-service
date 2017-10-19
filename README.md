@@ -19,7 +19,8 @@ Sequelize model based service, exposes basic CRUD methods, pub/sub mechanisms, c
 
 The only required dependency is a Sequelize model.
 
-`TUser` below is an interface describing a user's properties. It is suggested to describe this interface as the "creating" interface, meaning to require properties that are required to create the object and leaving the others either optional or readonly.  
+`TUser` below is an interface describing a user's properties. It is suggested to describe this interface as the "creating" interface, meaning to require properties that are required to create the object and leaving the others either optional or readonly.
+`TUserComputedProperties` is an interface describing the possible computed properties for a user object.  
 `UserModel` is the User Sequelize model.
 
 #### Manually
@@ -33,14 +34,14 @@ const userService = new SequelizeService<TUser, TUserComputedProperties>(UserMod
 ```typescript
 // TUser describes all the fields from the User schema
 @injectable()
-export class UserService extends SequelizeService<TUser> {
+export class UserService extends SequelizeService<TUser, TUserComputedProperties> {
   @inject(ID.UserModel) protected model: Sequelize.Model<TUser, TUser>;
 }
 
 // ---
 
 // Make sure to declare the service as a singleton to ensure events are caught by all subscribers
-container.bind<ISequelizeService<TUser>>(ID.UserService).to(UserService).inSingletonScope();
+container.bind<ISequelizeService<TUser, TUserComputedProperties>>(ID.UserService).to(UserService).inSingletonScope();
 ``` 
 
 ### Sessions
@@ -52,9 +53,9 @@ A `Session` inherits from [Collection](https://github.com/bluebirds-blue-jay/col
 Sessions also expose various methods related to the type of query you're currently dealing with. For example during an update:
 
 ```typescript
-class UserService extends SequelizeService<TUser> {
+class UserService extends SequelizeService<TUser, TUserComputedProperties> {
   // ...
-  protected async beforeUpdate(session: UpdateSession<TUser>) {
+  protected async beforeUpdate(session: UpdateSession<TUser, TUserComputedProperties>) {
     session.getOption('transaction'); // Get the transaction under which this update is being performed
     session.hasFilter('email'); // Whether os not this update is filtered by email
     session.getValue('email'); // Get the update value of `email`, if present
@@ -196,10 +197,10 @@ Hooks are a convenient way to validate and transform you data.
 Hooks are ran for all write queries, before and after the query.
 
 ```typescript
-class UserService extends SequelizeService<TUser> {
+class UserService extends SequelizeService<TUser, TUserComputedProperties> {
   /// ...
   
-  protected async beforeCreate(session: CreateSession<TUser>) {
+  protected async beforeCreate(session: CreateSession<TUser, TUserComputedProperties>) {
     await session.forEachParallel(async user => {
       // Your code here
     });
@@ -211,6 +212,32 @@ class UserService extends SequelizeService<TUser> {
 ### Working with events
 
 ### Computed properties
+
+Computed properties allow you to decorate objects with properties that are not stored in your DB. Given the DOB of a user, you could for example compute a property age that would correspond to the user's current age.
+
+Computed properties are instances of the abstract `ComputedProperty` class and must implement their `transform` method, which takes a `Session` as an argument.
+
+```typescript
+class UserAge extends ComputedProperty<TUser, TUserComputedProperties, number> { // age is a number
+  public async transform(session: Session<TUser, TUserComputedProperties>) {
+    session.forEach(user => {
+      user.age = moment.duration(moment().subtract(user.data_of_birth)).get('years');
+    });
+  }
+}
+```
+
+To make your service aware of the the `age` computed property, describe the mapping:
+
+```typescript
+class UserService extends SequelizeService<TUser, TUserComputedProperties> {
+  protected computedProperties = {
+    age: new UserAge()
+  }
+}
+```
+
+
 
 ## Documentation
 
