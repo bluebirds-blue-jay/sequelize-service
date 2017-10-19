@@ -213,36 +213,58 @@ class UserService extends SequelizeService<TUser, TUserComputedProperties> {
 
 ### Computed properties
 
-Computed properties allow you to decorate objects with properties that are not stored in your DB. Given the DOB of a user, you could for example compute a property age that would correspond to the user's current age.
+Computed properties allow you to decorate objects with properties that are not stored in your DB.
 
 Computed properties are instances of the abstract `ComputedProperty` class and must implement their `transform` method, which takes a `Session` as an argument.
 
 ```typescript
-class UserAge extends ComputedProperty<TUser, TUserComputedProperties, number> { // age is a number
-  public async transform(session: Session<TUser, TUserComputedProperties>) {
+class UserAge extends ComputedProperty<TUser, TUserComputedProperties, number> { // "age" is a number
+  public async transform(session: Session<TUser, TUserComputedProperties>) { // "transform" is abstract and must be implemented
     session.forEach(user => {
-      user.age = moment.duration(moment().subtract(user.data_of_birth)).get('years');
+      user.age = moment.duration(moment().diff(user.date_of_birth)).get('years'); // We set "age" on each object of the session, based on the date of birth
     });
   }
 }
 ```
 
-To make your service aware of the the `age` computed property, describe the mapping:
+```typescript
+class UserIsAdult extends ComputedProperty<TUser, TUserComputedProperties, boolean> {
+  public async transform(session: Session<TUser, TUserComputedProperties>) {
+    await session.ensureProperties({ compute: ['age'] }); // We make sure the age is set
+    session.forEach(user => {
+      user.isAdult = user.age >= 21
+    });
+  }
+}
+```
+
+To make your service aware of the computed properties, you need to create a manager:
+
+```typescript
+class UserComputedPropertiesManager extends UserComputedPropertiesManager<TUser, TUserComputedProperties> {
+  protected map() {
+    return {
+      age: new UserAge(),
+      isAdult: { property: new UserIsAdult(), dependencies: ['age'] } // We make sure that the age is fetched before
+    };
+  }
+}
+```
+
+And finally you can set the manager on your service:
 
 ```typescript
 class UserService extends SequelizeService<TUser, TUserComputedProperties> {
-  protected computedProperties = {
-    age: new UserAge()
-  }
+  protected computedPropertiesManager = new UserComputedPropertiesManager();
   
   // ...
 }
 ```
 
-You can now request `age` to be computed using the `compute` option:
+You can now request `age` and `isAdult` to be computed using the `compute` option:
 
 ```typescript
-const myUser = await userService.findByPrimaryKey(1, { compute: ['age'] });
+const myUser = await userService.findByPrimaryKey(1, { compute: ['age', 'isAdult'] });
 ```
 
 

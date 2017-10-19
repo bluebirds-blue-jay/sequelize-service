@@ -3,11 +3,11 @@ import { TUser, TUserComputedProperties } from '../../../types/user';
 import { Session } from '../../../../../src/classes/sessions/session';
 import * as moment from 'moment';
 
-export class DateOrBirth extends ComputedProperty<TUser, TUserComputedProperties, Date> {
+export class UserAge extends ComputedProperty<TUser, TUserComputedProperties, number> {
   public async transform(session: Session<TUser, TUserComputedProperties>) {
-    await session.ensureProperties({ select: ['age'] });
+    await session.ensureProperties(session.getSafeOptions({ select: ['date_of_birth'] }));
     for (const object of session) {
-      object.date_of_birth = object.age ? moment().subtract(object.age, 'years').toDate() : null;
+      object.age = object.date_of_birth ? moment.duration(moment().diff(object.date_of_birth)).get('years') : null;
     }
   }
 }

@@ -25,8 +25,8 @@ export default function(sequelize: Sequelize, dataTypes: DataTypes) {
       type: dataTypes.STRING,
       allowNull: false
     },
-    age: {
-      type: dataTypes.INTEGER.UNSIGNED,
+    date_of_birth: {
+      type: dataTypes.DATE(3),
       allowNull: true,
       defaultValue: null
     },

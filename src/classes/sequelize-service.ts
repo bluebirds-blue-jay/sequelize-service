@@ -33,17 +33,15 @@ import { DeleteSession } from './sessions/delete-session';
 import { TCountOptions } from '../types/count-options';
 import { TSequelizeCountOptions } from '../types/sequelize-count-options';
 import { TReplaceOneOptions } from '../types/replace-one-options';
-import { TCompute } from '../index';
-import { TComputedProperties } from '../types/computed-properties';
+import { ComputedPropertiesManager } from './computed-properties-manager';
 
 @injectable()
 export class SequelizeService<A, CP extends {} = {}> extends Service implements ISequelizeService<A, CP> {
   private primaryKeyField: keyof A = 'id' as keyof A;
-  protected computedProperties: TComputedProperties<A, CP>;
+  protected computedPropertiesManager: ComputedPropertiesManager<A, CP>;
 
   public constructor(protected model: Sequelize.Model<A, A>) {
     super();
-    this.computedProperties = this.computedProperties || <TComputedProperties<A, CP>>{};
   }
 
   public getPrimaryKeyField() {
@@ -180,9 +178,9 @@ export class SequelizeService<A, CP extends {} = {}> extends Service implements 
   protected async afterCreate(session: CreateSession<A, CP>) {}
 
   protected async computeProperties(session: Session<A, CP>) {
-    await Promise.all((session.getOption<TCompute<CP>>('compute') || []).map(async computedProperty => {
-      await this.computedProperties[computedProperty].transform(session);
-    }));
+    if (this.hasComputedProperties()) {
+      await this.computedPropertiesManager.transform(session, this);
+    }
   }
 
   protected async executeHook(hook: Hook, session: Session<A, CP>, handler: (session: Session<A, CP>) => Promise<any>) {
@@ -191,6 +189,10 @@ export class SequelizeService<A, CP extends {} = {}> extends Service implements 
     }
 
     await handler(session);
+  }
+
+  protected hasComputedProperties(): boolean {
+    return !!this.computedPropertiesManager;
   }
 
   protected async transaction<T>(

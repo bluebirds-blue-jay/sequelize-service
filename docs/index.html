@@ -204,29 +204,44 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 </code></pre>
 				<h3 id="working-with-events">Working with events</h3>
 				<h3 id="computed-properties">Computed properties</h3>
-				<p>Computed properties allow you to decorate objects with properties that are not stored in your DB. Given the DOB of a user, you could for example compute a property age that would correspond to the user&#39;s current age.</p>
+				<p>Computed properties allow you to decorate objects with properties that are not stored in your DB.</p>
 				<p>Computed properties are instances of the abstract <code>ComputedProperty</code> class and must implement their <code>transform</code> method, which takes a <code>Session</code> as an argument.</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserAge <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUser, TUserComputedProperties, <span class="hljs-built_in">number</span>&gt; { <span class="hljs-comment">// age is a number</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUser, TUserComputedProperties&gt;) {
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserAge <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUser, TUserComputedProperties, <span class="hljs-built_in">number</span>&gt; { <span class="hljs-comment">// "age" is a number</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUser, TUserComputedProperties&gt;) { <span class="hljs-comment">// "transform" is abstract and must be implemented</span>
     session.forEach(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> {
-      user.age = moment.duration(moment().subtract(user.data_of_birth)).get(<span class="hljs-string">'years'</span>);
+      user.age = moment.duration(moment().diff(user.date_of_birth)).get(<span class="hljs-string">'years'</span>); <span class="hljs-comment">// We set "age" on each object of the session, based on the date of birth</span>
     });
   }
 }
 </code></pre>
-				<p>To make your service aware of the the <code>age</code> computed property, describe the mapping:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUser, TUserComputedProperties&gt; {
-  <span class="hljs-keyword">protected</span> computedProperties = {
-    age: <span class="hljs-keyword">new</span> UserAge()
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserIsAdult <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUser, TUserComputedProperties, <span class="hljs-built_in">boolean</span>&gt; {
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUser, TUserComputedProperties&gt;) {
+    <span class="hljs-keyword">await</span> session.ensureProperties({ compute: [<span class="hljs-string">'age'</span>] }); <span class="hljs-comment">// We make sure the age is set</span>
+    session.forEach(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> {
+      user.isAdult = user.age &gt;= <span class="hljs-number">21</span>
+    });
   }
+}
+</code></pre>
+				<p>To make your service aware of the computed properties, you need to create a manager:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserComputedPropertiesManager <span class="hljs-keyword">extends</span> UserComputedPropertiesManager&lt;TUser, TUserComputedProperties&gt; {
+  <span class="hljs-keyword">protected</span> map() {
+    <span class="hljs-keyword">return</span> {
+      age: <span class="hljs-keyword">new</span> UserAge(),
+      isAdult: { property: <span class="hljs-keyword">new</span> UserIsAdult(), dependencies: [<span class="hljs-string">'age'</span>] } <span class="hljs-comment">// We make sure that the age is fetched before</span>
+    };
+  }
+}
+</code></pre>
+				<p>And finally you can set the manager on your service:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUser, TUserComputedProperties&gt; {
+  <span class="hljs-keyword">protected</span> computedPropertiesManager = <span class="hljs-keyword">new</span> UserComputedPropertiesManager();
 
   <span class="hljs-comment">// ...</span>
 }
 </code></pre>
-				<p>You can now request <code>age</code> to be computed using the <code>compute</code> option:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> myUser = <span class="hljs-keyword">await</span> userService.findById(<span class="hljs-number">1</span>, { compute: [<span class="hljs-string">'age'</span>] });
-
-<span class="hljs-built_in">console</span>.log()
+				<p>You can now request <code>age</code> and <code>isAdult</code> to be computed using the <code>compute</code> option:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> myUser = <span class="hljs-keyword">await</span> userService.findByPrimaryKey(<span class="hljs-number">1</span>, { compute: [<span class="hljs-string">'age'</span>, <span class="hljs-string">'isAdult'</span>] });
 </code></pre>
 				<h2 id="documentation">Documentation</h2>
 				<p>See <a href="https://bluebirds-blue-jay.github.io/sequelize-service/">Github Pages</a>.</p>
@@ -249,6 +264,9 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 						<a href="enums/sortorder.html" class="tsd-kind-icon">Sort<wbr>Order</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/computedpropertiesmanager.html" class="tsd-kind-icon">Computed<wbr>Properties<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/computedproperty.html" class="tsd-kind-icon">Computed<wbr>Property</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
@@ -265,6 +283,9 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/updatesession.html" class="tsd-kind-icon">Update<wbr>Session</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icomputedpropertiesmanager.html" class="tsd-kind-icon">IComputed<wbr>Properties<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/icomputedproperty.html" class="tsd-kind-icon">IComputed<wbr>Property</a>
@@ -292,9 +313,6 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tcomputeoption" class="tsd-kind-icon">TCompute<wbr>Option</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tcomputedproperties" class="tsd-kind-icon">TComputed<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#tcontext" class="tsd-kind-icon">TContext</a>

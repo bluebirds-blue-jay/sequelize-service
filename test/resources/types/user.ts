@@ -3,12 +3,13 @@ export type TUser = {
   email: string;
   first_name?: string;
   last_name?: string;
-  age?: number;
+  date_of_birth?: Date;
   lucky_number?: number;
   password: string;
   password_last_updated_at?: Date;
 };
 
 export type TUserComputedProperties = {
-  date_of_birth: Date;
+  age: number;
+  isAdult: boolean;
 };

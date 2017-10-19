@@ -9,6 +9,18 @@ import { Collection } from '@bluejay/collection';
 import * as Sequelize from 'sequelize';
 import { Session } from '../../src/classes/sessions/session';
 import { SortOrder } from '../../src/constants/sort-order';
+import moment = require('moment');
+import { cat } from 'shelljs';
+
+const dobCache: { [age: number]: Date } = {};
+function ageToDOB(age: number): Date {
+  if (dobCache[age]) {
+    return dobCache[age];
+  }
+  const value = moment().subtract(age, 'years').toDate();
+  dobCache[age] = value;
+  return value;
+}
 
 describe('SequelizeService', function () {
   beforeEach(async () => {
@@ -158,8 +170,8 @@ describe('SequelizeService', function () {
   describe('#find()', function () {
     it('should find objects', async () => {
       const objects = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 12 },
-        { email: 'foo2', password: 'bar2', age: 15 }
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(12) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(15) }
       ]);
 
       const userId1 = objects.getAt(0).id;
@@ -177,19 +189,19 @@ describe('SequelizeService', function () {
       const byEmail = await userService.find({ email: 'foo1' });
       const inEmail = await userService.find({ email: { in: ['foo1', 'foo2', 'foo3'] } });
       const notInEmail = await userService.find({ email: { nin: ['foo2', 'foo3'] } });
-      const ageGreaterThan = await userService.find({ age: { gt: 12 } });
-      const ageGreaterThanEqual = await userService.find({ age: { gte: 12 } });
-      const ageLowerThan = await userService.find({ age: { lt: 15 } });
-      const ageLowerThanEqual = await userService.find({ age: { lte: 15 } });
+      const dateOfBirthLowerThan = await userService.find({ date_of_birth: { lt: ageToDOB(12) } });
+      const dateOfBirthLowerThanEqual = await userService.find({ date_of_birth: { lte: ageToDOB(12) } });
+      const dateOfBirthGreaterThan = await userService.find({ date_of_birth: { gt: ageToDOB(15) } });
+      const dateOfBirthGreaterThanEqual = await userService.find({ date_of_birth: { gte: ageToDOB(15) } });
 
       assertContent(all, [userId1, userId2]);
       assertContent(byEmail, userId1);
       assertContent(inEmail, [userId1, userId2]);
       assertContent(notInEmail, userId1);
-      assertContent(ageGreaterThan, userId2);
-      assertContent(ageGreaterThanEqual, [userId2, userId1]);
-      assertContent(ageLowerThan, userId1);
-      assertContent(ageLowerThanEqual, [userId1, userId2]);
+      assertContent(dateOfBirthLowerThan, userId2);
+      assertContent(dateOfBirthLowerThanEqual, [userId2, userId1]);
+      assertContent(dateOfBirthGreaterThan, userId1);
+      assertContent(dateOfBirthGreaterThanEqual, [userId1, userId2]);
     });
 
     it('should return only selected fields (+ auto selected id)', async () => {
@@ -200,9 +212,9 @@ describe('SequelizeService', function () {
 
     it('should sort returned objects', async () => {
       const [ user1, user2, user3 ] = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 12, lucky_number: 3 },
-        { email: 'foo2', password: 'bar2', age: 15, lucky_number: 7 },
-        { email: 'foo3', password: 'bar3', age: 15, lucky_number: 12 }
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(12), lucky_number: 3 },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(15), lucky_number: 7 },
+        { email: 'foo3', password: 'bar3', date_of_birth: ageToDOB(15), lucky_number: 12 }
       ]);
 
       const assertContent = (list: Collection<TUser>, users: TUser | TUser[]): void => {
@@ -213,9 +225,9 @@ describe('SequelizeService', function () {
         }
       };
 
-      const ageASC = await userService.find({}, { sort: [['age', SortOrder.ASC]] });
-      const ageDESC = await userService.find({}, { sort: [['age', SortOrder.DESC]] });
-      const passwordAndAge = await userService.find({}, { sort: [['age', SortOrder.ASC], ['lucky_number', SortOrder.DESC]] });
+      const ageASC = await userService.find({}, { sort: [['date_of_birth', SortOrder.DESC]] });
+      const ageDESC = await userService.find({}, { sort: [['date_of_birth', SortOrder.ASC]] });
+      const passwordAndAge = await userService.find({}, { sort: [['date_of_birth', SortOrder.DESC], ['lucky_number', SortOrder.DESC]] });
 
       assertContent(ageASC, [user1, user2, user3]);
       assertContent(ageDESC, [user2, user3, user1]);
@@ -234,16 +246,31 @@ describe('SequelizeService', function () {
       afterCreateStub.restore();
     });
 
-    it('should computeProperties objects', async () => {
+    it('should compute properties', async () => {
       await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 12 },
-        { email: 'foo2', password: 'bar2', age: 14 }
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(12) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(23) }
       ]);
 
-      const [ user1, user2 ] = await userService.find({}, { compute: ['date_of_birth'] });
+      const [ user1, user2 ] = await userService.find({}, { compute: ['age', 'isAdult'] });
 
-      expect(user1.date_of_birth).to.be.a('date');
-      expect(user2.date_of_birth).to.be.a('date');
+      expect(user1).to.containSubset({ age: 12, isAdult: false });
+      expect(user2).to.containSubset({ age: 23, isAdult: true });
+    });
+
+    it('should throw trying to compute unknown property', async () => {
+      await userService.createMany([
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(12) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(23) }
+      ]);
+
+      try {
+        await userService.find({}, { compute: ['toto' as any] })
+      } catch(err) {
+        expect(err.message).to.match(/toto/);
+        return;
+      }
+      throw new Error(`Should not pass here`);
     });
 
     it('should limit/offset returned objects', async () => {
@@ -275,11 +302,11 @@ describe('SequelizeService', function () {
     });
     it('should apply sorting', async () => {
       const [ , user2 ] = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 15 },
-        { email: 'foo2', password: 'bar2', age: 12 }
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(15) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(12) }
       ]);
 
-      const found = await userService.findOne({}, { sort: ['age'] });
+      const found = await userService.findOne({}, { sort: [['date_of_birth', SortOrder.DESC]] });
       expect(found).to.exist.and.containSubset({ id: user2.id });
     });
     it('should only return selected fields', async () => {
@@ -287,10 +314,10 @@ describe('SequelizeService', function () {
       const found = await userService.findOne({}, { select: ['email'] });
       expect(found).to.contain.keys(['id', 'email']);
     });
-    it('should computeProperties object', async () => {
-      await userService.create({ email: 'foo', password: 'bar', age: 12 });
-      const found = await userService.findOne({}, { compute: ['date_of_birth'] });
-      expect(found.date_of_birth).to.be.a('date');
+    it('should compute properties object', async () => {
+      await userService.create({ email: 'foo', password: 'bar', date_of_birth: ageToDOB(12) });
+      const found = await userService.findOne({}, { compute: ['age'] });
+      expect(found.age).to.equal(12);
     });
   });
 
@@ -306,9 +333,9 @@ describe('SequelizeService', function () {
       expect(found).to.have.keys(['id', 'email']);
     });
     it('should computeProperties object', async () => {
-      const user = await userService.create({ email: 'foo', password: 'bar', age: 12 });
-      const found = await userService.findByPrimaryKey(user.id, { compute: ['date_of_birth'] });
-      expect(found.date_of_birth).to.be.a('date');
+      const user = await userService.create({ email: 'foo', password: 'bar', date_of_birth: ageToDOB(12) });
+      const found = await userService.findByPrimaryKey(user.id, { compute: ['age'] });
+      expect(found.age).to.equal(12);
     });
   });
 
@@ -333,12 +360,12 @@ describe('SequelizeService', function () {
     });
     it('should computeProperties objects', async () => {
       const users = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 12 },
-        { email: 'foo2', password: 'bar2', age: 12 }
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(12) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(12) }
       ]);
 
-      const found = await userService.findByPrimaryKeys(users.mapByProperty('id'), { compute: ['date_of_birth'] });
-      found.forEach(object => expect(object.date_of_birth).to.be.a('date'));
+      const found = await userService.findByPrimaryKeys(users.mapByProperty('id'), { compute: ['age'] });
+      found.forEach(object => expect(object.age).to.equal(12));
     });
   });
 
@@ -348,22 +375,22 @@ describe('SequelizeService', function () {
         { email: 'foo1', password: 'bar1' },
         { email: 'foo2', password: 'bar2' }
       ]);
-      const count = await userService.update({ id: { in: users.mapByProperty('id') } }, { age: 12 });
+      const count = await userService.update({ id: { in: users.mapByProperty('id') } }, { date_of_birth: ageToDOB(12) });
       expect(count).to.equal(2);
-      const retrieved = await userService.find({});
+      const retrieved = await userService.find({}, { compute: ['age'] });
       expect(retrieved.size()).to.equal(2);
       retrieved.forEach(object => expect(object.age).to.equal(12));
     });
     it('should limit updated objects', async () => {
       const users = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 15 },
-        { email: 'foo2', password: 'bar2', age: 15 }
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(15) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(15) }
       ]);
-      const count = await userService.update({ id: { in: users.mapByProperty('id') } }, { age: 12 }, {
+      const count = await userService.update({ id: { in: users.mapByProperty('id') } }, { date_of_birth: ageToDOB(12) }, {
         limit: 1
       });
       expect(count).to.equal(1);
-      const retrieved = await userService.find({});
+      const retrieved = await userService.find({}, { compute: ['age'] });
       expect(retrieved.size()).to.equal(2);
       expect(retrieved.getAt(0).age).to.equal(12);
       expect(retrieved.getAt(1).age).to.equal(15);
@@ -391,11 +418,11 @@ describe('SequelizeService', function () {
   describe('#updateByPrimaryKey()', function () {
     it('should update object', async () => {
       const [ user1, user2 ] = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 15 },
-        { email: 'foo2', password: 'bar2', age: 15 }
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(15) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(15) }
       ]);
-      const count = await userService.updateByPrimaryKey(user1.id, { age: 12 });
-      const retrieved = await userService.findByPrimaryKeys([user1.id, user2.id]);
+      const count = await userService.updateByPrimaryKey(user1.id, { date_of_birth: ageToDOB(12) });
+      const retrieved = await userService.findByPrimaryKeys([user1.id, user2.id], { compute: ['age'] });
       expect(count).to.equal(1);
       expect(retrieved.size()).to.equal(2);
       expect(retrieved.getAt(0).age).to.equal(12);
@@ -424,8 +451,8 @@ describe('SequelizeService', function () {
   describe('#delete()', function () {
     it('should delete object', async () => {
       const users = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 15 },
-        { email: 'foo2', password: 'bar2', age: 15 }
+        { email: 'foo1', password: 'bar1' },
+        { email: 'foo2', password: 'bar2' }
       ]);
       const count = await userService.delete({ id: { in: users.mapByProperty('id') } });
       expect(count).to.equal(2);
@@ -434,8 +461,8 @@ describe('SequelizeService', function () {
     });
     it('should limit deleted objects', async () => {
       const users = await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 15 },
-        { email: 'foo2', password: 'bar2', age: 15 }
+        { email: 'foo1', password: 'bar1' },
+        { email: 'foo2', password: 'bar2' }
       ]);
       const count = await userService.delete({ id: { in: users.mapByProperty('id') } }, { limit: 1 });
       expect(count).to.equal(1);
@@ -465,16 +492,16 @@ describe('SequelizeService', function () {
   describe('#count()', function () {
     it('should count objects', async () => {
       await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 15 },
-        { email: 'foo2', password: 'bar2', age: 15 }
+        { email: 'foo1', password: 'bar1' },
+        { email: 'foo2', password: 'bar2' }
       ]);
       const count = await userService.count({});
       expect(count).to.equal(2);
     });
     it('should count filtered objects', async () => {
       await userService.createMany([
-        { email: 'foo1', password: 'bar1', age: 15 },
-        { email: 'foo2', password: 'bar2', age: 15 }
+        { email: 'foo1', password: 'bar1' },
+        { email: 'foo2', password: 'bar2' }
       ]);
       const count = await userService.count({ email: 'foo1' });
       expect(count).to.equal(1);
