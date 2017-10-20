@@ -5,8 +5,9 @@ import { TValues } from '../../types/values';
 import { ISequelizeService } from '../../interfaces/sequelize-service';
 import * as Lodash from 'lodash';
 import { TValuesMap } from '../../types/values-map';
+import { IUpdateSession } from '../../interfaces/sessions/update-session';
 
-export class UpdateSession<A, CP> extends Session<A, CP, TUpdateOptions<A>> {
+export class UpdateSession<A, CP> extends Session<A, CP, TUpdateOptions<A>> implements IUpdateSession<A, CP> {
   private values: TValuesMap<A>;
 
   public constructor(filters: TFilters<A>, values: TValues<A>, options: TUpdateOptions<A>, service: ISequelizeService<A, CP>) {
@@ -28,5 +29,6 @@ export class UpdateSession<A, CP> extends Session<A, CP, TUpdateOptions<A>> {
 
   public setValue(key: keyof A, value: Partial<A>[keyof A]) {
     this.values.set(key, value);
+    return this;
   }
 }
