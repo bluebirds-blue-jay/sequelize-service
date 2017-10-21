@@ -10,8 +10,8 @@ import { TFindOptions } from '../../types/find-options';
 export interface ISession<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> extends Collection<A & Partial<CP>> {
   getOptions(): TOptionsMap<O>;
   getContext(): TContext;
-  getOption<T extends O[keyof O]>(key: keyof O): T;
-  setOption(key: keyof O, value: O[keyof O]): this;
+  getOption<K extends keyof O>(key: K): O[K];
+  setOption<K extends keyof O>(key: K, value: O[K]): this;
   unsetOption(key: keyof O): this;
   getSafeOptions<TA = A, TCP = CP>(overrides?: Partial<TAllOptions<TA, TCP>>): TSafeOptions;
   getFilters(): TFiltersMap<A>;

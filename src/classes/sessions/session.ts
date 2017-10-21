@@ -38,11 +38,11 @@ export class Session<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> extends
     return this.context;
   }
 
-  public getOption<T extends O[keyof O]>(key: keyof O): T {
+  public getOption<K extends keyof O>(key: K): O[K] {
     return this.options.get(key);
   }
 
-  public setOption(key: keyof O, value: O[keyof O]): this {
+  public setOption<K extends keyof O>(key: K, value: O[K]): this {
     this.options.set(key, value);
     return this;
   }

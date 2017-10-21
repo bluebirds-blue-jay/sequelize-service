@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IUpdateSession | @bluejay/sequelize-service</title>
+	<title>IDeleteSession | @bluejay/sequelize-service</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="iupdatesession.html">IUpdateSession</a>
+					<a href="ideletesession.html">IDeleteSession</a>
 				</li>
 			</ul>
-			<h1>Interface IUpdateSession&lt;A, CP&gt;</h1>
+			<h1>Interface IDeleteSession&lt;A, CP&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -79,10 +79,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="isession.html" class="tsd-signature-type">ISession</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">, </span><a href="../globals.html#tupdateoptions" class="tsd-signature-type">TUpdateOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="isession.html" class="tsd-signature-type">ISession</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">, </span><a href="../globals.html#tdeleteoptions" class="tsd-signature-type">TDeleteOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">IUpdateSession</span>
+								<span class="target">IDeleteSession</span>
 							</li>
 						</ul>
 					</li>
@@ -97,7 +97,7 @@
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/updatesession.html" class="tsd-signature-type">UpdateSession</a></li>
+					<li><a href="../classes/deletesession.html" class="tsd-signature-type">DeleteSession</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-kind-interface tsd-has-type-parameter">
@@ -111,69 +111,65 @@
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#assigneach" class="tsd-kind-icon">assign<wbr>Each</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#compact" class="tsd-kind-icon">compact</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#ensureidentified" class="tsd-kind-icon">ensure<wbr>Identified</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#ensureproperties" class="tsd-kind-icon">ensure<wbr>Properties</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#every" class="tsd-kind-icon">every</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#fetch" class="tsd-kind-icon">fetch</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#filter" class="tsd-kind-icon">filter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#filterbyproperties" class="tsd-kind-icon">filter<wbr>ByProperties</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#find" class="tsd-kind-icon">find</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#findbyproperties" class="tsd-kind-icon">find<wbr>ByProperties</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#foreachparallel" class="tsd-kind-icon">for<wbr>Each<wbr>Parallel</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#foreachseries" class="tsd-kind-icon">for<wbr>Each<wbr>Series</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#getat" class="tsd-kind-icon">get<wbr>At</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#getfilters" class="tsd-kind-icon">get<wbr>Filters</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#getobjects" class="tsd-kind-icon">get<wbr>Objects</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#getoption" class="tsd-kind-icon">get<wbr>Option</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#getoptions" class="tsd-kind-icon">get<wbr>Options</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#getrawfilters" class="tsd-kind-icon">get<wbr>Raw<wbr>Filters</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#getsafeoptions" class="tsd-kind-icon">get<wbr>Safe<wbr>Options</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="iupdatesession.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="iupdatesession.html#getvalues" class="tsd-kind-icon">get<wbr>Values</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#hasfilter" class="tsd-kind-icon">has<wbr>Filter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#hasfilters" class="tsd-kind-icon">has<wbr>Filters</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#hasoption" class="tsd-kind-icon">has<wbr>Option</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="iupdatesession.html#hasvalue" class="tsd-kind-icon">has<wbr>Value</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#includes" class="tsd-kind-icon">includes</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#indexof" class="tsd-kind-icon">index<wbr>Of</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#isempty" class="tsd-kind-icon">is<wbr>Empty</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#isidentified" class="tsd-kind-icon">is<wbr>Identified</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#lastindex" class="tsd-kind-icon">last<wbr>Index</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#lastindexof" class="tsd-kind-icon">last<wbr>Index<wbr>Of</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#map" class="tsd-kind-icon">map</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#mapbyproperty" class="tsd-kind-icon">map<wbr>ByProperty</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#mapparallel" class="tsd-kind-icon">map<wbr>Parallel</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#mapseries" class="tsd-kind-icon">map<wbr>Series</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#orderby" class="tsd-kind-icon">order<wbr>By</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#pop" class="tsd-kind-icon">pop</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#push" class="tsd-kind-icon">push</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#reduce" class="tsd-kind-icon">reduce</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#reduceright" class="tsd-kind-icon">reduce<wbr>Right</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#reduceseries" class="tsd-kind-icon">reduce<wbr>Series</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#reverse" class="tsd-kind-icon">reverse</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#setat" class="tsd-kind-icon">set<wbr>At</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#setobjects" class="tsd-kind-icon">set<wbr>Objects</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="iupdatesession.html#setoption" class="tsd-kind-icon">set<wbr>Option</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="iupdatesession.html#setvalue" class="tsd-kind-icon">set<wbr>Value</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#shift" class="tsd-kind-icon">shift</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#size" class="tsd-kind-icon">size</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#slice" class="tsd-kind-icon">slice</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#some" class="tsd-kind-icon">some</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#toarray" class="tsd-kind-icon">to<wbr>Array</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#uniq" class="tsd-kind-icon">uniq</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#unsetoption" class="tsd-kind-icon">unset<wbr>Option</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="iupdatesession.html#unshift" class="tsd-kind-icon">unshift</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#___iterator" class="tsd-kind-icon">__@iterator</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#assigneach" class="tsd-kind-icon">assign<wbr>Each</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#compact" class="tsd-kind-icon">compact</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#ensureidentified" class="tsd-kind-icon">ensure<wbr>Identified</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#ensureproperties" class="tsd-kind-icon">ensure<wbr>Properties</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#every" class="tsd-kind-icon">every</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#fetch" class="tsd-kind-icon">fetch</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#filter" class="tsd-kind-icon">filter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#filterbyproperties" class="tsd-kind-icon">filter<wbr>ByProperties</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#find" class="tsd-kind-icon">find</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#findbyproperties" class="tsd-kind-icon">find<wbr>ByProperties</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#foreachparallel" class="tsd-kind-icon">for<wbr>Each<wbr>Parallel</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#foreachseries" class="tsd-kind-icon">for<wbr>Each<wbr>Series</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#getat" class="tsd-kind-icon">get<wbr>At</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#getfilters" class="tsd-kind-icon">get<wbr>Filters</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#getobjects" class="tsd-kind-icon">get<wbr>Objects</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#getoption" class="tsd-kind-icon">get<wbr>Option</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#getoptions" class="tsd-kind-icon">get<wbr>Options</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#getrawfilters" class="tsd-kind-icon">get<wbr>Raw<wbr>Filters</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#getsafeoptions" class="tsd-kind-icon">get<wbr>Safe<wbr>Options</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#hasfilter" class="tsd-kind-icon">has<wbr>Filter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#hasfilters" class="tsd-kind-icon">has<wbr>Filters</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#hasoption" class="tsd-kind-icon">has<wbr>Option</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#includes" class="tsd-kind-icon">includes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#indexof" class="tsd-kind-icon">index<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#isempty" class="tsd-kind-icon">is<wbr>Empty</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#isidentified" class="tsd-kind-icon">is<wbr>Identified</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#lastindex" class="tsd-kind-icon">last<wbr>Index</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#lastindexof" class="tsd-kind-icon">last<wbr>Index<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#map" class="tsd-kind-icon">map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#mapbyproperty" class="tsd-kind-icon">map<wbr>ByProperty</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#mapparallel" class="tsd-kind-icon">map<wbr>Parallel</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#mapseries" class="tsd-kind-icon">map<wbr>Series</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#orderby" class="tsd-kind-icon">order<wbr>By</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#pop" class="tsd-kind-icon">pop</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#push" class="tsd-kind-icon">push</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#reduce" class="tsd-kind-icon">reduce</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#reduceright" class="tsd-kind-icon">reduce<wbr>Right</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#reduceseries" class="tsd-kind-icon">reduce<wbr>Series</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#reverse" class="tsd-kind-icon">reverse</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#setat" class="tsd-kind-icon">set<wbr>At</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#setobjects" class="tsd-kind-icon">set<wbr>Objects</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="ideletesession.html#setoption" class="tsd-kind-icon">set<wbr>Option</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#shift" class="tsd-kind-icon">shift</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#size" class="tsd-kind-icon">size</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#slice" class="tsd-kind-icon">slice</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#some" class="tsd-kind-icon">some</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#toarray" class="tsd-kind-icon">to<wbr>Array</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#uniq" class="tsd-kind-icon">uniq</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#unsetoption" class="tsd-kind-icon">unset<wbr>Option</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="ideletesession.html#unshift" class="tsd-kind-icon">unshift</a></li>
 							</ul>
 						</section>
 					</div>
@@ -185,7 +181,7 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new IUpdate<wbr>Session<span class="tsd-signature-symbol">(</span>objects<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="iupdatesession.html" class="tsd-signature-type">IUpdateSession</a></li>
+						<li class="tsd-signature tsd-kind-icon">new IDelete<wbr>Session<span class="tsd-signature-symbol">(</span>objects<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ideletesession.html" class="tsd-signature-type">IDeleteSession</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -201,12 +197,12 @@
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> objects: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CP</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="iupdatesession.html" class="tsd-signature-type">IUpdateSession</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="ideletesession.html" class="tsd-signature-type">IDeleteSession</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 					<a name="___iterator" class="tsd-anchor"></a>
@@ -779,7 +775,7 @@
 					<a name="getoptions" class="tsd-anchor"></a>
 					<h3>get<wbr>Options</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Options<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#toptionsmap" class="tsd-signature-type">TOptionsMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#tupdateoptions" class="tsd-signature-type">TUpdateOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Options<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#toptionsmap" class="tsd-signature-type">TOptionsMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#tdeleteoptions" class="tsd-signature-type">TDeleteOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -789,7 +785,7 @@
 									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L11">interfaces/sessions/session.ts:11</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../globals.html#toptionsmap" class="tsd-signature-type">TOptionsMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#tupdateoptions" class="tsd-signature-type">TUpdateOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../globals.html#toptionsmap" class="tsd-signature-type">TOptionsMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#tdeleteoptions" class="tsd-signature-type">TDeleteOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -841,52 +837,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-					<a name="getvalue" class="tsd-anchor"></a>
-					<h3>get<wbr>Value</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Value&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof A</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/update-session.ts#L8">interfaces/sessions/update-session.ts:8</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A[keyof A]</span></h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">keyof A</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="getvalues" class="tsd-anchor"></a>
-					<h3>get<wbr>Values</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Values<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#tvaluesmap" class="tsd-signature-type">TValuesMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/update-session.ts#L6">interfaces/sessions/update-session.ts:6</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tvaluesmap" class="tsd-signature-type">TValuesMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -950,29 +900,6 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">keyof O</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="hasvalue" class="tsd-anchor"></a>
-					<h3>has<wbr>Value</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">has<wbr>Value<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof A</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/update-session.ts#L7">interfaces/sessions/update-session.ts:7</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">keyof A</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1650,32 +1577,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="setvalue" class="tsd-anchor"></a>
-					<h3>set<wbr>Value</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Value<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof A</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A[keyof A]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/update-session.ts#L9">interfaces/sessions/update-session.ts:9</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">keyof A</span></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">A[keyof A]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 					<a name="shift" class="tsd-anchor"></a>
 					<h3>shift</h3>
@@ -1886,181 +1787,169 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="iupdatesession.html" class="tsd-kind-icon">IUpdate<wbr>Session</a>
+						<a href="ideletesession.html" class="tsd-kind-icon">IDelete<wbr>Session</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="ideletesession.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#___iterator" class="tsd-kind-icon">__@iterator</a>
+								<a href="ideletesession.html#___iterator" class="tsd-kind-icon">__@iterator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#assigneach" class="tsd-kind-icon">assign<wbr>Each</a>
+								<a href="ideletesession.html#assigneach" class="tsd-kind-icon">assign<wbr>Each</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#compact" class="tsd-kind-icon">compact</a>
+								<a href="ideletesession.html#compact" class="tsd-kind-icon">compact</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#ensureidentified" class="tsd-kind-icon">ensure<wbr>Identified</a>
+								<a href="ideletesession.html#ensureidentified" class="tsd-kind-icon">ensure<wbr>Identified</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#ensureproperties" class="tsd-kind-icon">ensure<wbr>Properties</a>
+								<a href="ideletesession.html#ensureproperties" class="tsd-kind-icon">ensure<wbr>Properties</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#every" class="tsd-kind-icon">every</a>
+								<a href="ideletesession.html#every" class="tsd-kind-icon">every</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#fetch" class="tsd-kind-icon">fetch</a>
+								<a href="ideletesession.html#fetch" class="tsd-kind-icon">fetch</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#filter" class="tsd-kind-icon">filter</a>
+								<a href="ideletesession.html#filter" class="tsd-kind-icon">filter</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#filterbyproperties" class="tsd-kind-icon">filter<wbr>ByProperties</a>
+								<a href="ideletesession.html#filterbyproperties" class="tsd-kind-icon">filter<wbr>ByProperties</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#find" class="tsd-kind-icon">find</a>
+								<a href="ideletesession.html#find" class="tsd-kind-icon">find</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#findbyproperties" class="tsd-kind-icon">find<wbr>ByProperties</a>
+								<a href="ideletesession.html#findbyproperties" class="tsd-kind-icon">find<wbr>ByProperties</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>
+								<a href="ideletesession.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#foreachparallel" class="tsd-kind-icon">for<wbr>Each<wbr>Parallel</a>
+								<a href="ideletesession.html#foreachparallel" class="tsd-kind-icon">for<wbr>Each<wbr>Parallel</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#foreachseries" class="tsd-kind-icon">for<wbr>Each<wbr>Series</a>
+								<a href="ideletesession.html#foreachseries" class="tsd-kind-icon">for<wbr>Each<wbr>Series</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#getat" class="tsd-kind-icon">get<wbr>At</a>
+								<a href="ideletesession.html#getat" class="tsd-kind-icon">get<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a>
+								<a href="ideletesession.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#getfilters" class="tsd-kind-icon">get<wbr>Filters</a>
+								<a href="ideletesession.html#getfilters" class="tsd-kind-icon">get<wbr>Filters</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#getobjects" class="tsd-kind-icon">get<wbr>Objects</a>
+								<a href="ideletesession.html#getobjects" class="tsd-kind-icon">get<wbr>Objects</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#getoption" class="tsd-kind-icon">get<wbr>Option</a>
+								<a href="ideletesession.html#getoption" class="tsd-kind-icon">get<wbr>Option</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#getoptions" class="tsd-kind-icon">get<wbr>Options</a>
+								<a href="ideletesession.html#getoptions" class="tsd-kind-icon">get<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#getrawfilters" class="tsd-kind-icon">get<wbr>Raw<wbr>Filters</a>
+								<a href="ideletesession.html#getrawfilters" class="tsd-kind-icon">get<wbr>Raw<wbr>Filters</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#getsafeoptions" class="tsd-kind-icon">get<wbr>Safe<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<a href="iupdatesession.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="iupdatesession.html#getvalues" class="tsd-kind-icon">get<wbr>Values</a>
+								<a href="ideletesession.html#getsafeoptions" class="tsd-kind-icon">get<wbr>Safe<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#hasfilter" class="tsd-kind-icon">has<wbr>Filter</a>
+								<a href="ideletesession.html#hasfilter" class="tsd-kind-icon">has<wbr>Filter</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#hasfilters" class="tsd-kind-icon">has<wbr>Filters</a>
+								<a href="ideletesession.html#hasfilters" class="tsd-kind-icon">has<wbr>Filters</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#hasoption" class="tsd-kind-icon">has<wbr>Option</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="iupdatesession.html#hasvalue" class="tsd-kind-icon">has<wbr>Value</a>
+								<a href="ideletesession.html#hasoption" class="tsd-kind-icon">has<wbr>Option</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#includes" class="tsd-kind-icon">includes</a>
+								<a href="ideletesession.html#includes" class="tsd-kind-icon">includes</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#indexof" class="tsd-kind-icon">index<wbr>Of</a>
+								<a href="ideletesession.html#indexof" class="tsd-kind-icon">index<wbr>Of</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#isempty" class="tsd-kind-icon">is<wbr>Empty</a>
+								<a href="ideletesession.html#isempty" class="tsd-kind-icon">is<wbr>Empty</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#isidentified" class="tsd-kind-icon">is<wbr>Identified</a>
+								<a href="ideletesession.html#isidentified" class="tsd-kind-icon">is<wbr>Identified</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#lastindex" class="tsd-kind-icon">last<wbr>Index</a>
+								<a href="ideletesession.html#lastindex" class="tsd-kind-icon">last<wbr>Index</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#lastindexof" class="tsd-kind-icon">last<wbr>Index<wbr>Of</a>
+								<a href="ideletesession.html#lastindexof" class="tsd-kind-icon">last<wbr>Index<wbr>Of</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#map" class="tsd-kind-icon">map</a>
+								<a href="ideletesession.html#map" class="tsd-kind-icon">map</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#mapbyproperty" class="tsd-kind-icon">map<wbr>ByProperty</a>
+								<a href="ideletesession.html#mapbyproperty" class="tsd-kind-icon">map<wbr>ByProperty</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#mapparallel" class="tsd-kind-icon">map<wbr>Parallel</a>
+								<a href="ideletesession.html#mapparallel" class="tsd-kind-icon">map<wbr>Parallel</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#mapseries" class="tsd-kind-icon">map<wbr>Series</a>
+								<a href="ideletesession.html#mapseries" class="tsd-kind-icon">map<wbr>Series</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#orderby" class="tsd-kind-icon">order<wbr>By</a>
+								<a href="ideletesession.html#orderby" class="tsd-kind-icon">order<wbr>By</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#pop" class="tsd-kind-icon">pop</a>
+								<a href="ideletesession.html#pop" class="tsd-kind-icon">pop</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#push" class="tsd-kind-icon">push</a>
+								<a href="ideletesession.html#push" class="tsd-kind-icon">push</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#reduce" class="tsd-kind-icon">reduce</a>
+								<a href="ideletesession.html#reduce" class="tsd-kind-icon">reduce</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#reduceright" class="tsd-kind-icon">reduce<wbr>Right</a>
+								<a href="ideletesession.html#reduceright" class="tsd-kind-icon">reduce<wbr>Right</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#reduceseries" class="tsd-kind-icon">reduce<wbr>Series</a>
+								<a href="ideletesession.html#reduceseries" class="tsd-kind-icon">reduce<wbr>Series</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#reverse" class="tsd-kind-icon">reverse</a>
+								<a href="ideletesession.html#reverse" class="tsd-kind-icon">reverse</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#setat" class="tsd-kind-icon">set<wbr>At</a>
+								<a href="ideletesession.html#setat" class="tsd-kind-icon">set<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#setobjects" class="tsd-kind-icon">set<wbr>Objects</a>
+								<a href="ideletesession.html#setobjects" class="tsd-kind-icon">set<wbr>Objects</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="iupdatesession.html#setoption" class="tsd-kind-icon">set<wbr>Option</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="iupdatesession.html#setvalue" class="tsd-kind-icon">set<wbr>Value</a>
+								<a href="ideletesession.html#setoption" class="tsd-kind-icon">set<wbr>Option</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#shift" class="tsd-kind-icon">shift</a>
+								<a href="ideletesession.html#shift" class="tsd-kind-icon">shift</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#size" class="tsd-kind-icon">size</a>
+								<a href="ideletesession.html#size" class="tsd-kind-icon">size</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#slice" class="tsd-kind-icon">slice</a>
+								<a href="ideletesession.html#slice" class="tsd-kind-icon">slice</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#some" class="tsd-kind-icon">some</a>
+								<a href="ideletesession.html#some" class="tsd-kind-icon">some</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#toarray" class="tsd-kind-icon">to<wbr>Array</a>
+								<a href="ideletesession.html#toarray" class="tsd-kind-icon">to<wbr>Array</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#uniq" class="tsd-kind-icon">uniq</a>
+								<a href="ideletesession.html#uniq" class="tsd-kind-icon">uniq</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#unsetoption" class="tsd-kind-icon">unset<wbr>Option</a>
+								<a href="ideletesession.html#unsetoption" class="tsd-kind-icon">unset<wbr>Option</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="iupdatesession.html#unshift" class="tsd-kind-icon">unshift</a>
+								<a href="ideletesession.html#unshift" class="tsd-kind-icon">unshift</a>
 							</li>
 						</ul>
 					</li>

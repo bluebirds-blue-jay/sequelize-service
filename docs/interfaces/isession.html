@@ -90,6 +90,9 @@
 									<li>
 										<a href="iupdatesession.html" class="tsd-signature-type">IUpdateSession</a>
 									</li>
+									<li>
+										<a href="ideletesession.html" class="tsd-signature-type">IDeleteSession</a>
+									</li>
 								</ul>
 							</li>
 						</ul>
@@ -107,6 +110,7 @@
 				<ul class="tsd-hierarchy">
 					<li><a href="../classes/createsession.html" class="tsd-signature-type">CreateSession</a></li>
 					<li><a href="../classes/deletesession.html" class="tsd-signature-type">DeleteSession</a></li>
+					<li><a href="icreatesession.html" class="tsd-signature-type">ICreateSession</a></li>
 					<li><a href="../classes/session.html" class="tsd-signature-type">Session</a></li>
 					<li><a href="../classes/updatesession.html" class="tsd-signature-type">UpdateSession</a></li>
 				</ul>
@@ -172,7 +176,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="isession.html#reverse" class="tsd-kind-icon">reverse</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="isession.html#setat" class="tsd-kind-icon">set<wbr>At</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="isession.html#setobjects" class="tsd-kind-icon">set<wbr>Objects</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="isession.html#setoption" class="tsd-kind-icon">set<wbr>Option</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="isession.html#setoption" class="tsd-kind-icon">set<wbr>Option</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="isession.html#shift" class="tsd-kind-icon">shift</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="isession.html#size" class="tsd-kind-icon">size</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="isession.html#slice" class="tsd-kind-icon">slice</a></li>
@@ -285,7 +289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L21">interfaces/sessions/session.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L21">interfaces/sessions/session.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -308,7 +312,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L22">interfaces/sessions/session.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L22">interfaces/sessions/session.ts:22</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -376,7 +380,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L24">interfaces/sessions/session.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L24">interfaces/sessions/session.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -705,7 +709,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L12">interfaces/sessions/session.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L12">interfaces/sessions/session.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tcontext" class="tsd-signature-type">TContext</a></h4>
@@ -722,7 +726,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L17">interfaces/sessions/session.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L17">interfaces/sessions/session.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tfiltersmap" class="tsd-signature-type">TFiltersMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -751,28 +755,28 @@
 					<a name="getoption" class="tsd-anchor"></a>
 					<h3>get<wbr>Option</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Option&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof O</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Option&lt;K&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">O[K]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L13">interfaces/sessions/session.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L13">interfaces/sessions/session.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">O[keyof O]</span></h4>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof O</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <span class="tsd-signature-type">keyof O</span></h5>
+									<h5>key: <span class="tsd-signature-type">K</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">O[K]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -786,7 +790,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L11">interfaces/sessions/session.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L11">interfaces/sessions/session.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#toptionsmap" class="tsd-signature-type">TOptionsMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -803,7 +807,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L18">interfaces/sessions/session.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L18">interfaces/sessions/session.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tfilters" class="tsd-signature-type">TFilters</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -820,7 +824,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L16">interfaces/sessions/session.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L16">interfaces/sessions/session.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -852,7 +856,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L20">interfaces/sessions/session.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L20">interfaces/sessions/session.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -875,7 +879,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L19">interfaces/sessions/session.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L19">interfaces/sessions/session.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -892,7 +896,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L25">interfaces/sessions/session.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L25">interfaces/sessions/session.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -987,7 +991,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L23">interfaces/sessions/session.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L23">interfaces/sessions/session.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1542,26 +1546,32 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 					<a name="setoption" class="tsd-anchor"></a>
 					<h3>set<wbr>Option</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Option<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof O</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">O[keyof O]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Option&lt;K&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">O[K]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L14">interfaces/sessions/session.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L14">interfaces/sessions/session.ts:14</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof O</span></h4>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <span class="tsd-signature-type">keyof O</span></h5>
+									<h5>key: <span class="tsd-signature-type">K</span></h5>
 								</li>
 								<li>
-									<h5>value: <span class="tsd-signature-type">O[keyof O]</span></h5>
+									<h5>value: <span class="tsd-signature-type">O[K]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -1725,7 +1735,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/c2b5eec/src/interfaces/sessions/session.ts#L15">interfaces/sessions/session.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/93a1f70/src/interfaces/sessions/session.ts#L15">interfaces/sessions/session.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1914,7 +1924,7 @@
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 								<a href="isession.html#setobjects" class="tsd-kind-icon">set<wbr>Objects</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 								<a href="isession.html#setoption" class="tsd-kind-icon">set<wbr>Option</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
