@@ -23,7 +23,7 @@
   "dependencies": {
     "@bluejay/collection": "^2.1.1",
     "@bluejay/rest-errors": "^3.0.8",
-    "@bluejay/service": "^1.0.2",
+    "@bluejay/service": "^1.0.3",
     "@bluejay/utils": "^3.0.0",
     "lodash": "^4.17.4"
   },
