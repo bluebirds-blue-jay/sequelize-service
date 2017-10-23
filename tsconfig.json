@@ -13,7 +13,6 @@
     "types": ["node", "mocha", "reflect-metadata", "chai-subset"]
   },
   "exclude": [
-    "node_modules",
-    "lib"
+    "node_modules"
   ]
 }

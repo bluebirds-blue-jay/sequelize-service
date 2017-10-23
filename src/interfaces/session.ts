@@ -1,11 +1,11 @@
-import { TSafeOptions } from '../../types/safe-options';
-import { TAllOptions } from '../../types/all-options';
+import { TSafeOptions } from '../types/safe-options';
+import { TAllOptions } from '../types/all-options';
 import { Collection } from '@bluejay/collection';
-import { TOptionsMap } from '../../types/options-map';
-import { TContext } from '../../types/context';
-import { TFiltersMap } from '../../types/filters-map';
-import { TFilters } from '../../types/filters';
-import { TFindOptions } from '../../types/find-options';
+import { TOptionsMap } from '../types/options-map';
+import { TContext } from '../types/context';
+import { TFiltersMap } from '../types/filters-map';
+import { TFilters } from '../types/filters';
+import { TFindOptions } from '../types/find-options';
 
 export interface ISession<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> extends Collection<A & Partial<CP>> {
   getOptions(): TOptionsMap<O>;

@@ -1,15 +1,15 @@
 import * as Lodash from 'lodash';
-import { TContext } from '../../types/context';
+import { TContext } from '../types/context';
 import { Collection } from '@bluejay/collection';
 import * as stringify from 'stringify-object';
-import { TAllOptions } from '../../types/all-options';
-import { TSafeOptions } from '../../types/safe-options';
-import { TFindOptions } from '../../types/find-options';
-import { TFilters } from '../../types/filters';
-import { ISequelizeService } from '../../interfaces/sequelize-service';
-import { TFiltersMap } from '../../types/filters-map';
-import { TOptionsMap } from '../../types/options-map';
-import { ISession } from '../../interfaces/sessions/session';
+import { TAllOptions } from '../types/all-options';
+import { TSafeOptions } from '../types/safe-options';
+import { TFindOptions } from '../types/find-options';
+import { TFilters } from '../types/filters';
+import { ISequelizeService } from '../interfaces/sequelize-service';
+import { TFiltersMap } from '../types/filters-map';
+import { TOptionsMap } from '../types/options-map';
+import { ISession } from '../interfaces/session';
 
 export class Session<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> extends Collection<A & Partial<CP>> implements ISession<A, CP, O> {
   private context: TContext;

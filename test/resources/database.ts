@@ -1,7 +1,7 @@
 import * as Sequelize from 'sequelize';
 import * as MySQL from 'mysql2/promise';
 
-interface IDatabase extends Sequelize.Sequelize {
+export interface IDatabase extends Sequelize.Sequelize {
   reset: (options?: { transaction?: Sequelize.Transaction }) => Promise<void>;
   disableForeignKeyCheck: (options?: { transaction?: Sequelize.Transaction }) => Promise<void>;
   restoreForeignKeyCheck: (options?: { transaction?: Sequelize.Transaction }) => Promise<void>;

@@ -3,3 +3,8 @@ node_modules/
 test/
 coverage/
 .nyc_output/
+*.ts
+dts/
+!dts/**/*.d.ts
+.idea/
+tsconfig.json

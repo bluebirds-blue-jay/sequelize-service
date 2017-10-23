@@ -1,6 +1,6 @@
 import { ISession } from './session';
-import { TUpdateOptions } from '../../types/update-options';
-import { TValuesMap } from '../../types/values-map';
+import { TUpdateOptions } from '../types/update-options';
+import { TValuesMap } from '../types/values-map';
 
 export interface IUpdateSession<A, CP> extends ISession<A, CP, TUpdateOptions<A>> {
   getValues(): TValuesMap<A>;

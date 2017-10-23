@@ -1,4 +1,4 @@
-import { ISession } from './sessions/session';
+import { ISession } from './session';
 import { ISequelizeService } from './sequelize-service';
 
 export interface IComputedPropertiesManager<A, CP> {

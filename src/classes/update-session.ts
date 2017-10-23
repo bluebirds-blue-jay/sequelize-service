@@ -1,11 +1,11 @@
-import { TUpdateOptions } from '../../types/update-options';
+import { TUpdateOptions } from '../types/update-options';
 import { Session } from './session';
-import { TFilters } from '../../types/filters';
-import { TValues } from '../../types/values';
-import { ISequelizeService } from '../../interfaces/sequelize-service';
+import { TFilters } from '../types/filters';
+import { TValues } from '../types/values';
+import { ISequelizeService } from '../interfaces/sequelize-service';
 import * as Lodash from 'lodash';
-import { TValuesMap } from '../../types/values-map';
-import { IUpdateSession } from '../../interfaces/sessions/update-session';
+import { TValuesMap } from '../types/values-map';
+import { IUpdateSession } from '../interfaces/update-session';
 
 export class UpdateSession<A, CP> extends Session<A, CP, TUpdateOptions<A>> implements IUpdateSession<A, CP> {
   private values: TValuesMap<A>;

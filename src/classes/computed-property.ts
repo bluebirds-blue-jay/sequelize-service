@@ -1,5 +1,5 @@
 import { IComputedProperty } from '../interfaces/computed-property';
-import { ISession } from '../interfaces/sessions/session';
+import { ISession } from '../interfaces/session';
 import { ISequelizeService } from '../interfaces/sequelize-service';
 import { injectable } from 'inversify';
 

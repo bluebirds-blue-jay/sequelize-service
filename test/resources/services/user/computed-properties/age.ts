@@ -1,6 +1,6 @@
 import { ComputedProperty } from '../../../../../src/classes/computed-property';
 import { TUser, TUserComputedProperties } from '../../../types/user';
-import { Session } from '../../../../../src/classes/sessions/session';
+import { Session } from '../../../../../src/classes/session';
 import * as moment from 'moment';
 
 export class UserAge extends ComputedProperty<TUser, TUserComputedProperties, number> {

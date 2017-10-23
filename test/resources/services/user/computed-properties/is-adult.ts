@@ -1,6 +1,6 @@
 import { ComputedProperty } from '../../../../../src/classes/computed-property';
 import { TUser, TUserComputedProperties } from '../../../types/user';
-import { Session } from '../../../../../src/classes/sessions/session';
+import { Session } from '../../../../../src/classes/session';
 
 export class UserIsAdult extends ComputedProperty<TUser, TUserComputedProperties, boolean> {
   public async transform(session: Session<TUser, TUserComputedProperties>) {
