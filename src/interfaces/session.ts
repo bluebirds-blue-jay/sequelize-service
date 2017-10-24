@@ -13,7 +13,7 @@ export interface ISession<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> ex
   getOption<K extends keyof O>(key: K): O[K];
   setOption<K extends keyof O>(key: K, value: O[K]): this;
   unsetOption(key: keyof O): this;
-  getSafeOptions<TA = A, TCP = CP>(overrides?: Partial<TAllOptions<TA, TCP>>): TSafeOptions;
+  getSafeOptions<TA extends {} = A, TCP extends {} = CP>(overrides?: Partial<TAllOptions<TA, TCP>>): TSafeOptions;
   getFilters(): TFiltersMap<A>;
   getRawFilters(): TFilters<A>
   hasFilters(): boolean;

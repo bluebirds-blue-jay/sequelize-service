@@ -56,7 +56,7 @@ export class Session<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> extends
     return this;
   }
 
-  public getSafeOptions<TA = A, TCP = CP>(overrides: Partial<TAllOptions<TA, TCP>> = {}): TSafeOptions {
+  public getSafeOptions<TA extends {} = A, TCP extends {} = CP>(overrides: Partial<TAllOptions<TA, TCP>> = {}): TSafeOptions {
     const options: TSafeOptions = {};
 
     for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks']) {
