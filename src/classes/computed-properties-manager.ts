@@ -8,20 +8,6 @@ import { IComputedProperty } from '../interfaces/computed-property';
 export abstract class ComputedPropertiesManager<A, CP> implements IComputedPropertiesManager<A, CP> {
   private computedProperties: { [key in keyof CP]: { property: IComputedProperty<A, CP>, dependencies: (keyof CP)[] } };
 
-  public constructor() {
-    const defined = this.map();
-
-    this.computedProperties = Object.keys(defined).reduce((acc, key: keyof CP) => {
-      if ('property' as keyof CP in defined[key]) {
-        acc[key] = <{ property: IComputedProperty<A, CP, CP[keyof CP]>, dependencies: (keyof CP)[] }>defined[key];
-      } else {
-        acc[key] = { property: <IComputedProperty<A, CP, CP[keyof CP]>>defined[key], dependencies: [] };
-      }
-
-      return acc;
-    }, {} as { [key in keyof CP]: { property: IComputedProperty<A, CP, CP[key]>, dependencies: (keyof CP)[] } });
-  }
-
   public async transform(session: ISession<A, CP>, service: ISequelizeService<A, CP>) {
     const toCompute = new Set<keyof CP>(session.getOption('compute') || []);
 
@@ -63,8 +49,26 @@ export abstract class ComputedPropertiesManager<A, CP> implements IComputedPrope
 
   protected abstract map(): { [key in keyof CP]: IComputedProperty<A, CP, CP[key]> | { property: IComputedProperty<A, CP, CP[key]>, dependencies: (keyof CP)[] } };
 
+  private getComputedProperties() {
+    if (!this.computedProperties) {
+      const defined = this.map();
+
+      this.computedProperties = Object.keys(defined).reduce((acc, key: keyof CP) => {
+        if ('property' as keyof CP in defined[key]) {
+          acc[key] = <{ property: IComputedProperty<A, CP, CP[keyof CP]>, dependencies: (keyof CP)[] }>defined[key];
+        } else {
+          acc[key] = { property: <IComputedProperty<A, CP, CP[keyof CP]>>defined[key], dependencies: [] };
+        }
+
+        return acc;
+      }, {} as { [key in keyof CP]: { property: IComputedProperty<A, CP, CP[key]>, dependencies: (keyof CP)[] } });
+    }
+
+    return this.computedProperties;
+  }
+
   private resolve<K extends keyof CP>(key: K): { property: IComputedProperty<A, CP, CP[K]>, dependencies: (keyof CP)[] } {
-    const definition = this.computedProperties[key];
+    const definition = this.getComputedProperties()[key];
     if (!definition) {
       throw new Error(`No computed property found for name ${key}.`);
     }
