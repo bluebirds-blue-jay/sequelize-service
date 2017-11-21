@@ -214,13 +214,31 @@ describe('SequelizeService', function () {
       const [ user ] = await userService.find({}, { select: ['email'] });
       expect(user).to.have.keys(['email', 'id']); // ID is auto selected
       expect(user).to.not.have.keys(['first_name']);
-      // Note: user.first_name should not even compile!
+      // user.first_name; // Note: Should NOT compile!
     });
 
     it('should by default select everything', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
       const [ user ] = await userService.find({});
       expect(user).to.have.keys(['id', 'email', 'first_name', 'last_name', 'date_of_birth', 'lucky_number', 'password', 'password_last_updated_at', 'updated_at', 'created_at']);
+    });
+
+    it('should only resolve types for what was computed (+ auto selected id)', async () => {
+      await userService.create({ email: 'foo', password: 'bar' });
+      const [ user ] = await userService.find({}, { select: [], compute: ['age'] });
+      expect(user).to.have.keys(['id', 'date_of_borth', 'age']); // ID is auto selected
+      expect(user).to.not.have.keys(['isAdult']);
+      // user.date_of_birth; // Note: Should NOT compile!
+      // user.isAdult; // Note: Should NOT compile!
+    });
+
+    it('should not auto compute anything', async () => {
+      await userService.create({ email: 'foo', password: 'bar' });
+      const [ user ] = await userService.find({}, { select: [] });
+      expect(user).to.have.keys(['id']);
+      expect(user).to.not.have.keys(['isAdult']);
+      // user.age; // Note: Should NOT compile!
+      // user.isAdult; // Note: Should NOT compile!
     });
 
     it('should sort returned objects', async () => {
