@@ -1,3 +1,3 @@
 import { TSequelizeWhere } from './sequelize-where';
 
-export type TSequelizeWhereOption<R> = { where: TSequelizeWhere<R> };
+export type TSequelizeWhereOption<T> = { where: TSequelizeWhere<T> };

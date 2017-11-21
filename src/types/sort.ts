@@ -1,3 +1,3 @@
 import { SortOrder } from '../constants/sort-order';
 
-export type TSort<R> = (keyof R | [keyof R, SortOrder])[];
+export type TSort<T> = (keyof T | [keyof T, SortOrder])[];
