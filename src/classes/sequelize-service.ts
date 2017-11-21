@@ -52,10 +52,10 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     return this.primaryKeyField;
   }
 
-  public async create<Compute extends keyof C = undefined>(object: W, options: TCreateOptions<R, C, Compute> = {}): Promise<R & Pick<C, Compute>> {
+  public async create<KC extends keyof C = undefined>(object: W, options: TCreateOptions<R, C, KC> = {}): Promise<R & Pick<C, KC>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = <ISession<W, R, C>>new CreateSession<W, R, C, Compute>([object], options, this);
+        const session = <ISession<W, R, C>>new CreateSession<W, R, C, KC>([object], options, this);
 
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
@@ -67,15 +67,15 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this));
 
-        return session.getAt(0) as R & Pick<C, Compute>;
+        return session.getAt(0) as R & Pick<C, KC>;
       });
     });
   }
 
-  public async createMany<Compute extends keyof C = undefined>(objects: W[], options: TCreateOptions<R, C, Compute> = {}): Promise<Collection<R & Pick<C, Compute>>> {
+  public async createMany<KC extends keyof C = undefined>(objects: W[], options: TCreateOptions<R, C, KC> = {}): Promise<Collection<R & Pick<C, KC>>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = <ISession<W, R, C>>new CreateSession<W, R, C, Compute>(objects, options, this);
+        const session = <ISession<W, R, C>>new CreateSession<W, R, C, KC>(objects, options, this);
 
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
@@ -96,29 +96,29 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     });
   }
 
-  public async find<Select extends keyof R, Compute extends keyof C = undefined>(filters: TFilters<R>, options: TFindOptions<R, C, Select, Compute> = {}): Promise<Collection<Pick<R, Select> & Pick<C, Compute>>> {
+  public async find<KR extends keyof R, KC extends keyof C = undefined>(filters: TFilters<R>, options: TFindOptions<R, C, KR, KC> = {}): Promise<Collection<Pick<R, KR> & Pick<C, KC>>> {
     const formattedFilters = this.toSequelizeWhere(filters);
     const sequelizeOptions = this.toSequelizeOptions<TSequelizeFindOptions<R>>(options, { where: formattedFilters });
 
     const objects = (await this.model.findAll(sequelizeOptions)).map(object => (<any>object).toJSON());
 
     if (objects.length) {
-      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, Select, Compute>>(objects, options, this, filters));
+      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, KR, KC>>(objects, options, this, filters));
     }
 
     return new Collection(objects);
   }
 
-  public async findOne<Select extends keyof R, Compute extends keyof C = undefined>(filters: TFilters<R>, options: TFindOneOptions<R, C, Select, Compute> = {}): Promise<Pick<R, Select> & Pick<C, Compute>> {
+  public async findOne<KR extends keyof R, KC extends keyof C = undefined>(filters: TFilters<R>, options: TFindOneOptions<R, C, KR, KC> = {}): Promise<Pick<R, KR> & Pick<C, KC>> {
     const [ object ] = await this.find(filters, Object.assign(options, { limit: 1 }));
     return object || null;
   }
 
-  public async findByPrimaryKey<Select extends keyof R, Compute extends keyof C = undefined>(pk: string | number, options: TFindByPrimaryKeyOptions<R, C, Select, Compute> = {}): Promise<Pick<R, Select> & Pick<C, Compute>> {
+  public async findByPrimaryKey<KR extends keyof R, KC extends keyof C = undefined>(pk: string | number, options: TFindByPrimaryKeyOptions<R, C, KR, KC> = {}): Promise<Pick<R, KR> & Pick<C, KC>> {
     return await this.findOne({ [this.getPrimaryKeyField()]: pk } as any, options);
   }
 
-  public async findByPrimaryKeys<Select extends keyof R, Compute extends keyof C = undefined>(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C, Select, Compute> = {}): Promise<Collection<Pick<R, Select> & Pick<C, Compute>>> {
+  public async findByPrimaryKeys<KR extends keyof R, KC extends keyof C = undefined>(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C, KR, KC> = {}): Promise<Collection<Pick<R, KR> & Pick<C, KC>>> {
     return await this.find({ [this.getPrimaryKeyField()]: { in: pks } } as any, options);
   }
 
@@ -156,7 +156,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     return await this.model.count(sequelizeOptions);
   }
 
-  public async replaceOne<Compute extends keyof C = undefined>(filters: TFilters<R>, values: W, options: TReplaceOneOptions<R, C, Compute> = {}): Promise<R & Pick<C, Compute>> {
+  public async replaceOne<KC extends keyof C = undefined>(filters: TFilters<R>, values: W, options: TReplaceOneOptions<R, C, KC> = {}): Promise<R & Pick<C, KC>> {
     return await this.transaction(options, async () => {
       const candidate = await this.findOne(filters, {
         transaction: options.transaction,

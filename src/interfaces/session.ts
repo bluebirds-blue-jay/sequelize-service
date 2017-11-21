@@ -13,14 +13,14 @@ export interface ISession<W, R extends W, C, O extends TSafeOptions = TAllOption
   getOption<K extends keyof O>(key: K): O[K];
   setOption<K extends keyof O>(key: K, value: O[K]): this;
   unsetOption(key: keyof O): this;
-  getSafeOptions<TR extends {} = R, TC extends {} = C, Select extends keyof R = keyof R, Compute extends keyof C = keyof C>(overrides?: Partial<TAllOptions<TR, TC, Select, Compute>>): TSafeOptions
+  getSafeOptions<TR extends {} = R, TC extends {} = C, KR extends keyof R = keyof R, KC extends keyof C = keyof C>(overrides?: Partial<TAllOptions<TR, TC, KR, KC>>): TSafeOptions
   getFilters(): TFiltersMap<R>;
   getRawFilters(): TFilters<R>
   hasFilters(): boolean;
   hasFilter(key: keyof R): boolean;
-  ensureIdentified<Select extends keyof R, Compute extends keyof C>(options: TFindOptions<R, C, Select, Compute>): Promise<void>;
-  ensureProperties<Select extends keyof R, Compute extends keyof C>(options: TFindOptions<R, C, Select, Compute>): Promise<void>;
+  ensureIdentified<KR extends keyof R, KC extends keyof C>(options: TFindOptions<R, C, KR, KC>): Promise<void>;
+  ensureProperties<KR extends keyof R, KC extends keyof C>(options: TFindOptions<R, C, KR, KC>): Promise<void>;
   isIdentified(): boolean
-  fetch<Select extends keyof R, Compute extends keyof C>(options: TFindOptions<R, C, Select, Compute>): Promise<void>
+  fetch<KR extends keyof R, KC extends keyof C>(options: TFindOptions<R, C, KR, KC>): Promise<void>
   hasOption(key: keyof O): boolean;
 }

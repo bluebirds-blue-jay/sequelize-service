@@ -13,16 +13,16 @@ import { TReplaceOneOptions } from '../types/replace-one-options';
 
 export interface ISequelizeService<W extends {}, R extends W, C extends {}> {
   getPrimaryKeyField(): string | number;
-  create<Select extends keyof R, Compute extends keyof C = undefined>(object: W, options?: TCreateOptions<R, C, Compute>): Promise<R & Pick<C, Compute>>;
-  createMany<Select extends keyof R, Compute extends keyof C = undefined>(objects: W[], options?: TCreateOptions<R, C, Compute>): Promise<Collection<R & Pick<C, Compute>>>;
-  find<Select extends keyof R, Compute extends keyof C = undefined>(filters: TFilters<R>, options?: TFindOptions<R, C, Select, Compute>): Promise<Collection<Pick<R, Select> & Pick<C, Compute>>>;
+  create<KR extends keyof R, KC extends keyof C = undefined>(object: W, options?: TCreateOptions<R, C, KC>): Promise<R & Pick<C, KC>>;
+  createMany<KR extends keyof R, KC extends keyof C = undefined>(objects: W[], options?: TCreateOptions<R, C, KC>): Promise<Collection<R & Pick<C, KC>>>;
+  find<KR extends keyof R, KC extends keyof C = undefined>(filters: TFilters<R>, options?: TFindOptions<R, C, KR, KC>): Promise<Collection<Pick<R, KR> & Pick<C, KC>>>;
   warn(condition: boolean, message: string, data?: object): void;
-  findOne<Select extends keyof R, Compute extends keyof C = undefined>(filters: TFilters<R>, options?: TFindOneOptions<R, C, Select, Compute>): Promise<Pick<R, Select> & Pick<C, Compute>>;
-  findByPrimaryKey<Select extends keyof R, Compute extends keyof C = undefined>(pk: string | number, options?: TFindByPrimaryKeyOptions<R, C, Select, Compute>): Promise<Pick<R, Select> & Pick<C, Compute>>;
-  findByPrimaryKeys<Select extends keyof R, Compute extends keyof C = undefined>(pks: string[] | number[], options?: TFindByPrimaryKeyOptions<R, C, Select, Compute>): Promise<Collection<Pick<R, Select> & Pick<C, Compute>>>;
+  findOne<KR extends keyof R, KC extends keyof C = undefined>(filters: TFilters<R>, options?: TFindOneOptions<R, C, KR, KC>): Promise<Pick<R, KR> & Pick<C, KC>>;
+  findByPrimaryKey<KR extends keyof R, KC extends keyof C = undefined>(pk: string | number, options?: TFindByPrimaryKeyOptions<R, C, KR, KC>): Promise<Pick<R, KR> & Pick<C, KC>>;
+  findByPrimaryKeys<KR extends keyof R, KC extends keyof C = undefined>(pks: string[] | number[], options?: TFindByPrimaryKeyOptions<R, C, KR, KC>): Promise<Collection<Pick<R, KR> & Pick<C, KC>>>;
   update(filters: TFilters<R>, values: TValues<W>, options?: TUpdateOptions<R>): Promise<number>;
   updateByPrimaryKey(pk: string | number, values: TValues<W>, options?: TUpdateByPrimaryKeyOptions<R>): Promise<number>;
   delete(filters: TFilters<R>, options?: TDeleteOptions<R>): Promise<number>;
   count(filters: TFilters<R>, options?: TCountOptions<R>): Promise<number>;
-  replaceOne<Select extends keyof R, Compute extends keyof C = undefined>(filters: TFilters<R>, values: W, options?: TReplaceOneOptions<R, C, Compute>): Promise<R & Pick<C, Compute>>;
+  replaceOne<KR extends keyof R, KC extends keyof C = undefined>(filters: TFilters<R>, values: W, options?: TReplaceOneOptions<R, C, KC>): Promise<R & Pick<C, KC>>;
 }

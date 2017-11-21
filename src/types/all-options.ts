@@ -7,12 +7,12 @@ import { TLimitOption } from './limit-option';
 import { TOffsetOption } from './offset-option';
 import { TTransactionOptions } from './transaction-options';
 
-export type TAllOptions<R, C, Select, Compute> = Partial<
+export type TAllOptions<R, C, KR, KC> = Partial<
   TContextOption &
   TTransactionOptions &
-  TComputeOption<Compute> &
+  TComputeOption<KC> &
   TSkipHooksOption &
-  TSelectOption<Select> &
+  TSelectOption<KR> &
   TSortOption<R> &
   TLimitOption &
   TOffsetOption
