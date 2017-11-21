@@ -1,3 +1,3 @@
 import { TSequelizeAttributes } from './sequelize-attributes';
 
-export type TSequelizeAttributesOption<R> = { attributes: TSequelizeAttributes<R> };
+export type TSequelizeAttributesOption<T> = { attributes: TSequelizeAttributes<T> };
