@@ -1,1 +1,1 @@
-export type TCompute<T> = (keyof T)[];
+export type TCompute<T> = T[];

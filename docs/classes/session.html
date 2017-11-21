@@ -68,13 +68,13 @@
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>W</h4>
+						<h4>W<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">__type</span></h4>
 					</li>
 					<li>
 						<h4>R<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">W</span></h4>
 					</li>
 					<li>
-						<h4>C</h4>
+						<h4>C<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">__type</span></h4>
 					</li>
 					<li>
 						<h4>O<span class="tsd-signature-symbol">: </span><a href="../globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></h4>
@@ -204,7 +204,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Collection.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L18">classes/session.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L18">classes/session.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -303,7 +303,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#ensureidentified">ensureIdentified</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L155">classes/session.ts:155</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L155">classes/session.ts:155</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -320,26 +320,29 @@
 					<a name="ensureproperties" class="tsd-anchor"></a>
 					<h3>ensure<wbr>Properties</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">ensure<wbr>Properties&lt;S&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">ensure<wbr>Properties&lt;Select, Compute&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Select</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Compute</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#ensureproperties">ensureProperties</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L128">classes/session.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L128">classes/session.ts:128</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>S<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof R</span></h4>
+									<h4>Select<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof R</span></h4>
+								</li>
+								<li>
+									<h4>Compute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof C</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>options: <a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Select</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Compute</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -395,26 +398,29 @@
 					<a name="fetch" class="tsd-anchor"></a>
 					<h3>fetch</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">fetch&lt;S&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">fetch&lt;Select, Compute&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Select</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Compute</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#fetch">fetch</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L108">classes/session.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L108">classes/session.ts:108</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>S<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof R</span></h4>
+									<h4>Select<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof R</span></h4>
+								</li>
+								<li>
+									<h4>Compute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof C</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>options: <a href="../globals.html#tfindoptions" class="tsd-signature-type">TFindOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Select</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Compute</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -741,7 +747,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#getcontext">getContext</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L37">classes/session.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L37">classes/session.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -759,7 +765,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#getfilters">getFilters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L69">classes/session.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L69">classes/session.ts:69</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tfiltersmap" class="tsd-signature-type">TFiltersMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -796,7 +802,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#getoption">getOption</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L41">classes/session.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L41">classes/session.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -826,7 +832,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#getoptions">getOptions</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L33">classes/session.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L33">classes/session.ts:33</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">keyof O</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">O[keyof O]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -844,7 +850,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#getrawfilters">getRawFilters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L73">classes/session.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L73">classes/session.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tfilters" class="tsd-signature-type">TFilters</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -855,14 +861,14 @@
 					<a name="getsafeoptions" class="tsd-anchor"></a>
 					<h3>get<wbr>Safe<wbr>Options</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Safe<wbr>Options&lt;TR, TC&gt;<span class="tsd-signature-symbol">(</span>overrides<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#talloptions" class="tsd-signature-type">TAllOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TR</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TC</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Safe<wbr>Options&lt;TR, TC, Select, Compute&gt;<span class="tsd-signature-symbol">(</span>overrides<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#talloptions" class="tsd-signature-type">TAllOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TR</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TC</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Select</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Compute</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#getsafeoptions">getSafeOptions</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L59">classes/session.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L59">classes/session.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -873,11 +879,17 @@
 								<li>
 									<h4>TC<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">__type</span></h4>
 								</li>
+								<li>
+									<h4>Select<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof R</span></h4>
+								</li>
+								<li>
+									<h4>Compute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof C</span></h4>
+								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> overrides: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#talloptions" class="tsd-signature-type">TAllOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TR</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TC</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> overrides: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#talloptions" class="tsd-signature-type">TAllOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TR</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TC</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Select</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Compute</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#tsafeoptions" class="tsd-signature-type">TSafeOptions</a></h4>
@@ -894,7 +906,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L159">classes/session.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L159">classes/session.ts:159</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/isequelizeservice.html" class="tsd-signature-type">ISequelizeService</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">W</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">C</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -912,7 +924,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#hasfilter">hasFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L81">classes/session.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L81">classes/session.ts:81</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -936,7 +948,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#hasfilters">hasFilters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L77">classes/session.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L77">classes/session.ts:77</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -954,7 +966,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#hasoption">hasOption</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L50">classes/session.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L50">classes/session.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1053,7 +1065,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#isidentified">isIdentified</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L85">classes/session.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L85">classes/session.ts:85</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1627,7 +1639,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#setoption">setOption</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L45">classes/session.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L45">classes/session.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1812,7 +1824,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isession.html">ISession</a>.<a href="../interfaces/isession.html#unsetoption">unsetOption</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/964d32f/src/classes/session.ts#L54">classes/session.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/bluebirds-blue-jay/sequelize-service/blob/cb2b68b/src/classes/session.ts#L54">classes/session.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

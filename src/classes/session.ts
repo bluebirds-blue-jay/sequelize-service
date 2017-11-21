@@ -11,7 +11,7 @@ import { TFiltersMap } from '../types/filters-map';
 import { TOptionsMap } from '../types/options-map';
 import { ISession } from '../interfaces/session';
 
-export class Session<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, C>> extends Collection<Partial<R> & Partial<C>> implements ISession<W, R, C, O> {
+export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOptions = TAllOptions<R, C, keyof R, keyof C>> extends Collection<Partial<R> & Partial<C>> implements ISession<W, R, C, O> {
   private context: TContext;
   private options: TOptionsMap<O>;
   private service: ISequelizeService<W, R, C>;
@@ -56,7 +56,7 @@ export class Session<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, 
     return this;
   }
 
-  public getSafeOptions<TR extends {} = R, TC extends {} = C>(overrides: Partial<TAllOptions<TR, TC>> = {}): TSafeOptions {
+  public getSafeOptions<TR extends {} = R, TC extends {} = C, KR extends keyof R = keyof R, KC extends keyof C = keyof C>(overrides: Partial<TAllOptions<TR, TC, KR, KC>> = {}): TSafeOptions {
     const options: TSafeOptions = {};
 
     for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks']) {
@@ -105,7 +105,7 @@ export class Session<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, 
     return allIdentified;
   }
 
-  public async fetch<S extends keyof R>(options: TFindOptions<R, C, S>): Promise<void> {
+  public async fetch<KR extends keyof R, KC extends keyof C>(options: TFindOptions<R, C, KR, KC>): Promise<void> {
     this.service.warn(!this.hasFilters() && !('limit' in options), `Fetching entire table.`);
 
     const primaryKeyField = this.service.getPrimaryKeyField();
@@ -125,7 +125,7 @@ export class Session<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, 
     }
   }
 
-  public async ensureProperties<S extends keyof R>(options: TFindOptions<R, C, S>): Promise<void> {
+  public async ensureProperties<KR extends keyof R, KC extends keyof C>(options: TFindOptions<R, C, KR, KC>): Promise<void> {
     const select = options.select || [];
     const computedProperties = options.compute || [];
 

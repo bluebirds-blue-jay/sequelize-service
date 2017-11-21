@@ -7,7 +7,7 @@ import * as Lodash from 'lodash';
 import { TValuesMap } from '../types/values-map';
 import { IUpdateSession } from '../interfaces/update-session';
 
-export class UpdateSession<W, R extends W, C> extends Session<W, R, C, TUpdateOptions<R>> implements IUpdateSession<W, R, C> {
+export class UpdateSession<W extends {}, R extends W, C extends {}> extends Session<W, R, C, TUpdateOptions<R>> implements IUpdateSession<W, R, C> {
   private values: TValuesMap<W>;
 
   public constructor(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R>, service: ISequelizeService<W, R, C>) {

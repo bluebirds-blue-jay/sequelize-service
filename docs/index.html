@@ -75,30 +75,34 @@
 				<h2 id="usage">Usage</h2>
 				<h3 id="creating-a-sequelizeservice">Creating a SequelizeService</h3>
 				<p>The only required dependency is a Sequelize model.</p>
-				<p><code>TUser</code> below is an interface describing a user&#39;s properties. It is suggested to describe this interface as the &quot;creating&quot; interface, meaning to require properties that are required to create the object and leaving the others either optional or readonly.
-				<code>TUserComputedProperties</code> is an interface describing the possible computed properties for a user object.<br><code>UserModel</code> is the User Sequelize model.</p>
+				<ul>
+					<li><code>TUserWriteProperties</code> is an interface describing a user&#39;s properties used during write and update operations. It is recommended to require properties that are required to create the object and leaving the others as optional.</li>
+					<li><code>TUserReadProperties</code> is an interface describing a user&#39;s properties used during read operations. It is recommend to define as readonly.</li>
+					<li><code>TUserComputedProperties</code> is an interface describing the possible computed properties for a user object.  </li>
+					<li><code>UserModel</code> is the User Sequelize model.</li>
+				</ul>
 				<h4 id="manually">Manually</h4>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> userService = <span class="hljs-keyword">new</span> SequelizeService&lt;TUser, TUserComputedProperties&gt;(UserModel);
+				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> userService = <span class="hljs-keyword">new</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;(UserModel);
 </code></pre>
 				<h4 id="using-inversify">Using inversify</h4>
-				<pre><code class="lang-typescript"><span class="hljs-comment">// TUser describes all the fields from the User schema</span>
+				<pre><code class="lang-typescript"><span class="hljs-comment">// TUserReadProperties is the most inclusive interface, describing all the fields from the User schema</span>
 <span class="hljs-meta">@injectable</span>()
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUser, TUserComputedProperties&gt; {
-  <span class="hljs-meta">@inject</span>(ID.UserModel) <span class="hljs-keyword">protected</span> model: Sequelize.Model&lt;TUser, TUser&gt;;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
+  <span class="hljs-meta">@inject</span>(ID.UserModel) <span class="hljs-keyword">protected</span> model: Sequelize.Model&lt;TUserReadProperties, TUserReadProperties&gt;;
 }
 
 <span class="hljs-comment">// ---</span>
 
 <span class="hljs-comment">// Make sure to declare the service as a singleton to ensure events are caught by all subscribers</span>
-container.bind&lt;ISequelizeService&lt;TUser, TUserComputedProperties&gt;&gt;(ID.UserService).to(UserService).inSingletonScope();
+container.bind&lt;ISequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;&gt;(ID.UserService).to(UserService).inSingletonScope();
 </code></pre>
 				<h3 id="sessions">Sessions</h3>
 				<p>All hooks and many methods receive a <code>Session</code> object which provides various handful methods to deal with a set of data, in a particular context.</p>
 				<p>A <code>Session</code> inherits from <a href="https://github.com/bluebirds-blue-jay/collection">Collection</a>, so you can manipulate/iterate data asynchronous without the need of external libraries.</p>
 				<p>Sessions also expose various methods related to the type of query you&#39;re currently dealing with. For example during an update:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUser, TUserComputedProperties&gt; {
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
   <span class="hljs-comment">// ...</span>
-  <span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> beforeUpdate(session: UpdateSession&lt;TUser, TUserComputedProperties&gt;) {
+  <span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> beforeUpdate(session: UpdateSession&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) {
     session.getOption(<span class="hljs-string">'transaction'</span>); <span class="hljs-comment">// Get the transaction under which this update is being performed</span>
     session.hasFilter(<span class="hljs-string">'email'</span>); <span class="hljs-comment">// Whether os not this update is filtered by email</span>
     session.getValue(<span class="hljs-string">'email'</span>); <span class="hljs-comment">// Get the update value of `email`, if present</span>
@@ -192,10 +196,10 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 				<h3 id="working-with-hooks">Working with hooks</h3>
 				<p>Hooks are a convenient way to validate and transform you data.</p>
 				<p>Hooks are ran for all write queries, before and after the query.</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUser, TUserComputedProperties&gt; {
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
   <span class="hljs-comment">/// ...</span>
 
-  <span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> beforeCreate(session: CreateSession&lt;TUser, TUserComputedProperties&gt;) {
+  <span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> beforeCreate(session: CreateSession&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) {
     <span class="hljs-keyword">await</span> session.forEachParallel(<span class="hljs-keyword">async</span> user =&gt; {
       <span class="hljs-comment">// Your code here</span>
     });
@@ -206,16 +210,16 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 				<h3 id="computed-properties">Computed properties</h3>
 				<p>Computed properties allow you to decorate objects with properties that are not stored in your DB.</p>
 				<p>Computed properties are instances of the abstract <code>ComputedProperty</code> class and must implement their <code>transform</code> method, which takes a <code>Session</code> as an argument.</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserAge <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUser, TUserComputedProperties, <span class="hljs-built_in">number</span>&gt; { <span class="hljs-comment">// "age" is a number</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUser, TUserComputedProperties&gt;) { <span class="hljs-comment">// "transform" is abstract and must be implemented</span>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserAge <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties, <span class="hljs-built_in">number</span>&gt; { <span class="hljs-comment">// "age" is a number</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) { <span class="hljs-comment">// "transform" is abstract and must be implemented</span>
     session.forEach(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> {
       user.age = moment.duration(moment().diff(user.date_of_birth)).get(<span class="hljs-string">'years'</span>); <span class="hljs-comment">// We set "age" on each object of the session, based on the date of birth</span>
     });
   }
 }
 </code></pre>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserIsAdult <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUser, TUserComputedProperties, <span class="hljs-built_in">boolean</span>&gt; {
-  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUser, TUserComputedProperties&gt;) {
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserIsAdult <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties, <span class="hljs-built_in">boolean</span>&gt; {
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) {
     <span class="hljs-keyword">await</span> session.ensureProperties({ compute: [<span class="hljs-string">'age'</span>] }); <span class="hljs-comment">// We make sure the age is set</span>
     session.forEach(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> {
       user.isAdult = user.age &gt;= <span class="hljs-number">21</span>
@@ -224,7 +228,7 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 }
 </code></pre>
 				<p>To make your service aware of the computed properties, you need to create a manager:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserComputedPropertiesManager <span class="hljs-keyword">extends</span> UserComputedPropertiesManager&lt;TUser, TUserComputedProperties&gt; {
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserComputedPropertiesManager <span class="hljs-keyword">extends</span> UserComputedPropertiesManager&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
   <span class="hljs-keyword">protected</span> map() {
     <span class="hljs-keyword">return</span> {
       age: <span class="hljs-keyword">new</span> UserAge(),
@@ -234,7 +238,7 @@ users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> 
 }
 </code></pre>
 				<p>And finally you can set the manager on your service:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUser, TUserComputedProperties&gt; {
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
   <span class="hljs-keyword">protected</span> computedPropertiesManager = <span class="hljs-keyword">new</span> UserComputedPropertiesManager();
 
   <span class="hljs-comment">// ...</span>
