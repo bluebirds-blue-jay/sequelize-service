@@ -11,7 +11,7 @@ import { TFiltersMap } from '../types/filters-map';
 import { TOptionsMap } from '../types/options-map';
 import { ISession } from '../interfaces/session';
 
-export class Session<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, C, keyof R, keyof C>> extends Collection<Partial<R> & Partial<C>> implements ISession<W, R, C, O> {
+export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOptions = TAllOptions<R, C, keyof R, keyof C>> extends Collection<Partial<R> & Partial<C>> implements ISession<W, R, C, O> {
   private context: TContext;
   private options: TOptionsMap<O>;
   private service: ISequelizeService<W, R, C>;

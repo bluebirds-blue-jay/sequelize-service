@@ -4,6 +4,6 @@ import { ISequelizeService } from '../interfaces/sequelize-service';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class ComputedProperty<W, R extends W, C, T = C[keyof C]> implements IComputedProperty<W, R, C, T> {
+export abstract class ComputedProperty<W extends {}, R extends W, C extends {}, T = C[keyof C]> implements IComputedProperty<W, R, C, T> {
   public async abstract transform(session: ISession<W, R, C>, service: ISequelizeService<W, R, C>): Promise<void>;
 }

@@ -11,7 +11,7 @@ import { TDeleteOptions } from '../types/delete-options';
 import { TCountOptions } from '../types/count-options';
 import { TReplaceOneOptions } from '../types/replace-one-options';
 
-export interface ISequelizeService<W, R extends W, C> {
+export interface ISequelizeService<W extends {}, R extends W, C extends {}> {
   getPrimaryKeyField(): string | number;
   create<Select extends keyof R, Compute extends keyof C = undefined>(object: W, options?: TCreateOptions<R, C, Compute>): Promise<R & Pick<C, Compute>>;
   createMany<Select extends keyof R, Compute extends keyof C = undefined>(objects: W[], options?: TCreateOptions<R, C, Compute>): Promise<Collection<R & Pick<C, Compute>>>;

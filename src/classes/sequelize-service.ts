@@ -40,7 +40,7 @@ import { ICreateSession } from '../interfaces/create-session';
 import { IDeleteSession } from '../interfaces/delete-session';
 
 @injectable()
-export class SequelizeService<W, R extends W, C extends {} = {}> extends Service implements ISequelizeService<W, R, C> {
+export class SequelizeService<W extends {}, R extends W, C extends {} = {}> extends Service implements ISequelizeService<W, R, C> {
   private primaryKeyField: keyof R = 'id' as keyof R;
   protected computedPropertiesManager: IComputedPropertiesManager<W, R, C>;
 

@@ -5,7 +5,7 @@ import { IComputedPropertiesManager } from '../interfaces/computed-properties-ma
 import { IComputedProperty } from '../interfaces/computed-property';
 
 @injectable()
-export abstract class ComputedPropertiesManager<W, R extends W, C> implements IComputedPropertiesManager<W, R, C> {
+export abstract class ComputedPropertiesManager<W extends {}, R extends W, C extends {}> implements IComputedPropertiesManager<W, R, C> {
   private computedProperties: { [key in keyof C]: { property: IComputedProperty<W, R, C>, dependencies: (keyof C)[] } };
 
   public async transform(session: ISession<W, R, C>, service: ISequelizeService<W, R, C>) {
