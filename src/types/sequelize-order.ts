@@ -1,3 +1,3 @@
 import { SortOrder } from '../constants/sort-order';
 
-export type TSequelizeOrder<A> = [keyof A, SortOrder][];
+export type TSequelizeOrder<R> = [keyof R, SortOrder][];

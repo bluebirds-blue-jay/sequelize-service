@@ -7,20 +7,20 @@ import { TFiltersMap } from '../types/filters-map';
 import { TFilters } from '../types/filters';
 import { TFindOptions } from '../types/find-options';
 
-export interface ISession<A, CP, O extends TSafeOptions = TAllOptions<A, CP>> extends Collection<A & Partial<CP>> {
+export interface ISession<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, C>> extends Collection<Partial<R> & Partial<C>> {
   getOptions(): TOptionsMap<O>;
   getContext(): TContext;
   getOption<K extends keyof O>(key: K): O[K];
   setOption<K extends keyof O>(key: K, value: O[K]): this;
   unsetOption(key: keyof O): this;
-  getSafeOptions<TA extends {} = A, TCP extends {} = CP>(overrides?: Partial<TAllOptions<TA, TCP>>): TSafeOptions;
-  getFilters(): TFiltersMap<A>;
-  getRawFilters(): TFilters<A>
+  getSafeOptions<TR extends {} = R, TC extends {} = C>(overrides?: Partial<TAllOptions<TR, TC>>): TSafeOptions;
+  getFilters(): TFiltersMap<R>;
+  getRawFilters(): TFilters<R>
   hasFilters(): boolean;
-  hasFilter(key: keyof A): boolean;
-  ensureIdentified(options: TFindOptions<A, CP>): Promise<void>;
-  ensureProperties(options: TFindOptions<A, CP>): Promise<void>;
+  hasFilter(key: keyof R): boolean;
+  ensureIdentified(options: TFindOptions<R, C>): Promise<void>;
+  ensureProperties(options: TFindOptions<R, C>): Promise<void>;
   isIdentified(): boolean
-  fetch(options: TFindOptions<A, CP>): Promise<void>
+  fetch(options: TFindOptions<R, C>): Promise<void>
   hasOption(key: keyof O): boolean;
 }

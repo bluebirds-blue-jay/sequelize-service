@@ -4,11 +4,11 @@ import { TLimitOption } from './limit-option';
 import { TOffsetOption } from './offset-option';
 import { TTransactionOptions } from './transaction-options';
 
-export type TAllSequelizeOptions<A> = Partial<
+export type TAllSequelizeOptions<R> = Partial<
   TTransactionOptions &
-  TSequelizeOrderOption<A> &
-  TSequelizeWhereOption<A> &
+  TSequelizeOrderOption<R> &
+  TSequelizeWhereOption<R> &
   TLimitOption &
   TOffsetOption &
-  TSequelizeOrderOption<A>
+  TSequelizeOrderOption<R>
 >;

@@ -1,9 +1,9 @@
 import { UpdateSession } from '../../../';
-import { TUser, TUserComputedProperties } from '../../resources/types/user';
-import { userService } from '../../resources/index';
+import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../resources/types/user';
+import { userService } from '../../resources';
 import { TValues } from '../../../src/types/values';
 
-function createSession(params: { values?: TValues<TUser> } = {}): UpdateSession<TUser, TUserComputedProperties> {
+function createSession(params: { values?: TValues<TUserWriteProperties> } = {}): UpdateSession<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
   return new UpdateSession({}, params.values || {}, {}, userService);
 }
 
@@ -16,24 +16,24 @@ describe('UpdateSession', function () {
 
   describe('#getValue()', function () {
     it('should return existing values', () => {
-      expect(createSession({ values: { id: 1 } }).getValue('id')).to.equal(1);
+      expect(createSession({ values: { email: 'john@doe.com' } }).getValue('email')).to.equal('john@doe.com');
     });
   });
 
   describe('#hasValue()', function () {
     it('should return true', () => {
-      expect(createSession({ values: { id: 1 } }).hasValue('id')).to.equal(true);
+      expect(createSession({ values: { email: 'john@doe.com' } }).hasValue('email')).to.equal(true);
     });
     it('should return false', () => {
-      expect(createSession({ values: { id: 1 } }).hasValue('email')).to.equal(false);
+      expect(createSession({ values: { first_name: 'John' } }).hasValue('email')).to.equal(false);
     });
   });
 
   describe('#setValue()', function () {
     it('should set value', () => {
       const session = createSession();
-      session.setValue('id', 1);
-      expect(session.getValue('id')).to.equal(1);
+      session.setValue('first_name', 'John');
+      expect(session.getValue('first_name')).to.equal('John');
     });
   });
 });

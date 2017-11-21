@@ -1,4 +1,4 @@
 import { TSafeOptions } from './safe-options';
 import { TComputeOption } from './compute-option';
 
-export type TCreateOptions<A, CP> = TSafeOptions & Partial<TComputeOption<CP>>;
+export type TCreateOptions<R, C> = TSafeOptions & Partial<TComputeOption<C>>;

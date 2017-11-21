@@ -1,16 +1,16 @@
 import { Session } from '../../../';
-import { TUser, TUserComputedProperties } from '../../resources/types/user';
-import { userService, database } from '../../resources/index';
+import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../resources/types/user';
+import { userService, database } from '../../resources';
 import { TAllOptions } from '../../../src/types/all-options';
 import { TSafeOptions } from '../../../src/types/safe-options';
 import { TFilters } from '../../../src/types/filters';
 import * as Sinon from 'sinon';
 import { Collection } from '@bluejay/collection';
 
-function createSession<O extends TSafeOptions = TAllOptions<TUser, TUserComputedProperties>>(
-  params: { options?: TAllOptions<TUser, TUserComputedProperties>, objects?: TUser[], filters?: TFilters<TUser> } = {}
-): Session<TUser, TUserComputedProperties, O> {
-  return new Session<TUser, TUserComputedProperties, O>(params.objects || [], (params.options || {}) as O, userService, params.filters || {});
+function createSession<O extends TSafeOptions = TAllOptions<TUserReadProperties, TUserComputedProperties>>(
+  params: { options?: TAllOptions<TUserReadProperties, TUserComputedProperties>, objects?: Partial<TUserReadProperties>[], filters?: TFilters<TUserReadProperties> } = {}
+): Session<TUserWriteProperties, TUserReadProperties, TUserComputedProperties, O> {
+  return new Session<TUserWriteProperties, TUserReadProperties, TUserComputedProperties, O>(params.objects || [], (params.options || {}) as O, userService, params.filters || {});
 }
 
 describe('Session', function () {

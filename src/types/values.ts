@@ -1,1 +1,1 @@
-export type TValues<A> = { [key in keyof Partial<A>]: A[key] };
+export type TValues<R> = Partial<R>; // { [key in keyof Partial<R>]:? R[key] };

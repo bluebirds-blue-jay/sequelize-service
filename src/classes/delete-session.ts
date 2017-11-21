@@ -4,8 +4,8 @@ import { TFilters } from '../types/filters';
 import { ISequelizeService } from '../interfaces/sequelize-service';
 import { IDeleteSession } from '../interfaces/delete-session';
 
-export class DeleteSession<A, CP> extends Session<A, CP, TDeleteOptions<A>> implements IDeleteSession<A, CP> {
-  public constructor(filters: TFilters<A>, options: TDeleteOptions<A>, service: ISequelizeService<A, CP>) {
+export class DeleteSession<W, R extends W, C> extends Session<W, R, C, TDeleteOptions<R>> implements IDeleteSession<W, R, C> {
+  public constructor(filters: TFilters<R>, options: TDeleteOptions<R>, service: ISequelizeService<W, R, C>) {
     super([], options, service, filters);
   }
 }

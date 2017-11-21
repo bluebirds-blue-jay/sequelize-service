@@ -1,1 +1,1 @@
-export type TSequelizeAttributes<A> = (keyof A)[];
+export type TSequelizeAttributes<R> = (keyof R)[];

@@ -3,8 +3,8 @@ import { TCreateOptions } from '../types/create-options';
 import { ISequelizeService } from '../interfaces/sequelize-service';
 import { ICreateSession } from '../interfaces/create-session';
 
-export class CreateSession<A, CP> extends Session<A, CP, TCreateOptions<A, CP>> implements ICreateSession<A, CP> {
-  public constructor(objects: A[], options: TCreateOptions<A, CP>, service: ISequelizeService<A, CP>) {
+export class CreateSession<W, R extends W, C> extends Session<W, R, C, TCreateOptions<R, C>> implements ICreateSession<W, R, C> {
+  public constructor(objects: R[], options: TCreateOptions<R, C>, service: ISequelizeService<W, R, C>) {
     super(objects, options, service);
   }
 }
