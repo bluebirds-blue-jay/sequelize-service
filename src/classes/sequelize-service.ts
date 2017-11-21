@@ -59,7 +59,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
 
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
-        const created = <R>(<any>await this.model.create(object, options)).toJSON();
+        const created = <R>(<any>await this.model.create(<R>object, options)).toJSON();
 
         session.setObjects([created]);
 
@@ -80,7 +80,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
         const created = (await Promise.all(objects.map(async item => {
-          return await this.model.create(item, options);
+          return await this.model.create(<R>item, options);
         }))).map(object => {
           return (<any>object).toJSON();
         });
@@ -128,7 +128,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
       await this.executeHook(Hook.DID_UPDATE, session, this._beforeUpdate.bind(this));
       const formattedFilters = this.toSequelizeWhere(filters);
       const sequelizeOptions = this.toSequelizeOptions<any>(options, { where: formattedFilters });
-      const [ count ] = await this.model.update(values, sequelizeOptions);
+      const [ count ] = await this.model.update(<R>values, sequelizeOptions);
       await this.executeHook(Hook.DID_UPDATE, session, this._afterUpdate.bind(this));
       return count;
     });
@@ -213,9 +213,9 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     });
   }
 
-  protected toSequelizeWhere(filters: TFilters<R>): TSequelizeWhere<W> {
+  protected toSequelizeWhere(filters: TFilters<R>): TSequelizeWhere<R> {
     for (const propertyName of Object.getOwnPropertyNames(filters)) {
-      const filter = <TOperatorFilter<W> & TSequelizeOperatorFilter<W>>filters[propertyName as keyof W];
+      const filter = <TOperatorFilter<R> & TSequelizeOperatorFilter<R>>filters[propertyName as keyof R];
 
       if (Lodash.isPlainObject(filter)) {
         if (filter.nin) {
@@ -238,7 +238,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
       if (!options.select.includes(this.primaryKeyField)) {
         options.select.push(this.primaryKeyField); // Make sure the id is always present
       }
-      (<TSequelizeAttributesOption<W>>options).attributes = options.select;
+      (<TSequelizeAttributesOption<R>>options).attributes = options.select;
       delete options.select;
     }
 
