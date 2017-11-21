@@ -18,9 +18,9 @@ export interface ISession<W, R extends W, C, O extends TSafeOptions = TAllOption
   getRawFilters(): TFilters<R>
   hasFilters(): boolean;
   hasFilter(key: keyof R): boolean;
-  ensureIdentified(options: TFindOptions<R, C>): Promise<void>;
-  ensureProperties(options: TFindOptions<R, C>): Promise<void>;
+  ensureIdentified<S extends keyof R>(options: TFindOptions<R, C, S>): Promise<void>;
+  ensureProperties<S extends keyof R>(options: TFindOptions<R, C, S>): Promise<void>;
   isIdentified(): boolean
-  fetch(options: TFindOptions<R, C>): Promise<void>
+  fetch<S extends keyof R>(options: TFindOptions<R, C, S>): Promise<void>
   hasOption(key: keyof O): boolean;
 }

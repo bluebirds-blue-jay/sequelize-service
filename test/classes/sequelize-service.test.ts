@@ -8,9 +8,8 @@ import { Collection } from '@bluejay/collection';
 import * as Sequelize from 'sequelize';
 import { Session } from '../../src/classes/session';
 import { SortOrder } from '../../src/constants/sort-order';
-import moment = require('moment');
-import { cat } from 'shelljs';
 import { TUserReadProperties } from '../resources/types/user';
+import moment = require('moment');
 
 const dobCache: { [age: number]: Date } = {};
 function ageToDOB(age: number): Date {
@@ -208,6 +207,20 @@ describe('SequelizeService', function () {
       await userService.create({ email: 'foo', password: 'bar' });
       const [ user ] = await userService.find({}, { select: ['email'] });
       expect(user).to.have.keys(['email', 'id']); // ID is auto selected
+    });
+
+    it('should only resolve types for what was selected (+ auto selected id)', async () => {
+      await userService.create({ email: 'foo', password: 'bar' });
+      const [ user ] = await userService.find({}, { select: ['email'] });
+      expect(user).to.have.keys(['email', 'id']); // ID is auto selected
+      expect(user).to.not.have.keys(['first_name']);
+      // Note: user.first_name should not even compile!
+    });
+
+    it('should by default select everything', async () => {
+      await userService.create({ email: 'foo', password: 'bar' });
+      const [ user ] = await userService.find({});
+      expect(user).to.have.keys(['id', 'email', 'first_name', 'last_name', 'date_of_birth', 'lucky_number', 'password', 'password_last_updated_at', 'updated_at', 'created_at']);
     });
 
     it('should sort returned objects', async () => {

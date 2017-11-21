@@ -96,29 +96,29 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     });
   }
 
-  public async find(filters: TFilters<R>, options: TFindOptions<R, C> = {}): Promise<Collection<R & C>> {
+  public async find<S extends keyof R>(filters: TFilters<R>, options: TFindOptions<R, C, S> = {}): Promise<Collection<Pick<R, S> & C>> {
     const formattedFilters = this.toSequelizeWhere(filters);
     const sequelizeOptions = this.toSequelizeOptions<TSequelizeFindOptions<R>>(options, { where: formattedFilters });
 
     const objects = (await this.model.findAll(sequelizeOptions)).map(object => (<any>object).toJSON());
 
     if (objects.length) {
-      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C>>(objects, options, this, filters));
+      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, S>>(objects, options, this, filters));
     }
 
     return new Collection(objects);
   }
 
-  public async findOne(filters: TFilters<R>, options: TFindOneOptions<R, C> = {}): Promise<R & C> {
+  public async findOne<S extends keyof R>(filters: TFilters<R>, options: TFindOneOptions<R, C, S> = {}): Promise<Pick<R, S> & C> {
     const [ object ] = await this.find(filters, Object.assign(options, { limit: 1 }));
     return object || null;
   }
 
-  public async findByPrimaryKey(pk: string | number, options: TFindByPrimaryKeyOptions<R, C> = {}): Promise<R & C> {
+  public async findByPrimaryKey<S extends keyof R>(pk: string | number, options: TFindByPrimaryKeyOptions<R, C, S> = {}): Promise<Pick<R, S> & C> {
     return await this.findOne({ [this.getPrimaryKeyField()]: pk } as any, options);
   }
 
-  public async findByPrimaryKeys(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C> = {}): Promise<Collection<R & C>> {
+  public async findByPrimaryKeys<S extends keyof R>(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C, S> = {}): Promise<Collection<Pick<R, S> & C>> {
     return await this.find({ [this.getPrimaryKeyField()]: { in: pks } } as any, options);
   }
 
