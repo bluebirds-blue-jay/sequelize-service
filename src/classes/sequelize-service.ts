@@ -103,7 +103,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     const objects = (await this.model.findAll(sequelizeOptions)).map(object => (<any>object).toJSON());
 
     if (objects.length) {
-      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C>>(objects, options, this, filters));
+      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, S>>(objects, options, this, filters));
     }
 
     return new Collection(objects);

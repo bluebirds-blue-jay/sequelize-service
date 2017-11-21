@@ -105,7 +105,7 @@ export class Session<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, 
     return allIdentified;
   }
 
-  public async fetch(options: TFindOptions<R, C>): Promise<void> {
+  public async fetch<S extends keyof R>(options: TFindOptions<R, C, S>): Promise<void> {
     this.service.warn(!this.hasFilters() && !('limit' in options), `Fetching entire table.`);
 
     const primaryKeyField = this.service.getPrimaryKeyField();
@@ -125,7 +125,7 @@ export class Session<W, R extends W, C, O extends TSafeOptions = TAllOptions<R, 
     }
   }
 
-  public async ensureProperties(options: TFindOptions<R, C>): Promise<void> {
+  public async ensureProperties<S extends keyof R>(options: TFindOptions<R, C, S>): Promise<void> {
     const select = options.select || [];
     const computedProperties = options.compute || [];
 

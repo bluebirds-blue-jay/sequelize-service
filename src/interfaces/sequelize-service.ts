@@ -18,7 +18,7 @@ export interface ISequelizeService<W, R extends W, C> {
   find<S extends keyof R>(filters: TFilters<R>, options?: TFindOptions<R, C, S>): Promise<Collection<Pick<R, S> & C>>;
   warn(condition: boolean, message: string, data?: object): void;
   findOne<S extends keyof R>(filters: TFilters<R>, options?: TFindOneOptions<R, C, S>): Promise<Pick<R, S> & C>;
-  findByPrimaryKey<S extends keyof R>(pk: string | number, options?: TFindByPrimaryKeyOptions<R, C, S>): Promise<R & C>;
+  findByPrimaryKey<S extends keyof R>(pk: string | number, options?: TFindByPrimaryKeyOptions<R, C, S>): Promise<Pick<R, S> & C>;
   findByPrimaryKeys<S extends keyof R>(pks: string[] | number[], options?: TFindByPrimaryKeyOptions<R, C, S>): Promise<Collection<Pick<R, S> & C>>;
   update(filters: TFilters<R>, values: TValues<W>, options?: TUpdateOptions<R>): Promise<number>;
   updateByPrimaryKey(pk: string | number, values: TValues<W>, options?: TUpdateByPrimaryKeyOptions<R>): Promise<number>;
