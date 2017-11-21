@@ -19,29 +19,30 @@ Sequelize model based service, exposes basic CRUD methods, pub/sub mechanisms, c
 
 The only required dependency is a Sequelize model.
 
-`TUser` below is an interface describing a user's properties. It is suggested to describe this interface as the "creating" interface, meaning to require properties that are required to create the object and leaving the others either optional or readonly.
-`TUserComputedProperties` is an interface describing the possible computed properties for a user object.  
-`UserModel` is the User Sequelize model.
+  - `TUserWriteProperties` is an interface describing a user's properties used during write and update operations. It is recommended to require properties that are required to create the object and leaving the others as optional.
+  - `TUserReadProperties` is an interface describing a user's properties used during read operations. It is recommend to define as readonly.
+  - `TUserComputedProperties` is an interface describing the possible computed properties for a user object.  
+  - `UserModel` is the User Sequelize model.
 
 #### Manually
 
 ```typescript
-const userService = new SequelizeService<TUser, TUserComputedProperties>(UserModel);
+const userService = new SequelizeService<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>(UserModel);
 ```
 
 #### Using inversify
 
 ```typescript
-// TUser describes all the fields from the User schema
+// TUserReadProperties is the most inclusive interface, describing all the fields from the User schema
 @injectable()
-export class UserService extends SequelizeService<TUser, TUserComputedProperties> {
-  @inject(ID.UserModel) protected model: Sequelize.Model<TUser, TUser>;
+export class UserService extends SequelizeService<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
+  @inject(ID.UserModel) protected model: Sequelize.Model<TUserReadProperties, TUserReadProperties>;
 }
 
 // ---
 
 // Make sure to declare the service as a singleton to ensure events are caught by all subscribers
-container.bind<ISequelizeService<TUser, TUserComputedProperties>>(ID.UserService).to(UserService).inSingletonScope();
+container.bind<ISequelizeService<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>>(ID.UserService).to(UserService).inSingletonScope();
 ``` 
 
 ### Sessions
@@ -53,9 +54,9 @@ A `Session` inherits from [Collection](https://github.com/bluebirds-blue-jay/col
 Sessions also expose various methods related to the type of query you're currently dealing with. For example during an update:
 
 ```typescript
-class UserService extends SequelizeService<TUser, TUserComputedProperties> {
+class UserService extends SequelizeService<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
   // ...
-  protected async beforeUpdate(session: UpdateSession<TUser, TUserComputedProperties>) {
+  protected async beforeUpdate(session: UpdateSession<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) {
     session.getOption('transaction'); // Get the transaction under which this update is being performed
     session.hasFilter('email'); // Whether os not this update is filtered by email
     session.getValue('email'); // Get the update value of `email`, if present
@@ -197,10 +198,10 @@ Hooks are a convenient way to validate and transform you data.
 Hooks are ran for all write queries, before and after the query.
 
 ```typescript
-class UserService extends SequelizeService<TUser, TUserComputedProperties> {
+class UserService extends SequelizeService<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
   /// ...
   
-  protected async beforeCreate(session: CreateSession<TUser, TUserComputedProperties>) {
+  protected async beforeCreate(session: CreateSession<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) {
     await session.forEachParallel(async user => {
       // Your code here
     });
@@ -218,8 +219,8 @@ Computed properties allow you to decorate objects with properties that are not s
 Computed properties are instances of the abstract `ComputedProperty` class and must implement their `transform` method, which takes a `Session` as an argument.
 
 ```typescript
-class UserAge extends ComputedProperty<TUser, TUserComputedProperties, number> { // "age" is a number
-  public async transform(session: Session<TUser, TUserComputedProperties>) { // "transform" is abstract and must be implemented
+class UserAge extends ComputedProperty<TUserWriteProperties, TUserReadProperties, TUserComputedProperties, number> { // "age" is a number
+  public async transform(session: Session<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) { // "transform" is abstract and must be implemented
     session.forEach(user => {
       user.age = moment.duration(moment().diff(user.date_of_birth)).get('years'); // We set "age" on each object of the session, based on the date of birth
     });
@@ -228,8 +229,8 @@ class UserAge extends ComputedProperty<TUser, TUserComputedProperties, number> {
 ```
 
 ```typescript
-class UserIsAdult extends ComputedProperty<TUser, TUserComputedProperties, boolean> {
-  public async transform(session: Session<TUser, TUserComputedProperties>) {
+class UserIsAdult extends ComputedProperty<TUserWriteProperties, TUserReadProperties, TUserComputedProperties, boolean> {
+  public async transform(session: Session<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) {
     await session.ensureProperties({ compute: ['age'] }); // We make sure the age is set
     session.forEach(user => {
       user.isAdult = user.age >= 21
@@ -241,7 +242,7 @@ class UserIsAdult extends ComputedProperty<TUser, TUserComputedProperties, boole
 To make your service aware of the computed properties, you need to create a manager:
 
 ```typescript
-class UserComputedPropertiesManager extends UserComputedPropertiesManager<TUser, TUserComputedProperties> {
+class UserComputedPropertiesManager extends UserComputedPropertiesManager<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
   protected map() {
     return {
       age: new UserAge(),
@@ -254,7 +255,7 @@ class UserComputedPropertiesManager extends UserComputedPropertiesManager<TUser,
 And finally you can set the manager on your service:
 
 ```typescript
-class UserService extends SequelizeService<TUser, TUserComputedProperties> {
+class UserService extends SequelizeService<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
   protected computedPropertiesManager = new UserComputedPropertiesManager();
   
   // ...
