@@ -40,5 +40,8 @@ export default function(sequelize: Sequelize, dataTypes: DataTypes): any {
       allowNull: false,
       defaultValue: () => new Date()
     }
+  }, {
+    timestamps: true,
+    underscored: true
   });
 }

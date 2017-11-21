@@ -4,4 +4,4 @@ import { TComputeOption } from './compute-option';
 import { TSortOption } from './sort-option';
 import { TTransactionOptions } from './transaction-options';
 
-export type TFindOneOptions<R, C> = TSafeOptions & Partial<TSelectOption<R> & TComputeOption<C> & TSortOption<R> & TTransactionOptions & TComputeOption<C>>;
+export type TFindOneOptions<R, C, S> = TSafeOptions & Partial<TSelectOption<S> & TComputeOption<C> & TSortOption<R> & TTransactionOptions & TComputeOption<C>>;

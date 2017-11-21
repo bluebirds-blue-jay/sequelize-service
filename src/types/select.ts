@@ -1,1 +1,1 @@
-export type TSelect<T> = (keyof T)[];
+export type TSelect<T> = T[];
