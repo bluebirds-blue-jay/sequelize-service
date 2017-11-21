@@ -7,8 +7,8 @@ import { TFilters } from '../../../src/types/filters';
 import * as Sinon from 'sinon';
 import { Collection } from '@bluejay/collection';
 
-function createSession<O extends TSafeOptions = TAllOptions<TUserReadProperties, TUserComputedProperties>>(
-  params: { options?: TAllOptions<TUserReadProperties, TUserComputedProperties>, objects?: Partial<TUserReadProperties>[], filters?: TFilters<TUserReadProperties> } = {}
+function createSession<O extends TSafeOptions = TAllOptions<TUserReadProperties, TUserComputedProperties, keyof TUserReadProperties, keyof TUserComputedProperties>>(
+  params: { options?: TAllOptions<TUserReadProperties, TUserComputedProperties, keyof TUserReadProperties, keyof TUserComputedProperties>, objects?: Partial<TUserReadProperties>[], filters?: TFilters<TUserReadProperties> } = {}
 ): Session<TUserWriteProperties, TUserReadProperties, TUserComputedProperties, O> {
   return new Session<TUserWriteProperties, TUserReadProperties, TUserComputedProperties, O>(params.objects || [], (params.options || {}) as O, userService, params.filters || {});
 }
