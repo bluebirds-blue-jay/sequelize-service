@@ -52,10 +52,10 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     return this.primaryKeyField;
   }
 
-  public async create(object: W, options: TCreateOptions<R, C> = {}): Promise<R & C> {
+  public async create<Compute extends keyof C = undefined>(object: W, options: TCreateOptions<R, C, Compute> = {}): Promise<R & Pick<C, Compute>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = <ISession<W, R, C>>new CreateSession<W, R, C>([object], options, this);
+        const session = <ISession<W, R, C>>new CreateSession<W, R, C, Compute>([object], options, this);
 
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
@@ -67,15 +67,15 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
 
         await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this));
 
-        return session.getAt(0) as R & C;
+        return session.getAt(0) as R & Pick<C, Compute>;
       });
     });
   }
 
-  public async createMany(objects: W[], options: TCreateOptions<R, C> = {}): Promise<Collection<R & C>> {
+  public async createMany<Compute extends keyof C = undefined>(objects: W[], options: TCreateOptions<R, C, Compute> = {}): Promise<Collection<R & Pick<C, Compute>>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = <ISession<W, R, C>>new CreateSession<W, R, C>(objects, options, this);
+        const session = <ISession<W, R, C>>new CreateSession<W, R, C, Compute>(objects, options, this);
 
         await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
 
@@ -96,29 +96,29 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     });
   }
 
-  public async find<S extends keyof R>(filters: TFilters<R>, options: TFindOptions<R, C, S> = {}): Promise<Collection<Pick<R, S> & C>> {
+  public async find<Select extends keyof R, Compute extends keyof C = undefined>(filters: TFilters<R>, options: TFindOptions<R, C, Select, Compute> = {}): Promise<Collection<Pick<R, Select> & Pick<C, Compute>>> {
     const formattedFilters = this.toSequelizeWhere(filters);
     const sequelizeOptions = this.toSequelizeOptions<TSequelizeFindOptions<R>>(options, { where: formattedFilters });
 
     const objects = (await this.model.findAll(sequelizeOptions)).map(object => (<any>object).toJSON());
 
     if (objects.length) {
-      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, S>>(objects, options, this, filters));
+      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, Select, Compute>>(objects, options, this, filters));
     }
 
     return new Collection(objects);
   }
 
-  public async findOne<S extends keyof R>(filters: TFilters<R>, options: TFindOneOptions<R, C, S> = {}): Promise<Pick<R, S> & C> {
+  public async findOne<Select extends keyof R, Compute extends keyof C = undefined>(filters: TFilters<R>, options: TFindOneOptions<R, C, Select, Compute> = {}): Promise<Pick<R, Select> & Pick<C, Compute>> {
     const [ object ] = await this.find(filters, Object.assign(options, { limit: 1 }));
     return object || null;
   }
 
-  public async findByPrimaryKey<S extends keyof R>(pk: string | number, options: TFindByPrimaryKeyOptions<R, C, S> = {}): Promise<Pick<R, S> & C> {
+  public async findByPrimaryKey<Select extends keyof R, Compute extends keyof C = undefined>(pk: string | number, options: TFindByPrimaryKeyOptions<R, C, Select, Compute> = {}): Promise<Pick<R, Select> & Pick<C, Compute>> {
     return await this.findOne({ [this.getPrimaryKeyField()]: pk } as any, options);
   }
 
-  public async findByPrimaryKeys<S extends keyof R>(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C, S> = {}): Promise<Collection<Pick<R, S> & C>> {
+  public async findByPrimaryKeys<Select extends keyof R, Compute extends keyof C = undefined>(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C, Select, Compute> = {}): Promise<Collection<Pick<R, Select> & Pick<C, Compute>>> {
     return await this.find({ [this.getPrimaryKeyField()]: { in: pks } } as any, options);
   }
 
@@ -156,7 +156,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     return await this.model.count(sequelizeOptions);
   }
 
-  public async replaceOne(filters: TFilters<R>, values: W, options: TReplaceOneOptions<R, C> = {}): Promise<R & C> {
+  public async replaceOne<Compute extends keyof C = undefined>(filters: TFilters<R>, values: W, options: TReplaceOneOptions<R, C, Compute> = {}): Promise<R & Pick<C, Compute>> {
     return await this.transaction(options, async () => {
       const candidate = await this.findOne(filters, {
         transaction: options.transaction,
@@ -164,7 +164,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
       });
 
       if (candidate) {
-        const primaryKeyFilter = <any>candidate[this.getPrimaryKeyField()];
+        const primaryKeyFilter = (<any>candidate)[this.getPrimaryKeyField()];
         await this.updateByPrimaryKey(primaryKeyFilter, values, options);
         // Return the updated object for consistency
         return await this.findByPrimaryKey(primaryKeyFilter, options);
@@ -178,8 +178,8 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
   protected async afterDelete(session: IDeleteSession<W, R, C>) {}
   protected async beforeUpdate(session: IUpdateSession<W, R, C>) {}
   protected async afterUpdate(session: IUpdateSession<W, R, C>) {}
-  protected async beforeCreate(session: ICreateSession<W, R, C>) {}
-  protected async afterCreate(session: ICreateSession<W, R, C>) {}
+  protected async beforeCreate(session: ICreateSession<W, R, C, keyof C>) {}
+  protected async afterCreate(session: ICreateSession<W, R, C, keyof C>) {}
 
   protected async computeProperties(session: ISession<W, R, C>) {
     if (this.hasComputedProperties()) {
@@ -231,7 +231,7 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     return filters;
   }
 
-  protected toSequelizeOptions<T extends TAllSequelizeOptions<R>>(options: Partial<TAllOptions<R, C>> = {}, overrides: TAllSequelizeOptions<R> = {}): T {
+  protected toSequelizeOptions<T extends TAllSequelizeOptions<R>>(options: Partial<TAllOptions<R, C, keyof R, keyof C>> = {}, overrides: TAllSequelizeOptions<R> = {}): T {
     options = Object.assign({}, options);
 
     if (options.select) {
@@ -255,12 +255,12 @@ export class SequelizeService<W, R extends W, C extends {} = {}> extends Service
     return <T>Object.assign(options, overrides);
   }
 
-  private async _beforeCreate(session: ICreateSession<W, R, C>) {
+  private async _beforeCreate(session: ICreateSession<W, R, C, keyof C>) {
     await this.beforeCreate(session);
     await this.publish(Hook.WILL_CREATE, session);
   }
 
-  private async _afterCreate(session: ICreateSession<W, R, C>) {
+  private async _afterCreate(session: ICreateSession<W, R, C, keyof C>) {
     await this.afterCreate(session);
     await this.publish(Hook.DID_CREATE, session);
   }

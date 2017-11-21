@@ -3,4 +3,4 @@ import { TSelectOption } from './select-option';
 import { TComputeOption } from './compute-option';
 import { TTransactionIsolationLevelOption } from './transaction-isolation-level-option';
 
-export type TFindByPrimaryKeyOptions<R, C, S> = TSafeOptions & Partial<TSelectOption<S> & TComputeOption<C> & TTransactionIsolationLevelOption>;
+export type TFindByPrimaryKeyOptions<R, C, Select, Compute> = TSafeOptions & Partial<TSelectOption<Select> & TComputeOption<Compute> & TTransactionIsolationLevelOption>;  // TODO Add "& TTransactionOption:"
