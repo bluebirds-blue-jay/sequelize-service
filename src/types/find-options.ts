@@ -6,4 +6,4 @@ import { TLimitOption } from './limit-option';
 import { TOffsetOption } from './offset-option';
 import { TTransactionOptions } from './transaction-options';
 
-export type TFindOptions<A, CP> = TSafeOptions & Partial<TComputeOption<CP> & TSelectOption<A> & TSortOption<A> & TLimitOption & TOffsetOption & TTransactionOptions>;
+export type TFindOptions<R, C> = TSafeOptions & Partial<TComputeOption<C> & TSelectOption<R> & TSortOption<R> & TLimitOption & TOffsetOption & TTransactionOptions>;

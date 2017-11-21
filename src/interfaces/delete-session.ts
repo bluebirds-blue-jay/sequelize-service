@@ -1,6 +1,6 @@
 import { TDeleteOptions } from '../types/delete-options';
 import { ISession } from './session';
 
-export interface IDeleteSession<A, CP> extends ISession<A, CP, TDeleteOptions<A>> {
+export interface IDeleteSession<W, R extends W, C> extends ISession<W, R, C, TDeleteOptions<R>> {
 
 }

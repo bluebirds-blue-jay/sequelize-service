@@ -1,9 +1,9 @@
 import { ComputedPropertiesManager } from '../../../../../src/classes/computed-properties-manager';
-import { TUser, TUserComputedProperties } from '../../../types/user';
+import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../../types/user';
 import { UserAge } from './age';
 import { UserIsAdult } from './is-adult';
 
-export class UserComputedPropertiesManager extends ComputedPropertiesManager<TUser, TUserComputedProperties> {
+export class UserComputedPropertiesManager extends ComputedPropertiesManager<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
   protected map() {
     return {
       age: new UserAge(),

@@ -1,3 +1,3 @@
 import { TSafeOptions } from './safe-options';
 
-export type TCountOptions<A> = TSafeOptions;
+export type TCountOptions<R> = TSafeOptions;

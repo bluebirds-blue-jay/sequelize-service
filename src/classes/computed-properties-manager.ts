@@ -5,13 +5,13 @@ import { IComputedPropertiesManager } from '../interfaces/computed-properties-ma
 import { IComputedProperty } from '../interfaces/computed-property';
 
 @injectable()
-export abstract class ComputedPropertiesManager<A, CP> implements IComputedPropertiesManager<A, CP> {
-  private computedProperties: { [key in keyof CP]: { property: IComputedProperty<A, CP>, dependencies: (keyof CP)[] } };
+export abstract class ComputedPropertiesManager<W, R extends W, C> implements IComputedPropertiesManager<W, R, C> {
+  private computedProperties: { [key in keyof C]: { property: IComputedProperty<W, R, C>, dependencies: (keyof C)[] } };
 
-  public async transform(session: ISession<A, CP>, service: ISequelizeService<A, CP>) {
-    const toCompute = new Set<keyof CP>(session.getOption('compute') || []);
+  public async transform(session: ISession<W, R, C>, service: ISequelizeService<W, R, C>) {
+    const toCompute = new Set<keyof C>(session.getOption('compute') || []);
 
-    const sequence: IComputedProperty<A, CP>[][] = [];
+    const sequence: IComputedProperty<W, R, C>[][] = [];
 
     toCompute.forEach(key => {
       let index: number = 0;
@@ -47,27 +47,27 @@ export abstract class ComputedPropertiesManager<A, CP> implements IComputedPrope
     }
   }
 
-  protected abstract map(): { [key in keyof CP]: IComputedProperty<A, CP, CP[key]> | { property: IComputedProperty<A, CP, CP[key]>, dependencies: (keyof CP)[] } };
+  protected abstract map(): { [key in keyof C]: IComputedProperty<W, R, C, C[key]> | { property: IComputedProperty<W, R, C, C[key]>, dependencies: (keyof C)[] } };
 
   private getComputedProperties() {
     if (!this.computedProperties) {
       const defined = this.map();
 
-      this.computedProperties = Object.keys(defined).reduce((acc, key: keyof CP) => {
-        if ('property' as keyof CP in defined[key]) {
-          acc[key] = <{ property: IComputedProperty<A, CP, CP[keyof CP]>, dependencies: (keyof CP)[] }>defined[key];
+      this.computedProperties = Object.keys(defined).reduce((acc, key: keyof C) => {
+        if ('property' as keyof C in defined[key]) {
+          acc[key] = <{ property: IComputedProperty<W, R, C, C[keyof C]>, dependencies: (keyof C)[] }>defined[key];
         } else {
-          acc[key] = { property: <IComputedProperty<A, CP, CP[keyof CP]>>defined[key], dependencies: [] };
+          acc[key] = { property: <IComputedProperty<W, R, C, C[keyof C]>>defined[key], dependencies: [] };
         }
 
         return acc;
-      }, {} as { [key in keyof CP]: { property: IComputedProperty<A, CP, CP[key]>, dependencies: (keyof CP)[] } });
+      }, {} as { [key in keyof C]: { property: IComputedProperty<W, R, C, C[key]>, dependencies: (keyof C)[] } });
     }
 
     return this.computedProperties;
   }
 
-  private resolve<K extends keyof CP>(key: K): { property: IComputedProperty<A, CP, CP[K]>, dependencies: (keyof CP)[] } {
+  private resolve<K extends keyof C>(key: K): { property: IComputedProperty<W, R, C, C[K]>, dependencies: (keyof C)[] } {
     const definition = this.getComputedProperties()[key];
     if (!definition) {
       throw new Error(`No computed property found for name ${key}.`);

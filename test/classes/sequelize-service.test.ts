@@ -3,7 +3,6 @@ import * as Sinon from 'sinon';
 import { Hook } from '../../src/constants/hook';
 import { RestError } from '@bluejay/rest-errors';
 import { SequelizeService } from '../..';
-import { TUser } from '../resources/types/user';
 import * as Utils from '@bluejay/utils';
 import { Collection } from '@bluejay/collection';
 import * as Sequelize from 'sequelize';
@@ -11,6 +10,7 @@ import { Session } from '../../src/classes/session';
 import { SortOrder } from '../../src/constants/sort-order';
 import moment = require('moment');
 import { cat } from 'shelljs';
+import { TUserReadProperties } from '../resources/types/user';
 
 const dobCache: { [age: number]: Date } = {};
 function ageToDOB(age: number): Date {
@@ -177,7 +177,7 @@ describe('SequelizeService', function () {
       const userId1 = objects.getAt(0).id;
       const userId2 = objects.getAt(1).id;
 
-      const assertContent = (list: Collection<TUser>, ids: number | number[]): void => {
+      const assertContent = (list: Collection<TUserReadProperties>, ids: number | number[]): void => {
         ids = Utils.makeArray(ids);
         expect(list.size()).to.equal(ids.length);
         for (const id of ids) {
@@ -217,7 +217,7 @@ describe('SequelizeService', function () {
         { email: 'foo3', password: 'bar3', date_of_birth: ageToDOB(15), lucky_number: 12 }
       ]);
 
-      const assertContent = (list: Collection<TUser>, users: TUser | TUser[]): void => {
+      const assertContent = (list: Collection<TUserReadProperties>, users: TUserReadProperties | TUserReadProperties[]): void => {
         users = Utils.makeArray(users);
         expect(users.length).to.equal(list.size());
         for (let i = 0, len = list.size(); i < len; i++) {
@@ -236,7 +236,7 @@ describe('SequelizeService', function () {
 
     it('should reuse transaction', async () => {
       let tx: Sequelize.Transaction = null;
-      const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any).callsFake((session: Session<any, any>) => {
+      const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any).callsFake((session: Session<any, any, any>) => {
         tx = <Sequelize.Transaction>session.getOptions().get('transaction')
       });
       await database.transaction(async transaction => {

@@ -7,27 +7,27 @@ import * as Lodash from 'lodash';
 import { TValuesMap } from '../types/values-map';
 import { IUpdateSession } from '../interfaces/update-session';
 
-export class UpdateSession<A, CP> extends Session<A, CP, TUpdateOptions<A>> implements IUpdateSession<A, CP> {
-  private values: TValuesMap<A>;
+export class UpdateSession<W, R extends W, C> extends Session<W, R, C, TUpdateOptions<R>> implements IUpdateSession<W, R, C> {
+  private values: TValuesMap<W>;
 
-  public constructor(filters: TFilters<A>, values: TValues<A>, options: TUpdateOptions<A>, service: ISequelizeService<A, CP>) {
+  public constructor(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R>, service: ISequelizeService<W, R, C>) {
     super([], options, service, filters);
-    this.values = <TValuesMap<A>>new Map(Lodash.toPairs(values));
+    this.values = <TValuesMap<W>>new Map(Lodash.toPairs(values));
   }
 
   public getValues() {
     return this.values;
   }
 
-  public hasValue(key: keyof A) {
+  public hasValue(key: keyof W) {
     return this.values.has(key);
   }
 
-  public getValue<T extends Partial<A>[keyof A]>(key: keyof A): T {
+  public getValue<T extends Partial<W>[keyof W]>(key: keyof W): T {
     return <T>this.values.get(key);
   }
 
-  public setValue(key: keyof A, value: Partial<A>[keyof A]) {
+  public setValue<K extends keyof W>(key: K, value: W[K]) {
     this.values.set(key, value);
     return this;
   }

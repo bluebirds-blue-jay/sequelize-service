@@ -1,3 +1,3 @@
 import { TSequelizeOrder } from './sequelize-order';
 
-export type TSequelizeOrderOption<A> = { order: TSequelizeOrder<A> } ;
+export type TSequelizeOrderOption<R> = { order: TSequelizeOrder<R> } ;
