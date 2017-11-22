@@ -62,11 +62,10 @@ describe('Session', function () {
 
   describe('#getSafeOptions()', function () {
     it('should only return safe options', () => {
-      const context = new Map();
-      const session = createSession({ options: { transaction: <any>null, context: context, skipHooks: true, select: ['id'] } });
+      const session = createSession({ options: { transaction: <any>null, context: <any>null, skipHooks: true, select: ['id'] } });
       expect(session.getSafeOptions()).to.deep.equal({
         transaction: null,
-        context: context,
+        context: null,
         skipHooks: true
       });
     });
