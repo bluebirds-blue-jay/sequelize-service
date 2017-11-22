@@ -20,6 +20,6 @@ export type TUserReadProperties = {
 };
 
 export type TUserComputedProperties = {
-  age: number;
-  isAdult: boolean;
+  age?: number | null;
+  isAdult?: boolean | null;
 };

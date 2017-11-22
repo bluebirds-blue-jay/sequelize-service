@@ -266,8 +266,8 @@ describe('SequelizeService', function () {
     });
 
     it('should reuse transaction', async () => {
-      let tx: Sequelize.Transaction = null;
-      const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any).callsFake((session: Session<any, any, any>) => {
+      let tx: Sequelize.Transaction | null = null;
+      const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any).callsFake((session: Session<any, any, any, any>) => {
         tx = <Sequelize.Transaction>session.getOptions().get('transaction')
       });
       await database.transaction(async transaction => {
