@@ -3,6 +3,8 @@
     "module": "commonjs",
     "target": "es6",
     "moduleResolution": "node",
+    "strict": true,
+    "noStrictGenericChecks": true,
     "alwaysStrict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
