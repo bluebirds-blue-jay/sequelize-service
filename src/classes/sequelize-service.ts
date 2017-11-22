@@ -224,7 +224,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
           delete filter.nin;
         }
 
-        this.warn(filter.in && !(<any[]>filter.in).length, `Empty IN clause, query should be avoided`, { [propertyName]: filter });
+        this.warn(!!filter.in && !(<any[]>filter.in).length, `Empty IN clause, query should be avoided`, { [propertyName]: filter });
       }
     }
 
