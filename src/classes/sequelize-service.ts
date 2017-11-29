@@ -109,12 +109,12 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     return new Collection(objects);
   }
 
-  public async findOne<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOneOptions<R, C, KR, KC> = {}): Promise<Pick<R, KR> & Pick<C, KC>> {
+  public async findOne<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOneOptions<R, C, KR, KC> = {}): Promise<(Pick<R, KR> & Pick<C, KC>) | null> {
     const [ object ] = await this.find(filters, Object.assign(options, { limit: 1 }));
     return object || null;
   }
 
-  public async findByPrimaryKey<KR extends keyof R, KC extends keyof C = keyof {}>(pk: string | number, options: TFindByPrimaryKeyOptions<R, C, KR, KC> = {}): Promise<Pick<R, KR> & Pick<C, KC>> {
+  public async findByPrimaryKey<KR extends keyof R, KC extends keyof C = keyof {}>(pk: string | number, options: TFindByPrimaryKeyOptions<R, C, KR, KC> = {}): Promise<(Pick<R, KR> & Pick<C, KC>) | null> {
     return await this.findOne({ [this.getPrimaryKeyField()]: pk } as any, options);
   }
 
@@ -167,7 +167,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
         const primaryKeyFilter = (<any>candidate)[this.getPrimaryKeyField()];
         await this.updateByPrimaryKey(primaryKeyFilter, values, options);
         // Return the updated object for consistency
-        return await this.findByPrimaryKey(primaryKeyFilter, options);
+        return <R & Pick<C, KC>>await this.findByPrimaryKey(primaryKeyFilter, options);
       } else {
         return await this.create(values, options);
       }
