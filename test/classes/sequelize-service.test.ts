@@ -348,7 +348,11 @@ describe('SequelizeService', function () {
     it('should compute properties object', async () => {
       await userService.create({ email: 'foo', password: 'bar', date_of_birth: ageToDOB(12) });
       const found = await userService.findOne({}, { compute: ['age'] });
-      expect(found.age).to.equal(12);
+      expect(found).to.have.property('age', 12);
+    });
+    it('should return null if no object is found', async () => {
+      const found = await userService.findOne({});
+      expect(found).to.equal(null);
     });
   });
 
@@ -366,7 +370,11 @@ describe('SequelizeService', function () {
     it('should computeProperties object', async () => {
       const user = await userService.create({ email: 'foo', password: 'bar', date_of_birth: ageToDOB(12) });
       const found = await userService.findByPrimaryKey(user.id, { compute: ['age'] });
-      expect(found.age).to.equal(12);
+      expect(found).to.have.property('age', 12);
+    });
+    it('should return null if no object is found', async () => {
+      const found = await userService.findByPrimaryKey(1);
+      expect(found).to.equal(null);
     });
   });
 
@@ -550,7 +558,7 @@ describe('SequelizeService', function () {
       expect(await userService.count({})).to.equal(1);
       await userService.replaceOne({ email: 'foo' }, { email: 'foo', password: 'baz' });
       expect(await userService.count({})).to.equal(1);
-      expect((await userService.findOne({})).password).to.equal('baz');
+      expect((await userService.findOne({}))).to.have.property('password', 'baz');
     });
     it('should call create hooks', async () => {
       let calledBefore = false;
