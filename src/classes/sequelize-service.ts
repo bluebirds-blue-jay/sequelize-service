@@ -110,7 +110,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   }
 
   public async findOne<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOneOptions<R, C, KR, KC> = {}): Promise<(Pick<R, KR> & Pick<C, KC>) | null> {
-    const [ object ] = await this.find(filters, Object.assign(options, { limit: 1 }));
+    const [ object ] = await this.find(filters, Object.assign({}, options, { limit: 1 }));
     return object || null;
   }
 
