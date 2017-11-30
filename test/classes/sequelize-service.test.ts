@@ -350,6 +350,10 @@ describe('SequelizeService', function () {
       const found = await userService.findOne({}, { compute: ['age'] });
       expect(found).to.have.property('age', 12);
     });
+    it('should return null if no object is found', async () => {
+      const found = await userService.findOne({});
+      expect(found).to.equal(null);
+    });
     it('should not modify the options in a side effect', async () => {
       const options = {};
       await userService.findOne({}, options);
