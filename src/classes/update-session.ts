@@ -19,6 +19,10 @@ export class UpdateSession<W extends {}, R extends W, C extends {}> extends Sess
     return this.values;
   }
 
+  public getRawValues(): TValues<W> {
+    return Lodash.fromPairs(Array.from(this.values.entries())) as TValues<W>;
+  }
+
   public hasValue(key: keyof W) {
     return this.values.has(key);
   }

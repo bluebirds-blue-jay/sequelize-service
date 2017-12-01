@@ -124,11 +124,11 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
   public async update(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R> = {}): Promise<number> {
     return await this.transaction(options, async () => {
-      const session = <ISession<W, R, C>>new UpdateSession<W, R, C>(filters, values, options, this);
+      const session =new UpdateSession<W, R, C>(filters, values, options, this);
       await this.executeHook(Hook.DID_UPDATE, session, this._beforeUpdate.bind(this));
       const formattedFilters = this.toSequelizeWhere(filters);
       const sequelizeOptions = this.toSequelizeOptions<any>(options, { where: formattedFilters });
-      const [ count ] = await this.model.update(<R>values, sequelizeOptions);
+      const [ count ] = await this.model.update(session.getRawValues() as R, sequelizeOptions);
       await this.executeHook(Hook.DID_UPDATE, session, this._afterUpdate.bind(this));
       return count;
     });
