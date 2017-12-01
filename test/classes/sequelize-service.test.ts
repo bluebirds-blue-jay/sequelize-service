@@ -8,8 +8,9 @@ import { Collection } from '@bluejay/collection';
 import * as Sequelize from 'sequelize';
 import { Session } from '../../src/classes/session';
 import { SortOrder } from '../../src/constants/sort-order';
-import { TUserReadProperties } from '../resources/types/user';
+import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../resources/types/user';
 import moment = require('moment');
+import { IUpdateSession } from '../../src/interfaces/update-session';
 
 const dobCache: { [age: number]: Date } = {};
 function ageToDOB(age: number): Date {
@@ -456,6 +457,16 @@ describe('SequelizeService', function () {
 
       beforeUpdateStub.restore();
       afterUpdateStub.restore();
+    });
+    it('should keep modified values from session', async () => {
+      const user = await userService.create({ email: 'foo1', password: 'bar1' });
+      const beforeUpdateStub = Sinon.stub(userService, 'beforeUpdate' as any).callsFake(async (session: IUpdateSession<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) => {
+        session.setValue('last_name', 'Doe');
+      });
+      await userService.update({ id: user.id }, { date_of_birth: ageToDOB(12) });
+      const retrieved = <TUserReadProperties>await userService.findByPrimaryKey(user.id);
+      expect(retrieved.last_name).to.equal('Doe');
+      beforeUpdateStub.restore();
     });
   });
 
