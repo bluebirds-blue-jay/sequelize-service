@@ -20,7 +20,7 @@ export class UpdateSession<W extends {}, R extends W, C extends {}> extends Sess
   }
 
   public getRawValues(): TValues<W> {
-    return Lodash.fromPairs(Array.from(this.values.entries())) as TValues<W>;
+    return Lodash.fromPairs(Array.from(this.values.entries())) as any;
   }
 
   public hasValue(key: keyof W) {
