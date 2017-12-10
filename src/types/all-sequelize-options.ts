@@ -3,6 +3,7 @@ import { TSequelizeWhereOption } from './sequelize-where-option';
 import { TLimitOption } from './limit-option';
 import { TOffsetOption } from './offset-option';
 import { TTransactionOptions } from './transaction-options';
+import { TParanoidOption } from './paranoid-option';
 
 export type TAllSequelizeOptions<R> = Partial<
   TTransactionOptions &
@@ -10,5 +11,6 @@ export type TAllSequelizeOptions<R> = Partial<
   TSequelizeWhereOption<R> &
   TLimitOption &
   TOffsetOption &
-  TSequelizeOrderOption<R>
+  TSequelizeOrderOption<R> &
+  TParanoidOption
 >;

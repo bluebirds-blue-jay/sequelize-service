@@ -6,6 +6,7 @@ import { TSortOption } from './sort-option';
 import { TLimitOption } from './limit-option';
 import { TOffsetOption } from './offset-option';
 import { TTransactionOptions } from './transaction-options';
+import { TParanoidOption } from './paranoid-option';
 
 export type TAllOptions<R, C, KR, KC> = Partial<
   TContextOption &
@@ -15,5 +16,6 @@ export type TAllOptions<R, C, KR, KC> = Partial<
   TSelectOption<KR> &
   TSortOption<R> &
   TLimitOption &
-  TOffsetOption
+  TOffsetOption &
+  TParanoidOption
 >;
