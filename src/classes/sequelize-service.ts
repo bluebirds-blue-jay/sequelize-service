@@ -225,6 +225,12 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
         }
 
         this.warn(!!filter.in && !(<any[]>filter.in).length, `Empty IN clause, query should be avoided`, { [propertyName]: filter });
+
+        for (const operator of Object.getOwnPropertyNames(filter)) {
+          if (Collection.isCollection<any>(filter[operator])) {
+            filter[operator] = filter[operator].toArray();
+          }
+        }
       }
     }
 
@@ -235,6 +241,9 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     options = Object.assign({}, options);
 
     if (options.select) {
+      if (Collection.isCollection<keyof R>(options.select)) {
+        options.select = options.select.toArray();
+      }
       if (!options.select.includes(this.primaryKeyField)) {
         options.select.push(this.primaryKeyField); // Make sure the id is always present
       }
@@ -243,6 +252,9 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     }
 
     if (options.sort) {
+      if (Collection.isCollection<keyof R | [keyof R, SortOrder]>(options.sort)) {
+        options.sort = options.sort.toArray();
+      }
       (<TSequelizeOrderOption<W>>options).order = options.sort.map(item => {
         return <[keyof W, SortOrder]>(Array.isArray(item) ? item : [item, SortOrder.ASC]);
       });
