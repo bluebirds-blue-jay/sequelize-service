@@ -76,3 +76,4 @@ export { TUpdateByPrimaryKeyOptions } from './src/types/update-by-primary-key-op
 export { TUpdateOptions } from './src/types/update-options';
 export { TValuesMap } from './src/types/values-map';
 export { TValues } from './src/types/values';
+export { Config } from './src/config';
