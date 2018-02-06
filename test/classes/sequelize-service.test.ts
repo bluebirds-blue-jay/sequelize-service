@@ -44,27 +44,6 @@ describe('SequelizeService', function () {
     });
   });
 
-  describe('.formatError()', () => {
-    it('should format SequelizeUniqueConstraintError', () => {
-      const err = new Error();
-      err.name = 'SequelizeUniqueConstraintError';
-      (err as any).errors = [{ path: 'foo' }];
-      expect((SequelizeService.formatError(err) as RestError).statusCode).to.equal(409);
-    });
-    it('should format SequelizeValidationError', () => {
-      const err = new Error();
-      err.name = 'SequelizeValidationError';
-      (err as any).errors = [{ message: 'foo' }];
-      expect((SequelizeService.formatError(err) as RestError).statusCode).to.equal(400);
-    });
-    it('should format SequelizeForeignKeyConstraintError', () => {
-      const err = new Error();
-      err.name = 'SequelizeForeignKeyConstraintError';
-      (err as any).index = 'foo';
-      expect((SequelizeService.formatError(err) as RestError).statusCode).to.equal(400);
-    });
-  });
-
   describe('#create()', function () {
     it('should create a new object', async () => {
       const properties = { email: 'foo', password: 'bar' };

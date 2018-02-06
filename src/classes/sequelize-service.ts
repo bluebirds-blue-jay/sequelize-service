@@ -38,6 +38,7 @@ import { IUpdateSession } from '../interfaces/update-session';
 import { ISession } from '../interfaces/session';
 import { ICreateSession } from '../interfaces/create-session';
 import { IDeleteSession } from '../interfaces/delete-session';
+import { Config } from '../config';
 
 @injectable()
 export class SequelizeService<W extends {}, R extends W, C extends {} = {}> extends Service implements ISequelizeService<W, R, C> {
@@ -304,25 +305,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     try {
       return await callback();
     } catch (err) {
-      throw this.formatError(err);
+      throw Config.get('errorFactory')(err);
     }
-  }
-
-  public static formatError(err: any): Error {
-    switch (err.name) {
-      case 'SequelizeValidationError':
-        const firstErr = err.errors[0];
-        err = new BadRequestRestError(firstErr.message, err);
-        break;
-      case 'SequelizeUniqueConstraintError':
-        const keys = err.errors.map((subErr: any) => subErr.path);
-        err = new ConflictRestError(`Unique constraint violation : ${keys.join(', ')}.`, err);
-        break;
-      case 'SequelizeForeignKeyConstraintError':
-        err = new BadRequestRestError(`Foreign key constraint violation : ${err.index}.`, err);
-        break;
-    }
-
-    return err;
   }
 }
