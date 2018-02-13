@@ -4,7 +4,7 @@ import { Hook } from '../../src/constants/hook';
 import { RestError } from '@bluejay/rest-errors';
 import { SequelizeService } from '../..';
 import * as Utils from '@bluejay/utils';
-import { Collection } from '@bluejay/collection';
+import { Collection, ICollection } from '@bluejay/collection';
 import * as Sequelize from 'sequelize';
 import { Session } from '../../src/classes/session';
 import { SortOrder } from '../../src/constants/sort-order';
@@ -13,6 +13,7 @@ import moment = require('moment');
 import { IUpdateSession } from '../../src/interfaces/update-session';
 
 const dobCache: { [age: number]: Date } = {};
+
 function ageToDOB(age: number): Date {
   if (dobCache[age]) {
     return dobCache[age];
