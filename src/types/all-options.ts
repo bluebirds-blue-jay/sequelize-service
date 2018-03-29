@@ -8,8 +8,8 @@ import { TOffsetOption } from './offset-option';
 import { TTransactionOptions } from './transaction-options';
 import { TParanoidOption } from './paranoid-option';
 
-export type TAllOptions<R, C, KR, KC> = Partial<
-  TContextOption &
+export type TAllOptions<R, C, KR, KC, CT extends {} = any> = Partial<
+  TContextOption<CT> &
   TTransactionOptions &
   TComputeOption<KC> &
   TSkipHooksOption &
