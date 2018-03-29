@@ -7,7 +7,7 @@ export class UserAge extends ComputedProperty<TUserWriteProperties, TUserReadPro
   public async transform(session: Session<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) {
     await session.ensureProperties(session.getSafeOptions({ select: ['date_of_birth'] }));
     for (const object of session) {
-      object.age = object.date_of_birth ? moment.duration(moment().diff(object.date_of_birth)).get('years') : null;
+      object.age = object.date_of_birth ? moment().diff(new Date(object.date_of_birth), 'years') : null;
     }
   }
 }

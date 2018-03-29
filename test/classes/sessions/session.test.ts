@@ -1,4 +1,5 @@
 import { Session } from '../../../';
+import { ObjectMap } from '../../../src/classes/object-map';
 import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../resources/types/user';
 import { userService, database } from '../../resources';
 import { TAllOptions } from '../../../src/types/all-options';
@@ -26,17 +27,17 @@ describe('Session', function () {
 
   describe('#getContext()', function () {
     it('should return provided context', () => {
-      const context = new Map();
+      const context = new ObjectMap({});
       expect(createSession({ options: { context } }).getContext()).to.equal(context);
     });
     it('should have create a context', () => {
-      expect(createSession().getContext()).to.be.instanceOf(Map);
+      expect(createSession().getContext()).to.be.instanceOf(ObjectMap);
     });
   });
 
   describe('#hasOption()', function () {
     it('should return true', () => {
-      expect(createSession({ options: { context: new Map() } }).hasOption('context')).to.equal(true);
+      expect(createSession({ options: { context: new ObjectMap({}) } }).hasOption('context')).to.equal(true);
     });
     it('should return false', () => {
       expect(createSession().hasOption('context')).to.equal(false);
@@ -46,14 +47,14 @@ describe('Session', function () {
   describe('#setOption()', function () {
     it('should set option', () => {
       const session = createSession();
-      session.setOption('context', new Map());
+      session.setOption('context', new ObjectMap({}));
       expect(session.hasOption('context')).to.equal(true);
     });
   });
 
   describe('#unsetOption()', function () {
     it('should unset option', () => {
-      const session = createSession({ options: { context: new Map() } });
+      const session = createSession({ options: { context: new ObjectMap({}) } });
       expect(session.hasOption('context')).to.equal(true);
       session.unsetOption('context');
       expect(session.hasOption('context')).to.equal(false);

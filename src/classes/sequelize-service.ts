@@ -4,7 +4,6 @@ import * as Sequelize from 'sequelize';
 import { injectable } from 'inversify';
 import { TTransactionOptions } from '../types/transaction-options';
 import { TCreateOptions } from '../types/create-options';
-import { BadRequestRestError, ConflictRestError } from '@bluejay/rest-errors';
 import { CreateSession } from './create-session';
 import { TFilters } from '../types/filters';
 import { TFindOptions } from '../types/find-options';
