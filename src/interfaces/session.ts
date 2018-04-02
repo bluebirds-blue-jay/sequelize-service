@@ -13,7 +13,7 @@ export interface ISession<W, R extends W, C, O extends TSafeOptions = TAllOption
   getOption<K extends keyof O>(key: K): O[K];
   setOption<K extends keyof O>(key: K, value: O[K]): this;
   unsetOption(key: keyof O): this;
-  getSafeOptions<TR extends {} = R, TC extends {} = C, KR extends keyof R = keyof R, KC extends keyof C = keyof C>(overrides?: Partial<TAllOptions<TR, TC, KR, KC>>): TSafeOptions
+  getSafeOptions<TR extends {} = R, TC extends {} = C>(overrides?: Partial<TAllOptions<TR, TC, keyof TR, keyof TC>>): TSafeOptions
   getFilters(): TFiltersMap<R>;
   getRawFilters(): TFilters<R>
   hasFilters(): boolean;
