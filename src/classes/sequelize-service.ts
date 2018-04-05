@@ -10,7 +10,7 @@ import { TFindOptions } from '../types/find-options';
 import { Hook } from '../constants/hook';
 import { Session } from './session';
 import * as Lodash from 'lodash';
-import { Collection } from '@bluejay/collection';
+import { Collection, ICollection } from '@bluejay/collection';
 import { TAllOptions } from '../types/all-options';
 import { TAllSequelizeOptions } from '../types/all-sequelize-options';
 import { TSequelizeAttributesOption } from '../types/sequelize-attributes-option';
@@ -72,7 +72,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     });
   }
 
-  public async createMany<KC extends keyof C = keyof {}>(objects: W[], options: TCreateOptions<R, C, KC> = {}): Promise<Collection<R & Pick<C, KC>>> {
+  public async createMany<KC extends keyof C = keyof {}>(objects: W[], options: TCreateOptions<R, C, KC> = {}): Promise<ICollection<R & Pick<C, KC>>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
         const session = <ISession<W, R, C>>new CreateSession<W, R, C, KC>(objects, options, this);
@@ -91,12 +91,12 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this));
 
-        return new Collection(created);
+        return new Collection<R & Pick<C, KC>>(created);
       });
     });
   }
 
-  public async find<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOptions<R, C, KR, KC> = {}): Promise<Collection<Pick<R, KR> & Pick<C, KC>>> {
+  public async find<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOptions<R, C, KR, KC> = {}): Promise<ICollection<Pick<R, KR> & Pick<C, KC>>> {
     const formattedFilters = this.toSequelizeWhere(filters);
     const sequelizeOptions = this.toSequelizeOptions<TSequelizeFindOptions<R>>(options, { where: formattedFilters });
 
@@ -118,7 +118,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     return await this.findOne({ [this.getPrimaryKeyField()]: pk } as any, options);
   }
 
-  public async findByPrimaryKeys<KR extends keyof R, KC extends keyof C = keyof {}>(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C, KR, KC> = {}): Promise<Collection<Pick<R, KR> & Pick<C, KC>>> {
+  public async findByPrimaryKeys<KR extends keyof R, KC extends keyof C = keyof {}>(pks: string[] | number[], options: TFindByPrimaryKeyOptions<R, C, KR, KC> = {}): Promise<ICollection<Pick<R, KR> & Pick<C, KC>>> {
     return await this.find({ [this.getPrimaryKeyField()]: { in: pks } } as any, options);
   }
 

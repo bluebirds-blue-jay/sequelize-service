@@ -157,7 +157,7 @@ describe('SequelizeService', function () {
       const userId1 = objects.getAt(0).id;
       const userId2 = objects.getAt(1).id;
 
-      const assertContent = (list: Collection<TUserReadProperties>, ids: number | number[]): void => {
+      const assertContent = (list: ICollection<TUserReadProperties>, ids: number | number[]): void => {
         ids = Utils.makeArray(ids);
         expect(list.size()).to.equal(ids.length);
         for (const id of ids) {
@@ -229,7 +229,7 @@ describe('SequelizeService', function () {
         { email: 'foo3', password: 'bar3', date_of_birth: ageToDOB(15), lucky_number: 12 }
       ]);
 
-      const assertContent = (list: Collection<TUserReadProperties>, users: TUserReadProperties | TUserReadProperties[]): void => {
+      const assertContent = (list: ICollection<TUserReadProperties>, users: TUserReadProperties | TUserReadProperties[]): void => {
         users = Utils.makeArray(users);
         expect(users.length).to.equal(list.size());
         for (let i = 0, len = list.size(); i < len; i++) {
