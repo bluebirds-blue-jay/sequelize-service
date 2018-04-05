@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/bluebirds-blue-jay/sequelize-service#readme",
   "dependencies": {
-    "@bluejay/collection": "4.2.3",
+    "@bluejay/collection": "4.2.4",
     "@bluejay/rest-errors": "^3.0.8",
     "@bluejay/service": "^1.0.3",
     "@bluejay/utils": "^3.2.0",
