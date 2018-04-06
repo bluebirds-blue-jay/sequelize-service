@@ -7,10 +7,10 @@ import * as Lodash from 'lodash';
 import { TValuesMap } from '../types/values-map';
 import { IUpdateSession } from '../interfaces/update-session';
 
-export class UpdateSession<W extends {}, R extends W, C extends {}> extends Session<W, R, C, TUpdateOptions<R>> implements IUpdateSession<W, R, C> {
+export class UpdateSession<W extends {}, R extends W, C extends {}, O extends {} = {}> extends Session<W, R, C, TUpdateOptions<R> & O> implements IUpdateSession<W, R, C, O> {
   private updateValues: TValuesMap<W>;
 
-  public constructor(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R>, service: ISequelizeService<W, R, C>) {
+  public constructor(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R> & O, service: ISequelizeService<W, R, C>) {
     super([], options, service, filters);
     this.updateValues = <TValuesMap<W>>new Map(Lodash.toPairs(values));
   }
