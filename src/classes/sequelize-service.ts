@@ -1,4 +1,5 @@
 import { Service } from '@bluejay/service';
+import { DatabaseError, ValidationError } from 'sequelize';
 import { ISequelizeService } from '../interfaces/sequelize-service';
 import * as Sequelize from 'sequelize';
 import { injectable } from 'inversify';
@@ -69,7 +70,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         return session.getAt(0) as R & Pick<C, KC>;
       });
-    });
+    }, this.errorFactory.bind(this));
   }
 
   public async createMany<KC extends keyof C = keyof {}>(objects: W[], options: TCreateOptions<R, C, KC> = {}): Promise<ICollection<R & Pick<C, KC>>> {
@@ -93,7 +94,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         return new Collection<R & Pick<C, KC>>(created);
       });
-    });
+    }, this.errorFactory.bind(this));
   }
 
   public async find<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOptions<R, C, KR, KC> = {}): Promise<ICollection<Pick<R, KR> & Pick<C, KC>>> {
@@ -180,6 +181,9 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   protected async afterUpdate(session: IUpdateSession<W, R, C>) {}
   protected async beforeCreate(session: ICreateSession<W, R, C, keyof C>) {}
   protected async afterCreate(session: ICreateSession<W, R, C, keyof C>) {}
+  protected errorFactory(originalErr: ValidationError | DatabaseError | Error): Error {
+    return Config.get('errorFactory')(originalErr);
+  }
 
   protected async computeProperties(session: ISession<W, R, C>) {
     if (this.hasComputedProperties()) {
@@ -300,11 +304,11 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     super.warn(condition, message, data);
   }
 
-  public static async try<T>(callback: () => Promise<T>): Promise<T> {
+  public static async try<T>(callback: () => Promise<T>, errorFactory?:  (originalErr: ValidationError | DatabaseError | Error) => Error): Promise<T> {
     try {
       return await callback();
     } catch (err) {
-      throw Config.get('errorFactory')(err);
+      throw Config.get('errorFactory', errorFactory)(err);
     }
   }
 }
