@@ -10,6 +10,7 @@ import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-optio
 import { TDeleteOptions } from '../types/delete-options';
 import { TCountOptions } from '../types/count-options';
 import { TReplaceOneOptions } from '../types/replace-one-options';
+import { TSubscriptionHandler } from '@bluejay/service';
 
 export interface ISequelizeService<W extends {}, R extends W, C extends {}> {
   getPrimaryKeyField(): string | number;
@@ -25,4 +26,5 @@ export interface ISequelizeService<W extends {}, R extends W, C extends {}> {
   delete(filters: TFilters<R>, options?: TDeleteOptions<R>): Promise<number>;
   count(filters: TFilters<R>, options?: TCountOptions<R>): Promise<number>;
   replaceOne<KC extends keyof C = keyof {}>(filters: TFilters<R>, values: W, options?: TReplaceOneOptions<R, C, KC>): Promise<R & Pick<C, KC>>;
+  subscribe(event: string, handler: TSubscriptionHandler): void;
 }
