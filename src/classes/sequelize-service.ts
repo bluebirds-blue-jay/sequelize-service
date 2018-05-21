@@ -1,4 +1,5 @@
 import { Service } from '@bluejay/service';
+import { BaseError, DatabaseError, ValidationError } from 'sequelize';
 import { ISequelizeService } from '../interfaces/sequelize-service';
 import * as Sequelize from 'sequelize';
 import { injectable } from 'inversify';
@@ -69,7 +70,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         return session.getAt(0) as R & Pick<C, KC>;
       });
-    });
+    }, this.errorFactory);
   }
 
   public async createMany<KC extends keyof C = keyof {}>(objects: W[], options: TCreateOptions<R, C, KC> = {}): Promise<ICollection<R & Pick<C, KC>>> {
@@ -93,7 +94,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         return new Collection<R & Pick<C, KC>>(created);
       });
-    });
+    }, this.errorFactory);
   }
 
   public async find<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOptions<R, C, KR, KC> = {}): Promise<ICollection<Pick<R, KR> & Pick<C, KC>>> {
@@ -123,15 +124,17 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   }
 
   public async update(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R> = {}): Promise<number> {
-    return await this.transaction(options, async () => {
-      const session =new UpdateSession<W, R, C>(filters, values, options, this);
-      await this.executeHook(Hook.DID_UPDATE, session, this._beforeUpdate.bind(this));
-      const formattedFilters = this.toSequelizeWhere(filters);
-      const sequelizeOptions = this.toSequelizeOptions<any>(options, { where: formattedFilters });
-      const [ count ] = await this.model.update(session.getRawValues() as R, sequelizeOptions);
-      await this.executeHook(Hook.DID_UPDATE, session, this._afterUpdate.bind(this));
-      return count;
-    });
+    return await SequelizeService.try(async () => {
+      return await this.transaction(options, async () => {
+        const session =new UpdateSession<W, R, C>(filters, values, options, this);
+        await this.executeHook(Hook.DID_UPDATE, session, this._beforeUpdate.bind(this));
+        const formattedFilters = this.toSequelizeWhere(filters);
+        const sequelizeOptions = this.toSequelizeOptions<any>(options, { where: formattedFilters });
+        const [ count ] = await this.model.update(session.getRawValues() as R, sequelizeOptions);
+        await this.executeHook(Hook.DID_UPDATE, session, this._afterUpdate.bind(this));
+        return count;
+      });
+    }, this.errorFactory);
   }
 
   public async updateByPrimaryKey(pk: string | number, values: TValues<W>, options: TUpdateByPrimaryKeyOptions<R> = {}): Promise<number> {
@@ -180,6 +183,9 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   protected async afterUpdate(session: IUpdateSession<W, R, C>) {}
   protected async beforeCreate(session: ICreateSession<W, R, C, keyof C>) {}
   protected async afterCreate(session: ICreateSession<W, R, C, keyof C>) {}
+  protected errorFactory(err: ValidationError | DatabaseError | BaseError | Error) {
+    return Config.get('errorFactory')(err);
+  }
 
   protected async computeProperties(session: ISession<W, R, C>) {
     if (this.hasComputedProperties()) {
@@ -300,11 +306,11 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     super.warn(condition, message, data);
   }
 
-  public static async try<T>(callback: () => Promise<T>): Promise<T> {
+  public static async try<T>(callback: () => Promise<T>, errorFactory?: (err: ValidationError | DatabaseError | BaseError | Error) => Error): Promise<T> {
     try {
       return await callback();
     } catch (err) {
-      throw Config.get('errorFactory')(err);
+      throw Config.get('errorFactory', errorFactory)(err);
     }
   }
 }
