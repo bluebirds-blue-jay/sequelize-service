@@ -4,7 +4,7 @@ import { Hook } from '../../src/constants/hook';
 import { RestError } from '@bluejay/rest-errors';
 import { SequelizeService } from '../..';
 import * as Utils from '@bluejay/utils';
-import { Collection, ICollection } from '@bluejay/collection';
+import { ICollection } from '@bluejay/collection';
 import * as Sequelize from 'sequelize';
 import { Session } from '../../src/classes/session';
 import { SortOrder } from '../../src/constants/sort-order';
@@ -447,6 +447,20 @@ describe('SequelizeService', function () {
       const retrieved = <TUserReadProperties>await userService.findByPrimaryKey(user.id);
       expect(retrieved.last_name).to.equal('Doe');
       beforeUpdateStub.restore();
+    });
+    it('should keep context', async () => {
+      const user = await userService.create({ email: 'foo1', password: 'bar1' });
+      const beforeUpdateStub = Sinon.stub(userService, 'beforeUpdate' as any).callsFake(async (session: IUpdateSession<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) => {
+        session.getContext().set('foo', 'bar');
+      });
+      const afterUpdateStub = Sinon.stub(userService, 'afterUpdate' as any).callsFake(async (session: IUpdateSession<TUserWriteProperties, TUserReadProperties, TUserComputedProperties>) => {
+        expect(session.getContext().get('foo')).to.equal('bar');
+      });
+
+      await userService.update({ id: user.id }, { date_of_birth: ageToDOB(12) });
+
+      beforeUpdateStub.restore();
+      afterUpdateStub.restore();
     });
   });
 

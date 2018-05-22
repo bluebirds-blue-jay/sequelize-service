@@ -1,3 +1,3 @@
-import { ObjectMap } from '../classes/object-map';
+import { Context } from '../classes/context';
 
-export type TContext<T extends {} = any> = ObjectMap<T>;
+export type TContext<T extends {} = any> = Context<T>;

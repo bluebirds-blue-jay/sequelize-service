@@ -77,4 +77,4 @@ export { TUpdateOptions } from './src/types/update-options';
 export { TValuesMap } from './src/types/values-map';
 export { TValues } from './src/types/values';
 export { Config } from './src/config';
-export { ObjectMap } from './src/classes/object-map';
+export { Context } from './src/classes/context';

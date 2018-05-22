@@ -10,7 +10,7 @@ import { ISequelizeService } from '../interfaces/sequelize-service';
 import { TFiltersMap } from '../types/filters-map';
 import { TOptionsMap } from '../types/options-map';
 import { ISession } from '../interfaces/session';
-import { ObjectMap } from './object-map';
+import { Context } from './context';
 
 export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOptions = TAllOptions<R, C, keyof R, keyof C>> extends Collection<Partial<R> & Partial<C>> implements ISession<W, R, C, O> {
   private readonly context: TContext;
@@ -25,7 +25,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
     filters?: TFilters<R>
   ) {
     super(objects);
-    this.context = options.context || new ObjectMap({});
+    this.context = options.context || new Context({});
     this.options = <TOptionsMap<O>>new Map(Lodash.toPairs(options));
     this.service = service;
     this.filters = <TFiltersMap<R>>new Map(Lodash.toPairs(filters || { [this.service.getPrimaryKeyField()]: null }));
@@ -35,7 +35,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
     return this.options;
   }
 
-  public getContext() {
+  public getContext<T extends {}, M extends Context<T>>(): Context<T> {
     return this.context;
   }
 
