@@ -13,7 +13,7 @@ import { ISession } from '../interfaces/session';
 import { Context } from './context';
 
 export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOptions = TAllOptions<R, C, keyof R, keyof C>> extends Collection<Partial<R> & Partial<C>> implements ISession<W, R, C, O> {
-  private readonly context: TContext;
+  private readonly context: TContext<any>;
   private readonly options: TOptionsMap<O>;
   private readonly service: ISequelizeService<W, R, C>;
   private readonly filters: TFiltersMap<R>;
@@ -35,7 +35,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
     return this.options;
   }
 
-  public getContext<T extends {}, M extends Context<T>>(): Context<T> {
+  public getContext<T extends {}>(): TContext<T> {
     return this.context;
   }
 
