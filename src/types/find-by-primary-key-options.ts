@@ -1,8 +1,7 @@
+import { TComputeOption } from './compute-option';
+import { TParanoidOption } from './paranoid-option';
 import { TSafeOptions } from './safe-options';
 import { TSelectOption } from './select-option';
-import { TComputeOption } from './compute-option';
-import { TTransactionIsolationLevelOption } from './transaction-isolation-level-option';
-import { TParanoidOption } from './paranoid-option';
-import { TTransactionOption } from './transaction-option';
+import { TTransactionOptions } from './transaction-options';
 
-export type TFindByPrimaryKeyOptions<R, C, KR, KC> = TSafeOptions & Partial<TSelectOption<KR> & TComputeOption<KC> & TTransactionIsolationLevelOption & TParanoidOption & TTransactionOption>;
+export type TFindByPrimaryKeyOptions<R, C, KR, KC> = TSafeOptions & Partial<TSelectOption<KR> & TComputeOption<KC> & TTransactionOptions & TParanoidOption>;
