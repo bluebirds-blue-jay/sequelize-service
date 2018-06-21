@@ -1,15 +1,15 @@
-import * as Lodash from 'lodash';
-import { TContext } from '../types/context';
 import { Collection } from '@bluejay/collection';
+import * as Lodash from 'lodash';
 import * as stringify from 'stringify-object';
-import { TAllOptions } from '../types/all-options';
-import { TSafeOptions } from '../types/safe-options';
-import { TFindOptions } from '../types/find-options';
-import { TFilters } from '../types/filters';
 import { ISequelizeService } from '../interfaces/sequelize-service';
-import { TFiltersMap } from '../types/filters-map';
-import { TOptionsMap } from '../types/options-map';
 import { ISession } from '../interfaces/session';
+import { TAllOptions } from '../types/all-options';
+import { TContext } from '../types/context';
+import { TFilters } from '../types/filters';
+import { TFiltersMap } from '../types/filters-map';
+import { TFindOptions } from '../types/find-options';
+import { TOptionsMap } from '../types/options-map';
+import { TSafeOptions } from '../types/safe-options';
 import { Context } from './context';
 
 export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOptions = TAllOptions<R, C, keyof R, keyof C>> extends Collection<Partial<R> & Partial<C>> implements ISession<W, R, C, O> {
@@ -57,14 +57,14 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
     return this;
   }
 
-  public getSafeOptions<TR extends {} = R, TC extends {} = C, KR extends keyof R = keyof R, KC extends keyof C = keyof C>(overrides: Partial<TAllOptions<TR, TC, KR, KC>> = {}): TSafeOptions {
+  public getSafeOptions<TR extends {} = R, TC extends {} = C>(overrides: Partial<TAllOptions<TR, TC, keyof TR, keyof TC>> = {}): TSafeOptions {
     const options: TSafeOptions = {};
 
     for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks']) {
       options[key as keyof TSafeOptions] = this.options.get(key);
     }
 
-    return Object.assign(options, overrides)
+    return Object.assign(options, overrides);
   }
 
   public getFilters(): TFiltersMap<R> {
