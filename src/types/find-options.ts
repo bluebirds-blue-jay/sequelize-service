@@ -7,4 +7,4 @@ import { TSelectOption } from './select-option';
 import { TSortOption } from './sort-option';
 import { TTransactionOptions } from './transaction-options';
 
-export type TFindOptions<R, C, KR, KC> = TSafeOptions & Partial<TSelectOption<KR> & TComputeOption<KC> & TSortOption<R> & TLimitOption & TOffsetOption & TTransactionOptions & TParanoidOption>;
+export type TFindOptions<R, C, KR extends keyof R = keyof R, KC extends keyof C = keyof C> = TSafeOptions & Partial<TSelectOption<KR> & TComputeOption<KC> & TSortOption<R> & TLimitOption & TOffsetOption & TTransactionOptions & TParanoidOption>;
