@@ -162,6 +162,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   public async replaceOne<KC extends keyof C = keyof {}>(filters: TFilters<R>, values: W, options: TReplaceOneOptions<R, C, KC> = {}): Promise<R & Pick<C, KC>> {
     return await this.transaction(options, async () => {
       const candidate = await this.findOne(filters, {
+        paranoid: options.paranoid,
         transaction: options.transaction,
         lock: Sequelize.Transaction.LOCK.UPDATE
       });
