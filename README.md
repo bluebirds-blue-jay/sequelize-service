@@ -1,5 +1,9 @@
 # SequelizeService
 
+[![npm](https://img.shields.io/npm/v/@bluejay/sequelize-service.svg?style=flat-square)](https://www.npmjs.com/package/@bluejay/sequelize-service)
+ [![npm](https://img.shields.io/npm/dm/@bluejay/sequelize-service.svg?style=flat-square)](https://www.npmjs.com/package/@bluejay/sequelize-service)
+[![npm](https://img.shields.io/npm/l/@bluejay/sequelize-service.svg?style=flat-square)](https://www.npmjs.com/package/@bluejay/sequelize-service)
+
 Sequelize model based service, exposes basic CRUD methods, pub/sub mechanisms, computed properties through decorations.
 
 ## Requirements
