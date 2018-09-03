@@ -7,6 +7,7 @@ import { TLimitOption } from './limit-option';
 import { TOffsetOption } from './offset-option';
 import { TTransactionOptions } from './transaction-options';
 import { TParanoidOption } from './paranoid-option';
+import { TUseMasterOption } from './use-master-option';
 
 export type TAllOptions<R, C, KR, KC, CT extends {} = any> = Partial<
   TContextOption<CT> &
@@ -17,5 +18,6 @@ export type TAllOptions<R, C, KR, KC, CT extends {} = any> = Partial<
   TSortOption<R> &
   TLimitOption &
   TOffsetOption &
-  TParanoidOption
+  TParanoidOption &
+  TUseMasterOption
 >;

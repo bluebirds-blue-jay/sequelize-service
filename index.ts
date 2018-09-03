@@ -21,6 +21,7 @@ export { TArrayOperator } from './src/types/array-operator';
 export { TComputeOption } from './src/types/compute-option';
 export { TCompute } from './src/types/compute';
 export { TContextOption } from './src/types/context-option';
+export { TUseMasterOption } from './src/types/use-master-option';
 export { TContext } from './src/types/context';
 export { TCountOptions } from './src/types/count-options';
 export { TCreateOptions } from './src/types/create-options';

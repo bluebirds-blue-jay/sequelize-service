@@ -60,7 +60,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
   public getSafeOptions<TR extends {} = R, TC extends {} = C>(overrides: Partial<TAllOptions<TR, TC, keyof TR, keyof TC>> = {}): TSafeOptions {
     const options: TSafeOptions = {};
 
-    for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks']) {
+    for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks', 'useMaster']) {
       options[key as keyof TSafeOptions] = this.options.get(key);
     }
 
