@@ -67,7 +67,8 @@ describe('Session', function () {
       expect(session.getSafeOptions()).to.deep.equal({
         transaction: null,
         context: null,
-        skipHooks: true
+        skipHooks: true,
+        useMaster: undefined
       });
     });
   });

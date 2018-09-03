@@ -1,9 +1,11 @@
-import * as Lodash from 'lodash';
-import { DatabaseError, ValidationError, BaseError } from 'sequelize';
 import { BadRequestRestError, ConflictRestError } from '@bluejay/rest-errors';
+import * as Lodash from 'lodash';
+import { BaseError, DatabaseError, ValidationError } from 'sequelize';
+import { TAllSequelizeOptions } from './types/all-sequelize-options';
 
 export type TConfigProperties = {
   errorFactory: (err: ValidationError | DatabaseError | BaseError | Error) => Error;
+  sequelizeOptionsModifier: <R extends {} = {}>(options: Partial<TAllSequelizeOptions<R>>) => Partial<TAllSequelizeOptions<R>>;
 };
 
 export abstract class Config {
@@ -26,7 +28,8 @@ export abstract class Config {
       }
 
       return err || originalErr;
-    }
+    },
+    sequelizeOptionsModifier: (options) => options
   };
 
   public static get<K extends keyof TConfigProperties>(propertyName: K, useIfExists?: TConfigProperties[K] | null, existsIfNull = false): TConfigProperties[K] {

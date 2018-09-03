@@ -271,7 +271,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     delete options.compute;
     delete options.context;
 
-    return <T>Object.assign(options, overrides);
+    return <T>Config.get('sequelizeOptionsModifier')(Object.assign(options, overrides));
   }
 
   private async _beforeCreate(session: ICreateSession<W, R, C, keyof C>) {
