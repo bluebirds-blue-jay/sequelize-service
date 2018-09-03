@@ -1,1 +1,1 @@
-export type TUseMasterOption = { useMaster?: boolean; };
+export type TUseMasterOption = { useMaster: boolean; };
