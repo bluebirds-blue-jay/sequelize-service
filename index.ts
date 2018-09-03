@@ -70,6 +70,7 @@ export { TSortOption } from './src/types/sort-option';
 export { TSort } from './src/types/sort';
 export { TTransactionIsolationLevelOption } from './src/types/transaction-isolation-level-option';
 export { TTransactionLockOption } from './src/types/transaction-lock-option';
+export { TTransactionReadOnlyOption } from './src/types/transaction-read-only-option';
 export { TTransactionLock } from './src/types/transaction-lock';
 export { TTransactionOption } from './src/types/transaction-option';
 export { TTransactionOptions } from './src/types/transaction-options';
