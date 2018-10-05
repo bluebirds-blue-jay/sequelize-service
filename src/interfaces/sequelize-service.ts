@@ -12,7 +12,7 @@ import { TCountOptions } from '../types/count-options';
 import { TReplaceOneOptions } from '../types/replace-one-options';
 import { TSubscriptionHandler } from '@bluejay/service';
 
-export interface ISequelizeService<W extends {}, R extends W, C extends {}> {
+export interface ISequelizeService<W extends {}, R extends W, C extends {} = {}> {
   getPrimaryKeyField(): string | number;
   create<KR extends keyof R, KC extends keyof C = keyof {}>(object: W, options?: TCreateOptions<R, C, KC>): Promise<R & Pick<C, KC>>;
   createMany<KR extends keyof R, KC extends keyof C = keyof {}>(objects: W[], options?: TCreateOptions<R, C, KC>): Promise<ICollection<R & Pick<C, KC>>>;
