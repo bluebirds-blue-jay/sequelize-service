@@ -7,6 +7,6 @@ export interface IUpdateSession<W extends {}, R extends W, C extends {}, O exten
   getValues(): TValuesMap<W>;
   getRawValues(): TValues<W>;
   hasValue(key: keyof W): boolean;
-  getValue<T extends Partial<W>[keyof W]>(key: keyof W): T;
-  setValue(key: keyof W, value: Partial<W>[keyof W]): this;
+  getValue<K extends keyof W>(key: K): W[K];
+  setValue<K extends keyof W>(key: K, value: W[K]): this;
 }

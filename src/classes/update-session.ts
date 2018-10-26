@@ -27,8 +27,8 @@ export class UpdateSession<W extends {}, R extends W, C extends {}, O extends {}
     return this.updateValues.has(key);
   }
 
-  public getValue<T extends Partial<W>[keyof W]>(key: keyof W): T {
-    return <T>this.updateValues.get(key);
+  public getValue<K extends keyof W>(key: K): W[K] {
+    return <W[K]>this.updateValues.get(key);
   }
 
   public setValue<K extends keyof W>(key: K, value: W[K]) {
