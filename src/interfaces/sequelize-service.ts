@@ -1,5 +1,6 @@
 import { ICollection } from '@bluejay/collection';
 import { TFilters } from '../types/filters';
+import { TUpsertOptions } from '../types/upsert-options';
 import { TValues } from '../types/values';
 import { TCreateOptions } from '../types/create-options';
 import { TFindOptions } from '../types/find-options';
@@ -16,6 +17,7 @@ export interface ISequelizeService<W extends {}, R extends W, C extends {} = {}>
   getPrimaryKeyField(): string | number;
   create<KR extends keyof R, KC extends keyof C = keyof {}>(object: W, options?: TCreateOptions<R, C, KC>): Promise<R & Pick<C, KC>>;
   createMany<KR extends keyof R, KC extends keyof C = keyof {}>(objects: W[], options?: TCreateOptions<R, C, KC>): Promise<ICollection<R & Pick<C, KC>>>;
+  upsert<KR extends keyof R, KC extends keyof C = keyof {}>(object: W, options?: TUpsertOptions<R, C>): Promise<R & Pick<C, KC>>;
   find<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options?: TFindOptions<R, C, KR, KC>): Promise<ICollection<Pick<R, KR> & Pick<C, KC>>>;
   warn(condition: boolean, message: string, data?: object): void;
   findOne<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options?: TFindOneOptions<R, C, KR, KC>): Promise<(Pick<R, KR> & Pick<C, KC>) | null>;

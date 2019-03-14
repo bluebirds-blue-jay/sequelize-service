@@ -1,8 +1,10 @@
+import { pick } from '@bluejay/utils';
 import { Service } from '@bluejay/service';
 import { BaseError, DatabaseError, ValidationError } from 'sequelize';
 import { ISequelizeService } from '../interfaces/sequelize-service';
 import * as Sequelize from 'sequelize';
 import { injectable } from 'inversify';
+import { IUpsertSession } from '../interfaces/upsert-session';
 import { TTransactionOptions } from '../types/transaction-options';
 import { TCreateOptions } from '../types/create-options';
 import { CreateSession } from './create-session';
@@ -39,6 +41,8 @@ import { ISession } from '../interfaces/session';
 import { ICreateSession } from '../interfaces/create-session';
 import { IDeleteSession } from '../interfaces/delete-session';
 import { Config } from '../config';
+import { TUpsertOptions } from '../types/upsert-options';
+import { UpsertSession } from './upsert-session';
 
 @injectable()
 export class SequelizeService<W extends {}, R extends W, C extends {} = {}> extends Service implements ISequelizeService<W, R, C> {
@@ -97,6 +101,36 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     }, this.errorFactory);
   }
 
+  public async upsert<KC extends keyof C = keyof {}>(object: W, options: TUpsertOptions<R, C> = {}): Promise<R & Pick<C, KC>> {
+    return await SequelizeService.try(async () => {
+      return await this.transaction(options, async () => {
+        const session = new UpsertSession<W, R, C, KC>([object], options, this);
+
+        await this.executeHook(Hook.WILL_UPSERT, session, this._beforeUpsert.bind(this));
+
+        const created = await this.model.upsert(<R>object, options);
+
+        session.setCreated(created);
+
+        let filters: TFilters<R>;
+        if (options.fields) {
+          filters = pick(object, options.fields as any as (keyof W)[]) as any as TFilters<R>;
+        } else {
+          filters = Lodash.clone(object) as any as TFilters<R>;
+        }
+
+        const createdObject = await this.findOne(filters, options) as R;
+        session.setObjects([createdObject]);
+
+        await this.computeProperties(session);
+
+        await this.executeHook(Hook.DID_UPSERT, session, this._afterUpsert.bind(this));
+
+        return session.getAt(0) as R & Pick<C, KC>;
+      });
+    }, this.errorFactory);
+  }
+
   public async find<KR extends keyof R, KC extends keyof C = keyof {}>(filters: TFilters<R>, options: TFindOptions<R, C, KR, KC> = {}): Promise<ICollection<Pick<R, KR> & Pick<C, KC>>> {
     const formattedFilters = this.toSequelizeWhere(filters);
     const sequelizeOptions = this.toSequelizeOptions<TSequelizeFindOptions<R>>(options, { where: formattedFilters });
@@ -126,7 +160,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   public async update(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R> = {}): Promise<number> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session =new UpdateSession<W, R, C>(filters, values, options, this);
+        const session = new UpdateSession<W, R, C>(filters, values, options, this);
         await this.executeHook(Hook.DID_UPDATE, session, this._beforeUpdate.bind(this));
         const formattedFilters = this.toSequelizeWhere(filters);
         const sequelizeOptions = this.toSequelizeOptions<any>(options, { where: formattedFilters });
@@ -184,6 +218,9 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   protected async afterUpdate(session: IUpdateSession<W, R, C>) {}
   protected async beforeCreate(session: ICreateSession<W, R, C, keyof C>) {}
   protected async afterCreate(session: ICreateSession<W, R, C, keyof C>) {}
+  protected async beforeUpsert(session: IUpsertSession<W, R, C>) {}
+  protected async afterUpsert(session: IUpsertSession<W, R, C>) {}
+
   protected errorFactory(err: ValidationError | DatabaseError | BaseError | Error) {
     return Config.get('errorFactory')(err);
   }
@@ -284,6 +321,16 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     await this.publish(Hook.DID_CREATE, session);
   }
 
+  private async _beforeUpsert(session: IUpsertSession<W, R, C>) {
+    await this.beforeUpsert(session);
+    await this.publish(Hook.WILL_UPSERT, session);
+  }
+
+  private async _afterUpsert(session: IUpsertSession<W, R, C>) {
+    await this.afterUpsert(session);
+    await this.publish(Hook.DID_UPSERT, session);
+  }
+
   private async _beforeUpdate(session: IUpdateSession<W, R, C>) {
     await this.beforeUpdate(session);
     await this.publish(Hook.WILL_UPDATE, session);
@@ -298,6 +345,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     await this.beforeDelete(session);
     await this.publish(Hook.WILL_DELETE, session);
   }
+
   private async _afterDelete(session: IDeleteSession<W, R, C>) {
     await this.afterDelete(session);
     await this.publish(Hook.DID_DELETE, session);

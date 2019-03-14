@@ -1,0 +1,1 @@
+export type TUpsertKeysOption<C> = { fields: (keyof C)[] };

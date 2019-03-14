@@ -1,4 +1,5 @@
 import { database, userService } from '../resources';
+import { pick } from '@bluejay/utils';
 import * as Sinon from 'sinon';
 import { Hook } from '../../src/constants/hook';
 import { RestError } from '@bluejay/rest-errors';
@@ -610,6 +611,59 @@ describe('SequelizeService', function () {
 
       beforeUpdateStub.restore();
       afterUpdateStub.restore();
+    });
+  });
+
+  describe('#upsert()', function () {
+    it('should create object', async () => {
+      const properties = { email: 'foo', password: 'bar' };
+      expect(await userService.count({})).to.equal(0);
+      const user = await userService.upsert(properties);
+      expect(await userService.count({})).to.equal(1);
+      expect(user).to.containSubset(properties);
+    });
+    it('should create object and compute properties', async () => {
+      const user = await userService.upsert({ email: 'foo', password: 'bar' }, { compute: ['age']});
+      expect(user).to.include.keys(['id', 'email', 'password', 'age']);
+    });
+    it('should update object', async () => {
+      const createProperties = { email: 'foo', password: 'bar', first_name: 'alice' };
+      const upsertProperties = { email: 'foo', password: 'baz', first_name: 'bob' };
+
+      expect(await userService.count({})).to.equal(0);
+      await userService.create(createProperties);
+      expect(await userService.count({})).to.equal(1);
+      const user = await userService.upsert(upsertProperties);
+      expect(await userService.count({})).to.equal(1);
+      expect(user).to.containSubset({ ...createProperties, ...upsertProperties });
+    });
+    it('should update object (with fields)', async () => {
+      const createProperties = { email: 'foo', password: 'bar', first_name: 'alice' };
+      const upsertProperties = { email: 'foo', password: 'baz', first_name: 'bob' };
+      expect(await userService.count({})).to.equal(0);
+      await userService.create(createProperties);
+      expect(await userService.count({})).to.equal(1);
+      const user = await userService.upsert(upsertProperties, { fields: ['password'] });
+      expect(await userService.count({})).to.equal(1);
+      expect(user).to.containSubset({ ...createProperties, ...pick(upsertProperties, 'password') }); // Only password was updated!
+    });
+    it('should call upsert hooks', async () => {
+      let calledBefore = false;
+      let calledAfter = false;
+      const beforeUpsertStub = Sinon.stub(userService, 'beforeUpsert' as any);
+      const afterUpsertStub = Sinon.stub(userService, 'afterUpsert' as any);
+      userService.subscribe(Hook.DID_UPSERT, () => calledBefore = true);
+      userService.subscribe(Hook.WILL_UPSERT, () => calledAfter = true);
+
+      await userService.upsert({ email: 'foo', password: 'bar' });
+
+      expect(beforeUpsertStub.calledOnce).to.equal(true);
+      expect(afterUpsertStub.calledOnce).to.equal(true);
+      expect(calledBefore).to.equal(true);
+      expect(calledAfter).to.equal(true);
+
+      beforeUpsertStub.restore();
+      afterUpsertStub.restore();
     });
   });
 });
