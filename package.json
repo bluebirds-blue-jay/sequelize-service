@@ -1,6 +1,6 @@
 {
   "name": "@bluejay/sequelize-service",
-  "version": "6.2.3",
+  "version": "6.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
