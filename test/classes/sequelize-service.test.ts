@@ -9,6 +9,8 @@ import { ICollection } from '@bluejay/collection';
 import * as Sequelize from 'sequelize';
 import { Session } from '../../src/classes/session';
 import { SortOrder } from '../../src/constants/sort-order';
+import { UserComputedPropertiesManager } from '../resources/services/user/computed-properties';
+import { UserAge } from '../resources/services/user/computed-properties/age';
 import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../resources/types/user';
 import moment = require('moment');
 import { IUpdateSession } from '../../src/interfaces/update-session';
@@ -266,6 +268,24 @@ describe('SequelizeService', function () {
       ]);
 
       const [ user1, user2 ] = await userService.find({}, { compute: ['age', 'isAdult'] });
+
+      expect(user1).to.containSubset({ age: 12, isAdult: false });
+      expect(user2).to.containSubset({ age: 23, isAdult: true });
+    });
+
+    it('should compute properties only once', async () => {
+      await userService.createMany([
+        { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(12) },
+        { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(23) }
+      ]);
+
+      const userComputedPropertiesManagerTransformSpy = Sinon.spy(UserComputedPropertiesManager.prototype, 'transform');
+      const userAgeComputerPropertyTransformSpy = Sinon.spy(UserAge.prototype, 'transform');
+
+      const [ user1, user2 ] = await userService.find({}, { compute: ['age', 'isAdult'] });
+
+      expect(userComputedPropertiesManagerTransformSpy.callCount).to.equal(1);
+      expect(userAgeComputerPropertyTransformSpy.callCount).to.equal(1);
 
       expect(user1).to.containSubset({ age: 12, isAdult: false });
       expect(user2).to.containSubset({ age: 23, isAdult: true });

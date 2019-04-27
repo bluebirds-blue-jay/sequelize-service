@@ -35,9 +35,6 @@ export abstract class ComputedPropertiesManager<W extends {}, R extends W, C ext
       } else {
         sequence[index].push(definition.property);
       }
-
-      sequence[index] = sequence[index] || [];
-      sequence[index].push(definition.property);
     });
 
     for (const group of sequence) {
