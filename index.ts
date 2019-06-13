@@ -40,6 +40,7 @@ export { TOperatorFilter } from './src/types/operator-filter';
 export { TOperator } from './src/types/operator';
 export { TOptionsMap } from './src/types/options-map';
 export { TOptions } from './src/types/options';
+export { TParanoidOption } from './src/types/paranoid-option';
 export { TReplaceOneOptions } from './src/types/replace-one-options';
 export { TReturningOption } from './src/types/returning-option';
 export { TReturning } from './src/types/returning';
