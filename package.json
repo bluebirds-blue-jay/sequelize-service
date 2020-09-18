@@ -1,7 +1,7 @@
 {
   "name": "@bluejay/sequelize-service",
   "description": "",
-  "version": "6.3.2",
+  "version": "7.0.0-alpha.0",
   "license": "MIT",
   "author": "Sylvain Estevez",
   "main": "./dist/index.js",
