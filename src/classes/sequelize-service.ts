@@ -231,14 +231,14 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     super.warn(condition, message, data);
   }
 
-  protected async beforeDelete(session: IDeleteSession<W, R, C>) {}
-  protected async afterDelete(session: IDeleteSession<W, R, C>) {}
-  protected async beforeUpdate(session: IUpdateSession<W, R, C>) {}
-  protected async afterUpdate(session: IUpdateSession<W, R, C>) {}
-  protected async beforeCreate(session: ICreateSession<W, R, C, keyof C>) {}
-  protected async afterCreate(session: ICreateSession<W, R, C, keyof C>) {}
-  protected async beforeUpsert(session: IUpsertSession<W, R, C>) {}
-  protected async afterUpsert(session: IUpsertSession<W, R, C>) {}
+  protected async beforeDelete(session: IDeleteSession<W, R, C>) { /* Nothing */ }
+  protected async afterDelete(session: IDeleteSession<W, R, C>) { /* Nothing */ }
+  protected async beforeUpdate(session: IUpdateSession<W, R, C>) { /* Nothing */ }
+  protected async afterUpdate(session: IUpdateSession<W, R, C>) { /* Nothing */ }
+  protected async beforeCreate(session: ICreateSession<W, R, C, keyof C>) { /* Nothing */ }
+  protected async afterCreate(session: ICreateSession<W, R, C, keyof C>) { /* Nothing */ }
+  protected async beforeUpsert(session: IUpsertSession<W, R, C>) { /* Nothing */ }
+  protected async afterUpsert(session: IUpsertSession<W, R, C>) { /* Nothing */ }
 
   protected errorFactory(err: ValidationError | DatabaseError | BaseError | Error) {
     return Config.get('errorFactory')(err);
