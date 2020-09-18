@@ -9,11 +9,11 @@ export class Context<T extends {} = any> {
   }
 
   public as<U extends T>(): Context<U> {
-    return this as Context<U>;
+    return this as unknown as Context<U>;
   }
 
   public get<K extends keyof T>(key: K): T[K] {
-    return this.data.get(key);
+    return this.data.get(key) as T[K];
   }
 
   public set<K extends keyof T>(key: K, value: T[K]): this {

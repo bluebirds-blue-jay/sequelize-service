@@ -1,0 +1,377 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@bluejay/sequelize-service</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@bluejay/sequelize-service</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> @bluejay/sequelize-service</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#sequelizeservice" id="sequelizeservice" style="color: inherit; text-decoration: none;">
+					<h1>SequelizeService</h1>
+				</a>
+				<p><a href="https://www.npmjs.com/package/@bluejay/sequelize-service"><img src="https://img.shields.io/npm/v/@bluejay/sequelize-service.svg?style=flat-square" alt="npm"></a>
+					<a href="https://www.npmjs.com/package/@bluejay/sequelize-service"><img src="https://img.shields.io/npm/dm/@bluejay/sequelize-service.svg?style=flat-square" alt="npm"></a>
+				<a href="https://www.npmjs.com/package/@bluejay/sequelize-service"><img src="https://img.shields.io/npm/l/@bluejay/sequelize-service.svg?style=flat-square" alt="npm"></a></p>
+				<p>Sequelize model based service, exposes basic CRUD methods, pub/sub mechanisms, computed properties through decorations.</p>
+				<a href="#requirements" id="requirements" style="color: inherit; text-decoration: none;">
+					<h2>Requirements</h2>
+				</a>
+				<ul>
+					<li><code>node &gt;= 8.6</code>, tested with:<ul>
+							<li><code>node@8.6.0</code></li>
+							<li><code>node@12.8.1</code></li>
+						</ul>
+					</li>
+					<li><code>typescript &gt;= 4.0</code>, tested with:<ul>
+							<li><code>typescript@4.0.2</code></li>
+						</ul>
+					</li>
+					<li><code>inversify &gt;= 4.13</code></li>
+				</ul>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<p><code>npm i inversify reflect-metadata @bluejay/sequelize-service</code></p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#creating-a-sequelizeservice" id="creating-a-sequelizeservice" style="color: inherit; text-decoration: none;">
+					<h3>Creating a SequelizeService</h3>
+				</a>
+				<p>The only required dependency is a Sequelize model.</p>
+				<ul>
+					<li><code>TUserWriteProperties</code> is an interface describing a user&#39;s properties used during write and update operations. It is recommended to require properties that are required to create the object and leaving the others as optional.</li>
+					<li><code>TUserReadProperties</code> is an interface describing a user&#39;s properties used during read operations. It is recommend to define as readonly.</li>
+					<li><code>TUserComputedProperties</code> is an interface describing the possible computed properties for a user object.  </li>
+					<li><code>UserModel</code> is the User Sequelize model.</li>
+				</ul>
+				<a href="#manually" id="manually" style="color: inherit; text-decoration: none;">
+					<h4>Manually</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> userService = <span class="hljs-keyword">new</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;(UserModel);</code></pre>
+				<a href="#using-inversify" id="using-inversify" style="color: inherit; text-decoration: none;">
+					<h4>Using inversify</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-comment">// TUserReadProperties is the most inclusive interface, describing all the fields from the User schema</span>
+<span class="hljs-meta">@injectable</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
+  <span class="hljs-meta">@inject</span>(ID.UserModel) <span class="hljs-keyword">protected</span> model: Sequelize.Model&lt;TUserReadProperties, TUserReadProperties&gt;;
+}
+
+<span class="hljs-comment">// ---</span>
+
+<span class="hljs-comment">// Make sure to declare the service as a singleton to ensure events are caught by all subscribers</span>
+container.bind&lt;ISequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;&gt;(ID.UserService).to(UserService).inSingletonScope();</code></pre>
+				<a href="#sessions" id="sessions" style="color: inherit; text-decoration: none;">
+					<h3>Sessions</h3>
+				</a>
+				<p>All hooks and many methods receive a <code>Session</code> object which provides various handful methods to deal with a set of data, in a particular context.</p>
+				<p>A <code>Session</code> inherits from <a href="https://github.com/bluebirds-blue-jay/collection">Collection</a>, so you can manipulate/iterate data asynchronous without the need of external libraries.</p>
+				<p>Sessions also expose various methods related to the type of query you&#39;re currently dealing with. For example during an update:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
+  <span class="hljs-comment">// ...</span>
+  <span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> beforeUpdate(session: UpdateSession&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) {
+    session.getOption(<span class="hljs-string">'transaction'</span>); <span class="hljs-comment">// Get the transaction under which this update is being performed</span>
+    session.hasFilter(<span class="hljs-string">'email'</span>); <span class="hljs-comment">// Whether os not this update is filtered by email</span>
+    session.getValue(<span class="hljs-string">'email'</span>); <span class="hljs-comment">// Get the update value of `email`, if present</span>
+
+    <span class="hljs-keyword">await</span> session.fetch(); <span class="hljs-comment">// Performs a select</span>
+
+    <span class="hljs-keyword">await</span> session.ensureIdentified(); <span class="hljs-comment">// Make sure all objects corresponding to the filters have their primary key set</span>
+
+    <span class="hljs-keyword">await</span> session.ensureProperties({ select: [<span class="hljs-string">'email'</span>, <span class="hljs-string">'age'</span>] }); <span class="hljs-comment">// Only performs a SELECT if not all objects have their age and email set</span>
+
+    <span class="hljs-comment">// Run a callback for each user, in parallel</span>
+    <span class="hljs-keyword">await</span> session.forEachParallel(<span class="hljs-keyword">async</span> user =&gt; {
+
+    });
+
+    <span class="hljs-comment">// Run a callback for each user, in series</span>
+    <span class="hljs-keyword">await</span> session.forEachSeries(<span class="hljs-keyword">async</span> user =&gt; {
+
+    });
+
+    <span class="hljs-comment">// Get all the users IDs</span>
+    <span class="hljs-keyword">const</span> ids = session.mapByProperty(<span class="hljs-string">'id'</span>);
+  }
+}</code></pre>
+				<p>You might notice that this documentation never refers to particular instances, this is because this entire module is based on sessions, which in turn encourage you to think all queries as bulk operations, and therefore optimize for multiple objects.</p>
+				<a href="#querying" id="querying" style="color: inherit; text-decoration: none;">
+					<h3>Querying</h3>
+				</a>
+				<p>All methods returning multiple objects return a <a href="https://github.com/bluebirds-blue-jay/collection">Collection</a>. Methods returning a single return an unwrapped object.</p>
+				<a href="#creating-objects" id="creating-objects" style="color: inherit; text-decoration: none;">
+					<h4>Creating objects</h4>
+				</a>
+				<a href="#creating-a-single-object" id="creating-a-single-object" style="color: inherit; text-decoration: none;">
+					<h5>Creating a single object</h5>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userService.create({ email: <span class="hljs-string">'foo@example.com'</span>, password: <span class="hljs-string">'abcdefg'</span> });
+<span class="hljs-built_in">console</span>.log(user.email); <span class="hljs-comment">// foo@example.com</span></code></pre>
+				<a href="#creating-multiple-objects" id="creating-multiple-objects" style="color: inherit; text-decoration: none;">
+					<h5>Creating multiple objects</h5>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> userService.createMany([{ email: <span class="hljs-string">'foo@example.com'</span>, password: <span class="hljs-string">'abcdefg'</span> } <span class="hljs-comment">/*, ...*/</span> ]);
+users.forEach(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(user.email));</code></pre>
+				<a href="#finding-objects" id="finding-objects" style="color: inherit; text-decoration: none;">
+					<h4>Finding objects</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-comment">// Find multiple users</span>
+<span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> userService.find({ email: { <span class="hljs-keyword">in</span>: [<span class="hljs-string">'foo@example.com'</span>, <span class="hljs-string">'foo@bar.com'</span>] } });
+
+<span class="hljs-comment">// Find a single user by its primary key</span>
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userService.findByPrimaryKey(<span class="hljs-number">1</span>);
+
+<span class="hljs-comment">// Find multiple users by their primary key</span>
+<span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> userService.findByPrimaryKeys([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]);</code></pre>
+				<a href="#updating-objects" id="updating-objects" style="color: inherit; text-decoration: none;">
+					<h4>Updating objects</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-comment">// Change the user email to another value</span>
+<span class="hljs-keyword">await</span> userService.update({ email: <span class="hljs-string">'foo@example.comn'</span> }, { email: <span class="hljs-string">'foo@bar.com'</span> });
+
+<span class="hljs-comment">// Target a user by primary key</span>
+<span class="hljs-keyword">await</span> userService.updateByPrimaryKey(<span class="hljs-number">1</span>, {  email: <span class="hljs-string">'foo@bar.com'</span> });</code></pre>
+				<a href="#upserting-an-obejct" id="upserting-an-obejct" style="color: inherit; text-decoration: none;">
+					<h4>Upserting an obejct</h4>
+				</a>
+				<p><em>Caution:</em> This methods will lock the &quot;candidate&quot; row, and perform either a <code>create</code> or an <code>update</code> depending on if a candidate was found.</p>
+				<p><em>Note:</em> For consistency, the created/updated row is always returned, meaning that we perform a SELECT after the update, if necessary.</p>
+				<p>This method uses a more MongoDB like syntax, allowing you to pass complex filters as part of the matching criteria.</p>
+				<pre><code class="language-typescript"><span class="hljs-comment">// Make sure a user older than 21 exists</span>
+<span class="hljs-keyword">await</span> userService.replaceOne({ email: <span class="hljs-string">'foo@example.com'</span>, age: { gte: <span class="hljs-number">21</span> } }, { email: <span class="hljs-string">'foo@example.com'</span>, age: <span class="hljs-number">21</span> });</code></pre>
+				<a href="#deleting-objects" id="deleting-objects" style="color: inherit; text-decoration: none;">
+					<h4>Deleting objects</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-comment">// Remove all users younger than 21 </span>
+<span class="hljs-keyword">await</span> userService.delete({ age: { lt: <span class="hljs-number">21</span> } });</code></pre>
+				<a href="#counting-objects" id="counting-objects" style="color: inherit; text-decoration: none;">
+					<h4>Counting objects</h4>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> count = <span class="hljs-keyword">await</span> userService.count({ age: { lt: <span class="hljs-number">30</span> } });</code></pre>
+				<a href="#working-with-transactions" id="working-with-transactions" style="color: inherit; text-decoration: none;">
+					<h3>Working with transactions</h3>
+				</a>
+				<p><em>Note:</em> All writing methods automatically create a transaction, which encapsulates both the hooks and the model call itself, meaning that if an <code>afterCreate</code> hooks fails, for example, the entire creation will be rolled back,.</p>
+				<a href="#creating-a-transaction" id="creating-a-transaction" style="color: inherit; text-decoration: none;">
+					<h4>Creating a transaction</h4>
+				</a>
+				<p>Within your service, the <code>protected</code> <code>transaction()</code> method allows you to create a new transaction.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.transaction({}, <span class="hljs-keyword">async</span> transaction =&gt; {
+  <span class="hljs-comment">// Your code here</span>
+});</code></pre>
+				<a href="#ensuring-a-transaction" id="ensuring-a-transaction" style="color: inherit; text-decoration: none;">
+					<h4>Ensuring a transaction</h4>
+				</a>
+				<p>There are times when you want to make sure you&#39;re running under a transaction, but not necessarily create a new one, if, for example, your current method&#39;s caller already created one.</p>
+				<p>The <code>transaction()</code> method takes an <code>options</code> parameter, which may contain a <code>transaction</code> property, in which the transaction will be reused.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.transaction({}, <span class="hljs-keyword">async</span> transaction =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.transaction({ transaction }, <span class="hljs-function"><span class="hljs-params">newTransaction</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(newTransaction === transaction); <span class="hljs-comment">// true</span>
+  });
+});</code></pre>
+				<a href="#passing-transactions-to-methods" id="passing-transactions-to-methods" style="color: inherit; text-decoration: none;">
+					<h4>Passing transactions to methods</h4>
+				</a>
+				<p>All query methods accept an optional <code>transaction</code>.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">await</span> userService.find({}, { transaction });
+<span class="hljs-keyword">await</span> userService.create({ email: <span class="hljs-string">'foo@example.com'</span>, password: <span class="hljs-string">'abcdefg'</span> }, { transaction });</code></pre>
+				<a href="#working-with-hooks" id="working-with-hooks" style="color: inherit; text-decoration: none;">
+					<h3>Working with hooks</h3>
+				</a>
+				<p>Hooks are a convenient way to validate and transform you data.</p>
+				<p>Hooks are ran for all write queries, before and after the query.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
+  <span class="hljs-comment">/// ...</span>
+
+  <span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> beforeCreate(session: CreateSession&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) {
+    <span class="hljs-keyword">await</span> session.forEachParallel(<span class="hljs-keyword">async</span> user =&gt; {
+      <span class="hljs-comment">// Your code here</span>
+    });
+  }
+}</code></pre>
+				<a href="#working-with-events" id="working-with-events" style="color: inherit; text-decoration: none;">
+					<h3>Working with events</h3>
+				</a>
+				<a href="#computed-properties" id="computed-properties" style="color: inherit; text-decoration: none;">
+					<h3>Computed properties</h3>
+				</a>
+				<p>Computed properties allow you to decorate objects with properties that are not stored in your DB.</p>
+				<p>Computed properties are instances of the abstract <code>ComputedProperty</code> class and must implement their <code>transform</code> method, which takes a <code>Session</code> as an argument.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> UserAge <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties, <span class="hljs-built_in">number</span>&gt; { <span class="hljs-comment">// "age" is a number</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) { <span class="hljs-comment">// "transform" is abstract and must be implemented</span>
+    session.forEach(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> {
+      user.age = moment.duration(moment().diff(user.date_of_birth)).get(<span class="hljs-string">'years'</span>); <span class="hljs-comment">// We set "age" on each object of the session, based on the date of birth</span>
+    });
+  }
+}</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> UserIsAdult <span class="hljs-keyword">extends</span> ComputedProperty&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties, <span class="hljs-built_in">boolean</span>&gt; {
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> transform(session: Session&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt;) {
+    <span class="hljs-keyword">await</span> session.ensureProperties({ compute: [<span class="hljs-string">'age'</span>] }); <span class="hljs-comment">// We make sure the age is set</span>
+    session.forEach(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> {
+      user.isAdult = user.age &gt;= <span class="hljs-number">21</span>
+    });
+  }
+}</code></pre>
+				<p>To make your service aware of the computed properties, you need to create a manager:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> UserComputedPropertiesManager <span class="hljs-keyword">extends</span> UserComputedPropertiesManager&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
+  <span class="hljs-keyword">protected</span> map() {
+    <span class="hljs-keyword">return</span> {
+      age: <span class="hljs-keyword">new</span> UserAge(),
+      isAdult: { property: <span class="hljs-keyword">new</span> UserIsAdult(), dependencies: [<span class="hljs-string">'age'</span>] } <span class="hljs-comment">// We make sure that the age is fetched before</span>
+    };
+  }
+}</code></pre>
+				<p>And finally you can set the manager on your service:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> UserService <span class="hljs-keyword">extends</span> SequelizeService&lt;TUserWriteProperties, TUserReadProperties, TUserComputedProperties&gt; {
+  <span class="hljs-keyword">protected</span> computedPropertiesManager = <span class="hljs-keyword">new</span> UserComputedPropertiesManager();
+
+  <span class="hljs-comment">// ...</span>
+}</code></pre>
+				<p>You can now request <code>age</code> and <code>isAdult</code> to be computed using the <code>compute</code> option:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> myUser = <span class="hljs-keyword">await</span> userService.findByPrimaryKey(<span class="hljs-number">1</span>, { compute: [<span class="hljs-string">'age'</span>, <span class="hljs-string">'isAdult'</span>] });</code></pre>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>See <a href="https://bluebirds-blue-jay.github.io/sequelize-service/">Github Pages</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

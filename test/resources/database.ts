@@ -26,7 +26,7 @@ database.setup = async function() {
   await connection.query(`DROP DATABASE IF EXISTS ${DB_NAME};`);
   await connection.query(`CREATE DATABASE ${DB_NAME};`);
   await database.sync({ force: true });
-  await connection.close();
+  await connection.end();
   this.isSetup = true;
 };
 

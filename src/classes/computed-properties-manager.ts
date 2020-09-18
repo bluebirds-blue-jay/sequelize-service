@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
-import { ISession } from '../interfaces/session';
-import { ISequelizeService } from '../interfaces/sequelize-service';
 import { IComputedPropertiesManager } from '../interfaces/computed-properties-manager';
 import { IComputedProperty } from '../interfaces/computed-property';
+import { ISequelizeService } from '../interfaces/sequelize-service';
+import { ISession } from '../interfaces/session';
 
 @injectable()
 export abstract class ComputedPropertiesManager<W extends {}, R extends W, C extends {}> implements IComputedPropertiesManager<W, R, C> {
@@ -14,7 +14,7 @@ export abstract class ComputedPropertiesManager<W extends {}, R extends W, C ext
     const sequence: IComputedProperty<W, R, C>[][] = [];
 
     toCompute.forEach(key => {
-      let index: number = 0;
+      let index = 0;
 
       const definition = this.resolve(key);
 
@@ -50,7 +50,7 @@ export abstract class ComputedPropertiesManager<W extends {}, R extends W, C ext
     if (!this.computedProperties) {
       const defined = this.map();
 
-      this.computedProperties = Object.keys(defined).reduce((acc, key: keyof C) => {
+      this.computedProperties = (Object.keys(defined) as (keyof C)[]).reduce((acc, key: keyof C) => {
         if ('property' as keyof C in defined[key]) {
           acc[key] = <{ property: IComputedProperty<W, R, C, C[keyof C]>, dependencies: (keyof C)[] }>defined[key];
         } else {
@@ -71,5 +71,4 @@ export abstract class ComputedPropertiesManager<W extends {}, R extends W, C ext
     }
     return definition;
   }
-
 }

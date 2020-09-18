@@ -1,68 +1,69 @@
-import { pick } from '@bluejay/utils';
-import { Service } from '@bluejay/service';
-import { BaseError, DatabaseError, ValidationError } from 'sequelize';
-import { ISequelizeService } from '../interfaces/sequelize-service';
-import * as Sequelize from 'sequelize';
-import { injectable } from 'inversify';
-import { IUpsertSession } from '../interfaces/upsert-session';
-import { TTransactionOptions } from '../types/transaction-options';
-import { TCreateOptions } from '../types/create-options';
-import { CreateSession } from './create-session';
-import { TFilters } from '../types/filters';
-import { TFindOptions } from '../types/find-options';
-import { Hook } from '../constants/hook';
-import { Session } from './session';
-import * as Lodash from 'lodash';
 import { Collection, ICollection } from '@bluejay/collection';
-import { TAllOptions } from '../types/all-options';
-import { TAllSequelizeOptions } from '../types/all-sequelize-options';
-import { TSequelizeAttributesOption } from '../types/sequelize-attributes-option';
-import { TSequelizeOrderOption } from '../types/sequelize-order-option';
-import { TSequelizeOperatorFilter } from '../types/sequelize-operator-filter';
-import { TOperatorFilter } from '../types/operator-filter';
-import { TSequelizeWhere } from '../types/sequelize-where';
-import { TSequelizeFindOptions } from '../types/sequelize-find-options';
-import { TFindOneOptions } from '../types/find-one-options';
-import { TFindByPrimaryKeyOptions } from '../types/find-by-primary-key-options';
+import { Service } from '@bluejay/service';
+import { pick } from '@bluejay/utils';
+import { injectable } from 'inversify';
+import * as Lodash from 'lodash';
+import { BaseError, DatabaseError, ValidationError } from 'sequelize';
+import * as Sequelize from 'sequelize';
+import { Config } from '../config';
+import { Hook } from '../constants/hook';
 import { SortOrder } from '../constants/sort-order';
-import { TValues } from '../types/values';
-import { TUpdateOptions } from '../types/update-options';
-import { UpdateSession } from './update-session';
-import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
-import { TDeleteOptions } from '../types/delete-options';
-import { TSequelizeDestroyOptions } from '../types/sequelize-destroy-options';
-import { DeleteSession } from './delete-session';
-import { TCountOptions } from '../types/count-options';
-import { TSequelizeCountOptions } from '../types/sequelize-count-options';
-import { TReplaceOneOptions } from '../types/replace-one-options';
 import { IComputedPropertiesManager } from '../interfaces/computed-properties-manager';
-import { IUpdateSession } from '../interfaces/update-session';
-import { ISession } from '../interfaces/session';
 import { ICreateSession } from '../interfaces/create-session';
 import { IDeleteSession } from '../interfaces/delete-session';
-import { Config } from '../config';
+import { ISequelizeService } from '../interfaces/sequelize-service';
+import { ISession } from '../interfaces/session';
+import { IUpdateSession } from '../interfaces/update-session';
+import { IUpsertSession } from '../interfaces/upsert-session';
+import { TAllOptions } from '../types/all-options';
+import { TAllSequelizeOptions } from '../types/all-sequelize-options';
+import { TCountOptions } from '../types/count-options';
+import { TCreateOptions } from '../types/create-options';
+import { TDeleteOptions } from '../types/delete-options';
+import { TFilters } from '../types/filters';
+import { TFindByPrimaryKeyOptions } from '../types/find-by-primary-key-options';
+import { TFindOneOptions } from '../types/find-one-options';
+import { TFindOptions } from '../types/find-options';
+import { TOperatorFilter } from '../types/operator-filter';
+import { TReplaceOneOptions } from '../types/replace-one-options';
+import { TSequelizeAttributesOption } from '../types/sequelize-attributes-option';
+import { TSequelizeCountOptions } from '../types/sequelize-count-options';
+import { TSequelizeDestroyOptions } from '../types/sequelize-destroy-options';
+import { TSequelizeFindOptions } from '../types/sequelize-find-options';
+import { TSequelizeOperatorFilter } from '../types/sequelize-operator-filter';
+import { TSequelizeOrderOption } from '../types/sequelize-order-option';
+import { TSequelizeWhere } from '../types/sequelize-where';
+import { TTransactionOptions } from '../types/transaction-options';
+import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
+import { TUpdateOptions } from '../types/update-options';
 import { TUpsertOptions } from '../types/upsert-options';
+import { TValues } from '../types/values';
+import { CreateSession } from './create-session';
+import { DeleteSession } from './delete-session';
+import { Session } from './session';
+import { UpdateSession } from './update-session';
 import { UpsertSession } from './upsert-session';
 
 @injectable()
 export class SequelizeService<W extends {}, R extends W, C extends {} = {}> extends Service implements ISequelizeService<W, R, C> {
-  private primaryKeyField: keyof R = 'id' as keyof R;
   protected computedPropertiesManager: IComputedPropertiesManager<W, R, C>;
+  private primaryKeyField: keyof R = 'id' as keyof R;
 
   public constructor(protected model: Sequelize.Model<R, R>) {
     super();
   }
 
-  public getPrimaryKeyField() {
-    return this.primaryKeyField;
+  public getPrimaryKeyField(): string | number {
+    return this.primaryKeyField as string | number;
   }
 
   public async create<KC extends keyof C = keyof {}>(object: W, options: TCreateOptions<R, C, KC> = {}): Promise<R & Pick<C, KC>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = <ISession<W, R, C>>new CreateSession<W, R, C, KC>([object], options, this);
+        const createSession = new CreateSession<W, R, C, KC>([object], options, this);
+        const session = createSession as ISession<W, R, C>;
 
-        await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
+        await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this, createSession)); // TODO Make sure the bind calls actually work...
 
         const created = <R>(<any>await this.model.create(<R>object, options)).toJSON();
 
@@ -70,7 +71,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         await this.computeProperties(session);
 
-        await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this));
+        await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this, createSession));
 
         return session.getAt(0) as R & Pick<C, KC>;
       });
@@ -80,9 +81,10 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   public async createMany<KC extends keyof C = keyof {}>(objects: W[], options: TCreateOptions<R, C, KC> = {}): Promise<ICollection<R & Pick<C, KC>>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = <ISession<W, R, C>>new CreateSession<W, R, C, KC>(objects, options, this);
+        const createSession = new CreateSession<W, R, C, KC>(objects, options, this);
+        const session = <ISession<W, R, C>>createSession;
 
-        await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this));
+        await this.executeHook(Hook.WILL_CREATE, session, this._beforeCreate.bind(this, createSession));
 
         const created = (await Promise.all(objects.map(async item => {
           return await this.model.create(<R>item, options);
@@ -94,23 +96,24 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
         await this.computeProperties(session);
 
-        await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this));
+        await this.executeHook(Hook.DID_CREATE, session, this._afterCreate.bind(this, createSession));
 
         return new Collection<R & Pick<C, KC>>(created);
       });
     }, this.errorFactory);
   }
 
-  public async upsert<KC extends keyof C = keyof {}>(object: W, options: TUpsertOptions<R, C> = {}): Promise<R & Pick<C, KC>> {
+  public async upsert<KC extends keyof C = keyof {}>(object: W, options: TUpsertOptions<R, C, KC> = {}): Promise<R & Pick<C, KC>> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = new UpsertSession<W, R, C, KC>([object], options, this);
+        const upsertSession = new UpsertSession<W, R, C, KC>([object], options, this);
+        const session = upsertSession as ISession<W, R, C>;
 
-        await this.executeHook(Hook.WILL_UPSERT, session, this._beforeUpsert.bind(this));
+        await this.executeHook(Hook.WILL_UPSERT, session, this._beforeUpsert.bind(this, upsertSession));
 
         const created = await this.model.upsert(<R>object, options);
 
-        session.setCreated(created);
+        upsertSession.setCreated(created);
 
         let filters: TFilters<R>;
         if (options.fields) {
@@ -119,14 +122,14 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
           filters = Lodash.clone(object) as any as TFilters<R>;
         }
 
-        const createdObject = await this.findOne(filters, options) as R;
-        session.setObjects([createdObject]);
+        const createdObject = await this.findOne(filters, options) as unknown as R;
+        upsertSession.setObjects([createdObject]);
 
         await this.computeProperties(session);
 
-        await this.executeHook(Hook.DID_UPSERT, session, this._afterUpsert.bind(this));
+        await this.executeHook(Hook.DID_UPSERT, session, this._afterUpsert.bind(this, upsertSession));
 
-        return session.getAt(0) as R & Pick<C, KC>;
+        return upsertSession.getAt(0) as R & Pick<C, KC>;
       });
     }, this.errorFactory);
   }
@@ -135,10 +138,10 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     const formattedFilters = this.toSequelizeWhere(filters);
     const sequelizeOptions = this.toSequelizeOptions<TSequelizeFindOptions<R>>(options, { where: formattedFilters });
 
-    const objects = (await this.model.findAll(sequelizeOptions)).map(object => (<any>object).toJSON());
+    const objects = (await this.model.findAll(sequelizeOptions as any)).map(object => (<any>object).toJSON()); // TODO Not proud of this one...
 
     if (objects.length) {
-      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, KR, KC>>(objects, options, this, filters));
+      await this.computeProperties(new Session<W, R, C, TFindOptions<R, C, KR, KC>>(objects, options, this, filters) as ISession<W, R, C>);
     }
 
     return new Collection(objects);
@@ -160,12 +163,18 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   public async update(filters: TFilters<R>, values: TValues<W>, options: TUpdateOptions<R> = {}): Promise<number> {
     return await SequelizeService.try(async () => {
       return await this.transaction(options, async () => {
-        const session = new UpdateSession<W, R, C>(filters, values, options, this);
-        await this.executeHook(Hook.DID_UPDATE, session, this._beforeUpdate.bind(this));
+        const updateSession = new UpdateSession<W, R, C>(filters, values, options, this);
+        const session = updateSession as ISession<W, R, C>;
+
+        await this.executeHook(Hook.DID_UPDATE, session, this._beforeUpdate.bind(this, updateSession));
+
         const formattedFilters = this.toSequelizeWhere(filters);
         const sequelizeOptions = this.toSequelizeOptions<any>(options, { where: formattedFilters });
-        const [ count ] = await this.model.update(session.getRawValues() as R, sequelizeOptions);
-        await this.executeHook(Hook.DID_UPDATE, session, this._afterUpdate.bind(this));
+
+        const [ count ] = await this.model.update(updateSession.getRawValues() as R, sequelizeOptions);
+
+        await this.executeHook(Hook.DID_UPDATE, session, this._afterUpdate.bind(this, updateSession));
+
         return count;
       });
     }, this.errorFactory);
@@ -177,12 +186,18 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
 
   public async delete(filters: TFilters<R>, options: TDeleteOptions<R> = {}): Promise<number> {
     return await this.transaction(options, async () => {
-      const session = <ISession<W, R, C>>new DeleteSession(filters, options, this);
-      await this.executeHook(Hook.WILL_DELETE, session, this._beforeDelete.bind(this));
+      const deleteSession = new DeleteSession(filters, options, this);
+      const session = <ISession<W, R, C>>deleteSession;
+
+      await this.executeHook(Hook.WILL_DELETE, session, this._beforeDelete.bind(this, deleteSession));
+
       const formattedFilters = this.toSequelizeWhere(filters);
       const sequelizeOptions = this.toSequelizeOptions<TSequelizeDestroyOptions<R>>(options, { where: formattedFilters });
+
       const count = await this.model.destroy(sequelizeOptions);
-      await this.executeHook(Hook.DID_DELETE, session, this._afterDelete.bind(this));
+
+      await this.executeHook(Hook.DID_DELETE, session, this._afterDelete.bind(this, deleteSession));
+
       return count;
     });
   }
@@ -210,6 +225,10 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
         return await this.create(values, options);
       }
     });
+  }
+
+  public warn(condition: boolean, message: string, data?: object) {
+    super.warn(condition, message, data);
   }
 
   protected async beforeDelete(session: IDeleteSession<W, R, C>) {}
@@ -278,7 +297,7 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
       }
     }
 
-    return filters;
+    return filters as TSequelizeWhere<R>;
   }
 
   protected toSequelizeOptions<T extends TAllSequelizeOptions<R>>(options: Partial<TAllOptions<R, C, keyof R, keyof C>> = {}, overrides: TAllSequelizeOptions<R> = {}): T {
@@ -349,10 +368,6 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
   private async _afterDelete(session: IDeleteSession<W, R, C>) {
     await this.afterDelete(session);
     await this.publish(Hook.DID_DELETE, session);
-  }
-
-  public warn(condition: boolean, message: string, data?: object) {
-    super.warn(condition, message, data);
   }
 
   public static async try<T>(callback: () => Promise<T>, errorFactory?: (err: ValidationError | DatabaseError | BaseError | Error) => Error): Promise<T> {

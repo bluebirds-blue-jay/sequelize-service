@@ -1,7 +1,9 @@
-import { UpdateSession } from '../../../';
-import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../resources/types/user';
-import { userService } from '../../resources';
+import { expect } from 'chai';
+
+import { UpdateSession } from '../../../src';
 import { TValues } from '../../../src/types/values';
+import { userService } from '../../resources';
+import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../resources/types/user';
 
 function createSession(params: { values?: TValues<TUserWriteProperties> } = {}): UpdateSession<TUserWriteProperties, TUserReadProperties, TUserComputedProperties> {
   return new UpdateSession({}, params.values || {}, {}, userService);

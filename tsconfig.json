@@ -3,20 +3,36 @@
     "module": "commonjs",
     "target": "es6",
     "moduleResolution": "node",
+    "noEmit": true,
     "strict": true,
-    "noStrictGenericChecks": true,
+    "strictPropertyInitialization": false, /* TODO Enable this, if compatible with our ioc approach! */
+    "strictNullChecks": true,
     "alwaysStrict": true,
+    "pretty": true,
+    "declaration": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
-    "inlineSourceMap": true,
     "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "lib": ["es2017"],
-    "types": ["node", "mocha", "reflect-metadata", "chai-subset"]
+    "inlineSourceMap": true,
+    "outDir": "dist",
+    "lib": [
+      "es2017"
+    ],
+    "types": [
+      "node",
+      "mocha",
+      "chai",
+      "reflect-metadata",
+      "chai-subset"
+    ],
+    "removeComments": true
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules",
-    "dts"
+    "dist"
   ]
 }
