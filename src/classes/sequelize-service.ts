@@ -1,10 +1,11 @@
 import { Collection, ICollection } from '@bluejay/collection';
-import { Service } from '@bluejay/service';
 import { pick } from '@bluejay/utils';
+import * as Colors from 'colors';
 import { injectable } from 'inversify';
 import * as Lodash from 'lodash';
 import { BaseError, DatabaseError, ValidationError } from 'sequelize';
 import * as Sequelize from 'sequelize';
+import * as stringify from 'stringify-object';
 import { Config } from '../config';
 import { Hook } from '../constants/hook';
 import { SortOrder } from '../constants/sort-order';
@@ -33,6 +34,7 @@ import { TSequelizeFindOptions } from '../types/sequelize-find-options';
 import { TSequelizeOperatorFilter } from '../types/sequelize-operator-filter';
 import { TSequelizeOrderOption } from '../types/sequelize-order-option';
 import { TSequelizeWhere } from '../types/sequelize-where';
+import { TSubscriptionHandler } from '../types/subscription-handler';
 import { TTransactionOptions } from '../types/transaction-options';
 import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
 import { TUpdateOptions } from '../types/update-options';
@@ -45,12 +47,13 @@ import { UpdateSession } from './update-session';
 import { UpsertSession } from './upsert-session';
 
 @injectable()
-export class SequelizeService<W extends {}, R extends W, C extends {} = {}> extends Service implements ISequelizeService<W, R, C> {
+export class SequelizeService<W extends {}, R extends W, C extends {} = {}> implements ISequelizeService<W, R, C> {
   protected computedPropertiesManager: IComputedPropertiesManager<W, R, C>;
   private primaryKeyField: keyof R = 'id' as keyof R;
+  private subscriptions: Map<string, Set<TSubscriptionHandler>>;
 
   public constructor(protected model: Sequelize.Model<R, R>) {
-    super();
+    this.subscriptions = new Map();
   }
 
   public getPrimaryKeyField(): string | number {
@@ -227,8 +230,29 @@ export class SequelizeService<W extends {}, R extends W, C extends {} = {}> exte
     });
   }
 
+  public subscribe(event: string, handler: TSubscriptionHandler) {
+    if (this.subscriptions.has(event)) {
+      (<Set<TSubscriptionHandler>>this.subscriptions.get(event)).add(handler);
+    } else {
+      this.subscriptions.set(event, new Set([handler]));
+    }
+  }
+
   public warn(condition: boolean, message: string, data?: object) {
-    super.warn(condition, message, data);
+    if (condition) {
+      const error = new Error(message);
+      const stack = error.stack ? error.stack.split('\n').splice(2).join('\n') : undefined;
+      const dataPart = data ? stringify(data, { inlineCharacterLimit: Infinity }) : '';
+      const formattedMessage = `${Colors.blue(this.constructor.name)} ${message} ${dataPart} \n${stack}`;
+      // tslint:disable-next-line
+      console.warn(formattedMessage);
+    }
+  }
+
+  protected async publish(event: string, data: any) {
+    await Promise.all(Array.from(this.subscriptions.get(event) || []).map(async handler => {
+      await handler(data);
+    }));
   }
 
   protected async beforeDelete(session: IDeleteSession<W, R, C>) { /* Nothing */ }

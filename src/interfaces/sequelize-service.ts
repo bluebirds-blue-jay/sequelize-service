@@ -1,5 +1,4 @@
 import { ICollection } from '@bluejay/collection';
-import { TSubscriptionHandler } from '@bluejay/service';
 import { TCountOptions } from '../types/count-options';
 import { TCreateOptions } from '../types/create-options';
 import { TDeleteOptions } from '../types/delete-options';
@@ -8,6 +7,7 @@ import { TFindByPrimaryKeyOptions } from '../types/find-by-primary-key-options';
 import { TFindOneOptions } from '../types/find-one-options';
 import { TFindOptions } from '../types/find-options';
 import { TReplaceOneOptions } from '../types/replace-one-options';
+import { TSubscriptionHandler } from '../types/subscription-handler';
 import { TUpdateByPrimaryKeyOptions } from '../types/update-by-primary-key-options';
 import { TUpdateOptions } from '../types/update-options';
 import { TUpsertOptions } from '../types/upsert-options';

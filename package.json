@@ -30,7 +30,9 @@
     "@bluejay/collection": "5.0.0-beta.2",
     "@bluejay/rest-errors": "4.0.0-beta.0",
     "@bluejay/utils": "4.0.0-beta.2",
-    "lodash": "4.17.20"
+    "colors": "1.4.0",
+    "lodash": "4.17.20",
+    "stringify-object": "3.3.0"
   },
   "peerDependencies": {
     "sequelize": "^4.13.8",
