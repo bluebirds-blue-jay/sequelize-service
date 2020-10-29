@@ -212,7 +212,7 @@ describe('SequelizeService', function () {
 
     it('should only resolve types for what was computed (+ auto selected id)', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
-      const [user] = await userService.find({}, { select: [], compute: ['age'] });
+      const [user] = await userService.find({ id: { gte: 0 } }, { select: [], compute: ['age'] });
       expect(user).to.have.keys(['id', 'date_of_birth', 'age']); // 'id' is auto selected and 'date_of_birth' is a dependency of 'age'
       expect(user).to.not.have.keys(['isAdult']);
       // user.date_of_birth; // Note: Should NOT compile!
