@@ -13,7 +13,7 @@ export class UpsertSession<W extends {}, R extends W, C extends {}, KC extends k
   }
   private _created: boolean;
 
-  public constructor(objects: W[], options: TUpsertOptions<R, C> & O, service: ISequelizeService<W, R, C>) {
+  public constructor(objects: W[], options: TUpsertOptions<R, C, KC> & O, service: ISequelizeService<W, R, C>) {
     super(objects, options, service);
   }
 

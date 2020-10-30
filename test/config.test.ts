@@ -1,4 +1,6 @@
+import { expect } from 'chai';
 import { RestError } from '@bluejay/rest-errors';
+
 import { Config } from '../src/config';
 
 describe('Config', () => {

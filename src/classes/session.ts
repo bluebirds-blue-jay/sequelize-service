@@ -26,9 +26,9 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
   ) {
     super(objects);
     this.context = options.context || new Context({});
-    this.options = <TOptionsMap<O>>new Map(Lodash.toPairs(options));
+    this.options = new Map(Lodash.toPairs(options)) as unknown as TOptionsMap<O>;
     this.service = service;
-    this.filters = <TFiltersMap<R>>new Map(Lodash.toPairs(filters || { [this.service.getPrimaryKeyField()]: null }));
+    this.filters = new Map(Lodash.toPairs(filters || { [this.service.getPrimaryKeyField()]: null })) as unknown as TFiltersMap<R>;
   }
 
   public getOptions() {
@@ -40,7 +40,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
   }
 
   public getOption<K extends keyof O>(key: K): O[K] {
-    return this.options.get(key);
+    return this.options.get(key) as O[K];
   }
 
   public setOption<K extends keyof O>(key: K, value: O[K]): this {
@@ -61,7 +61,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
     const options: TSafeOptions = {};
 
     for (const key of <(keyof O)[]>['transaction', 'context', 'skipHooks', 'useMaster']) {
-      options[key as keyof TSafeOptions] = this.options.get(key);
+      options[key as keyof TSafeOptions] = this.options.get(key) as O[keyof TSafeOptions] as any; // TODO Figure out any cast...
     }
 
     return Object.assign(options, overrides);
@@ -122,7 +122,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
         Object.assign(object, newObject); // Refresh existing object
       }
     } else {
-      this.setObjects(newObjects.toArray());
+      this.setObjects(newObjects.toArray() as (Partial<R> & Partial<C>)[]); // TODO Unsure if this is right...
     }
   }
 
@@ -154,7 +154,7 @@ export class Session<W extends {}, R extends W, C extends {}, O extends TSafeOpt
   }
 
   public async ensureIdentified(options: TSafeOptions = {}): Promise<void> {
-    return await this.ensureProperties(Object.assign(options, { select: [this.service.getPrimaryKeyField()] }));
+    return await this.ensureProperties(Object.assign(options, { select: [this.service.getPrimaryKeyField() as keyof R] }));
   }
 
   protected getService() {

@@ -1,1 +1,1 @@
-export type TUpsertKeysOption<C> = { fields: (keyof C)[] };
+export type TUpsertKeysOption<C> = { fields: (Extract<keyof C, string>)[] };

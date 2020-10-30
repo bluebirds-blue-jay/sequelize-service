@@ -1,19 +1,22 @@
-import { database, userService } from '../resources';
-import { pick } from '@bluejay/utils';
-import * as Sinon from 'sinon';
-import { Hook } from '../../src/constants/hook';
-import { RestError } from '@bluejay/rest-errors';
-import { SequelizeService } from '../..';
-import * as Utils from '@bluejay/utils';
 import { ICollection } from '@bluejay/collection';
+import { RestError } from '@bluejay/rest-errors';
+import * as Utils from '@bluejay/utils';
+import { pick } from '@bluejay/utils';
+import { expect } from 'chai';
 import * as Sequelize from 'sequelize';
+import * as Sinon from 'sinon';
+
+import { SequelizeService } from '../../src';
 import { Session } from '../../src/classes/session';
+import { Hook } from '../../src/constants/hook';
 import { SortOrder } from '../../src/constants/sort-order';
+import { IUpdateSession } from '../../src/interfaces/update-session';
+
+import { database, userService } from '../resources';
 import { UserComputedPropertiesManager } from '../resources/services/user/computed-properties';
 import { UserAge } from '../resources/services/user/computed-properties/age';
 import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../resources/types/user';
 import moment = require('moment');
-import { IUpdateSession } from '../../src/interfaces/update-session';
 
 const dobCache: { [age: number]: Date } = {};
 
@@ -40,7 +43,7 @@ describe('SequelizeService', function () {
           (err as any).errors = [{ path: 'foo' }];
           throw err;
         });
-      } catch(err) {
+      } catch (err) {
         expect((err as RestError).statusCode).to.equal(409);
         return;
       }
@@ -189,13 +192,13 @@ describe('SequelizeService', function () {
 
     it('should return only selected fields (+ auto selected id)', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
-      const [ user ] = await userService.find({}, { select: ['email'] });
+      const [user] = await userService.find({}, { select: ['email'] });
       expect(user).to.have.keys(['email', 'id']); // ID is auto selected
     });
 
     it('should only resolve types for what was selected (+ auto selected id)', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
-      const [ user ] = await userService.find({}, { select: ['email'] });
+      const [user] = await userService.find({}, { select: ['email'] });
       expect(user).to.have.keys(['email', 'id']); // ID is auto selected
       expect(user).to.not.have.keys(['first_name']);
       // user.first_name; // Note: Should NOT compile!
@@ -203,13 +206,13 @@ describe('SequelizeService', function () {
 
     it('should by default select everything', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
-      const [ user ] = await userService.find({});
+      const [user] = await userService.find({});
       expect(user).to.have.keys(['id', 'email', 'first_name', 'last_name', 'date_of_birth', 'lucky_number', 'password', 'password_last_updated_at', 'updated_at', 'created_at']);
     });
 
     it('should only resolve types for what was computed (+ auto selected id)', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
-      const [ user ] = await userService.find({}, { select: [], compute: ['age'] });
+      const [user] = await userService.find({ id: { gte: 0 } }, { select: [], compute: ['age'] });
       expect(user).to.have.keys(['id', 'date_of_birth', 'age']); // 'id' is auto selected and 'date_of_birth' is a dependency of 'age'
       expect(user).to.not.have.keys(['isAdult']);
       // user.date_of_birth; // Note: Should NOT compile!
@@ -218,7 +221,7 @@ describe('SequelizeService', function () {
 
     it('should not auto compute anything', async () => {
       await userService.create({ email: 'foo', password: 'bar' });
-      const [ user ] = await userService.find({}, { select: [] });
+      const [user] = await userService.find({}, { select: [] });
       expect(user).to.have.keys(['id']);
       expect(user).to.not.have.keys(['isAdult']);
       // user.age; // Note: Should NOT compile!
@@ -226,7 +229,7 @@ describe('SequelizeService', function () {
     });
 
     it('should sort returned objects', async () => {
-      const [ user1, user2, user3 ] = await userService.createMany([
+      const [user1, user2, user3] = await userService.createMany([
         { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(12), lucky_number: 3 },
         { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(15), lucky_number: 7 },
         { email: 'foo3', password: 'bar3', date_of_birth: ageToDOB(15), lucky_number: 12 }
@@ -252,7 +255,7 @@ describe('SequelizeService', function () {
     it('should reuse transaction', async () => {
       let tx: Sequelize.Transaction | null = null;
       const afterCreateStub = Sinon.stub(userService, 'afterCreate' as any).callsFake((session: Session<any, any, any, any>) => {
-        tx = <Sequelize.Transaction>session.getOptions().get('transaction')
+        tx = <Sequelize.Transaction>session.getOptions().get('transaction');
       });
       await database.transaction(async transaction => {
         await userService.create({ email: 'foo', password: 'bar' }, { transaction });
@@ -267,7 +270,7 @@ describe('SequelizeService', function () {
         { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(23) }
       ]);
 
-      const [ user1, user2 ] = await userService.find({}, { compute: ['age', 'isAdult'] });
+      const [user1, user2] = await userService.find({}, { compute: ['age', 'isAdult'] });
 
       expect(user1).to.containSubset({ age: 12, isAdult: false });
       expect(user2).to.containSubset({ age: 23, isAdult: true });
@@ -282,7 +285,7 @@ describe('SequelizeService', function () {
       const userComputedPropertiesManagerTransformSpy = Sinon.spy(UserComputedPropertiesManager.prototype, 'transform');
       const userAgeComputerPropertyTransformSpy = Sinon.spy(UserAge.prototype, 'transform');
 
-      const [ user1, user2 ] = await userService.find({}, { compute: ['age', 'isAdult'] });
+      const [user1, user2] = await userService.find({}, { compute: ['age', 'isAdult'] });
 
       expect(userComputedPropertiesManagerTransformSpy.callCount).to.equal(1);
       expect(userAgeComputerPropertyTransformSpy.callCount).to.equal(1);
@@ -298,8 +301,8 @@ describe('SequelizeService', function () {
       ]);
 
       try {
-        await userService.find({}, { compute: ['toto' as any] })
-      } catch(err) {
+        await userService.find({}, { compute: ['toto' as any] });
+      } catch (err) {
         expect(err.message).to.match(/toto/);
         return;
       }
@@ -307,7 +310,7 @@ describe('SequelizeService', function () {
     });
 
     it('should limit/offset returned objects', async () => {
-      const [ user1, user2 ] = await userService.createMany([
+      const [user1, user2] = await userService.createMany([
         { email: 'foo1', password: 'bar1' },
         { email: 'foo2', password: 'bar2' }
       ]);
@@ -325,7 +328,7 @@ describe('SequelizeService', function () {
 
   describe('#findOne()', function () {
     it('should only find one object', async () => {
-      const [ user1, ] = await userService.createMany([
+      const [user1] = await userService.createMany([
         { email: 'foo1', password: 'bar1' },
         { email: 'foo2', password: 'bar2' }
       ]);
@@ -334,7 +337,7 @@ describe('SequelizeService', function () {
       expect(found).to.exist.and.containSubset({ id: user1.id });
     });
     it('should apply sorting', async () => {
-      const [ , user2 ] = await userService.createMany([
+      const [, user2] = await userService.createMany([
         { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(15) },
         { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(12) }
       ]);
@@ -487,7 +490,7 @@ describe('SequelizeService', function () {
 
   describe('#updateByPrimaryKey()', function () {
     it('should update object', async () => {
-      const [ user1, user2 ] = await userService.createMany([
+      const [user1, user2] = await userService.createMany([
         { email: 'foo1', password: 'bar1', date_of_birth: ageToDOB(15) },
         { email: 'foo2', password: 'bar2', date_of_birth: ageToDOB(15) }
       ]);
@@ -643,7 +646,7 @@ describe('SequelizeService', function () {
       expect(user).to.containSubset(properties);
     });
     it('should create object and compute properties', async () => {
-      const user = await userService.upsert({ email: 'foo', password: 'bar' }, { compute: ['age']});
+      const user = await userService.upsert({ email: 'foo', password: 'bar' }, { compute: ['age'] });
       expect(user).to.include.keys(['id', 'email', 'password', 'age']);
     });
     it('should update object', async () => {

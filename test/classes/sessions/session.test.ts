@@ -1,12 +1,14 @@
-import { Session } from '../../../';
-import { Context } from '../../../src/classes/context';
-import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../resources/types/user';
-import { userService, database } from '../../resources';
-import { TAllOptions } from '../../../src/types/all-options';
-import { TSafeOptions } from '../../../src/types/safe-options';
-import { TFilters } from '../../../src/types/filters';
-import * as Sinon from 'sinon';
 import { Collection } from '@bluejay/collection';
+import { expect } from 'chai';
+import * as Sinon from 'sinon';
+
+import { Session } from '../../../src';
+import { Context } from '../../../src/classes/context';
+import { TAllOptions } from '../../../src/types/all-options';
+import { TFilters } from '../../../src/types/filters';
+import { TSafeOptions } from '../../../src/types/safe-options';
+import { database, userService } from '../../resources';
+import { TUserComputedProperties, TUserReadProperties, TUserWriteProperties } from '../../resources/types/user';
 
 function createSession<O extends TSafeOptions = TAllOptions<TUserReadProperties, TUserComputedProperties, keyof TUserReadProperties, keyof TUserComputedProperties>>(
   params: { options?: TAllOptions<TUserReadProperties, TUserComputedProperties, keyof TUserReadProperties, keyof TUserComputedProperties>, objects?: Partial<TUserReadProperties>[], filters?: TFilters<TUserReadProperties> } = {}
@@ -151,7 +153,7 @@ describe('Session', function () {
       session.forEach(object => expect(object).to.have.keys(['id', 'email', 'password']));
     });
     it('should throw if not finding an object', async () => {
-      const [ user1 ] = await userService.createMany([
+      const [user1] = await userService.createMany([
         { email: 'foo1', password: 'bar1' },
         { email: 'foo2', password: 'bar2' },
         { email: 'foo3', password: 'bar3' }
@@ -161,7 +163,7 @@ describe('Session', function () {
       await session.fetch({ select: ['email'] });
 
       const findStub = Sinon.stub(userService, 'find').callsFake(async () => {
-        return new Collection([user1]);
+        return new Collection([user1 as any]); // TODO Better case?
       });
 
       try {
@@ -172,7 +174,7 @@ describe('Session', function () {
         return;
       }
 
-      throw new Error(`Should not pass here.`)
+      throw new Error(`Should not pass here.`);
     });
   });
 
